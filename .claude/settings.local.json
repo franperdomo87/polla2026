@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm --version)",
+      "Bash(npm create *)",
+      "Bash(Get-Content \"C:\\\\Users\\\\LENOVO\\\\Dropbox\\\\Mundial 2026\\\\prode2026.jsx\")",
+      "Bash(Select-Object -Last 5)",
+      "Bash(npm install *)",
+      "Bash(npm run *)"
+    ]
+  }
+}
