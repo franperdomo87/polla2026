@@ -1156,11 +1156,11 @@ function GroupPanel({gk,preds,results,onMC,onSC,locked}){
       </div>}
       <div style={{display:"flex",alignItems:"center",gap:10,marginTop:22,marginBottom:9}}>
         <div className="stit" style={{marginTop:0,marginBottom:0}}>Clasificación final — tu pronóstico</div>
-        {predRows.some(r=>r.pj>0)&&!st.every(Boolean)&&(
+        {pRows.some(r=>r.pj>0)&&!st.every(Boolean)&&(
           <button className="btn btn-sm btn-ol" style={{padding:"4px 10px",fontSize:11,letterSpacing:"1px"}}
             onClick={()=>{
-              const sorted=cStand(gk,preds?.matches);
-              sorted.forEach((_,i)=>onSC(gk,i,sorted[i].n));
+              const s=cStand(gk,preds?.matches);
+              if(s.length===4) s.forEach((t,i)=>onSC(gk,i,t.n));
             }}>
             🔄 Sugerir por resultados
           </button>
