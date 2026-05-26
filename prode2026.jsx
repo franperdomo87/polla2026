@@ -862,9 +862,10 @@ export default function App(){
   return(
     <div className="app">
       <div className="bg"/><div className="rel">
-        {view==="landing"&&<Landing onLogin={login} onAdmin={()=>setView("admin")} onLB={()=>setView("lb")} locked={locked}/>}
-        {view==="predict"&&user&&<PredictView user={user} preds={up} onSave={p=>saveP(user.id,p)} onLB={()=>setView("lb")} onOut={()=>{setUser(null);setView("landing");}} locked={locked} nav={nav} setNav={setNav} results={results} koTeams={koTeams} koResults={koResults} koUnlocked={koUnlocked} spRes={spRes}/>}
-        {view==="lb"&&<LBView lb={lb} results={results} koUnlocked={koUnlocked} users={users} onBack={()=>setView(user?"predict":"landing")}/>}
+        {view==="landing"&&<Landing onLogin={login} onAdmin={()=>setView("admin")} onLB={()=>setView("lb")} onHoy={()=>setView("hoy")} locked={locked}/>}
+        {view==="predict"&&user&&<PredictView user={user} preds={up} onSave={p=>saveP(user.id,p)} onLB={()=>setView("lb")} onOut={()=>{setUser(null);setView("landing");}} onHoy={()=>setView("hoy")} locked={locked} nav={nav} setNav={setNav} results={results} koTeams={koTeams} koResults={koResults} koUnlocked={koUnlocked} spRes={spRes}/>}
+        {view==="lb"&&<LBView lb={lb} results={results} koUnlocked={koUnlocked} users={users} allPreds={allPreds} onBack={()=>setView(user?"predict":"landing")}/>}
+        {view==="hoy"&&<HoyView results={results} allPreds={allPreds} users={users} lb={lb} onBack={()=>setView(user?"predict":"landing")}/>}
         {view==="admin"&&<AdminView results={results} onSaveR={saveR} locked={locked} onToggle={toggleLock} onBack={()=>setView("landing")} users={users} allPreds={allPreds} lb={lb} koTeams={koTeams} onSaveKT={saveKT} koResults={koResults} onSaveKR={saveKR} koUnlocked={koUnlocked} onSaveKU={saveKU} spRes={spRes} onSaveSR={saveSR}/>}
       </div>
     </div>
@@ -903,7 +904,7 @@ function CityAutocomplete({value,onChange}){
   );
 }
 
-function Landing({onLogin,onAdmin,onLB,locked}){
+function Landing({onLogin,onAdmin,onLB,onHoy,locked}){
   const [name,setName]=useState("");
   const [step,setStep]=useState("home");
   const [demo,setDemo]=useState({sexo:"",edad:"",equipoFav:"",ciudad:""});
@@ -920,6 +921,7 @@ function Landing({onLogin,onAdmin,onLB,locked}){
           {!locked?<button className="btn btn-gold" onClick={()=>setStep("name")}>📝 Ingresar mis Pronósticos</button>
             :<div className="badge badge-r" style={{padding:"9px 18px",fontSize:13}}>🔒 Polla cerrada — ¡El mundial ya arrancó!</div>}
           <button className="btn btn-ol" onClick={onLB}>📊 Ver Tabla de Posiciones</button>
+          <button className="btn btn-ol" onClick={onHoy}>📅 Partidos de Hoy</button>
           <button className="btn btn-ol btn-sm" style={{marginTop:4,opacity:.5}} onClick={onAdmin}>🔧 Administrador</button>
         </div>
       )}
@@ -1087,7 +1089,7 @@ function DailyFact(){
 }
 
 // ═══ PREDICT VIEW ═════════════════════════════════════════════════════
-function PredictView({user,preds,onSave,onLB,onOut,locked,nav,setNav,results,koTeams,koResults,koUnlocked,spRes}){
+function PredictView({user,preds,onSave,onLB,onOut,onHoy,locked,nav,setNav,results,koTeams,koResults,koUnlocked,spRes}){
   const [lp,setLp]=useState(preds);
   const [saving,setSaving]=useState(false);
   const [saved,setSaved]=useState(false);
@@ -1111,6 +1113,7 @@ function PredictView({user,preds,onSave,onLB,onOut,locked,nav,setNav,results,koT
         <button className={`gb${nav.type==="special"?" sp":""}`} onClick={()=>setNav({type:"special",id:"s"})}><span style={{fontFamily:"'Bebas Neue',cursive",fontSize:11}}>🌟 Picks</span><span style={{flex:1,fontSize:10,color:"var(--txs)"}}>Goleador·Balón</span>{lp?.special?.topScorer&&lp?.special?.goldenBall&&<span style={{color:"var(--gold)",fontSize:10}}>✓</span>}</button>
         <div style={{marginTop:"auto",padding:"8px 5px",display:"flex",flexDirection:"column",gap:5}}>
           {!locked&&<button className={`btn btn-sm ${saved?"btn-gr":"btn-gold"}`} style={{width:"100%",justifyContent:"center"}} onClick={save} disabled={saving}>{saving?"Guardando...":saved?"✅ Guardado":"💾 Guardar"}</button>}
+          <button className="btn btn-ol btn-sm" style={{width:"100%",justifyContent:"center"}} onClick={onHoy}>📅 Hoy</button>
           <button className="btn btn-ol btn-sm" style={{width:"100%",justifyContent:"center"}} onClick={onLB}>📊 Tabla</button>
           <button className="btn btn-ol btn-sm" style={{width:"100%",justifyContent:"center"}} onClick={onOut}>← Salir</button>
         </div>
@@ -1275,31 +1278,36 @@ function SpecialPanel({preds,spRes,onUpd,locked}){
   </div>);
 }
 // ═══ LEADERBOARD ══════════════════════════════════════════════════════
-function LBView({lb,results,koUnlocked,users,onBack}){
-  const [showSt,setShowSt]=useState(false);
+function LBView({lb,results,koUnlocked,users,allPreds,onBack}){
+  const [tab,setTab]=useState("tabla");
   const hasKO=Object.values(koUnlocked||{}).some(Boolean);
   const rc=["rnkg","rnks","rnkb"],re=["🥇","🥈","🥉"];
   const haRes=Object.values(results?.matches||{}).some(r=>r.h!==""&&r.a!=="");
-  return(<div style={{padding:"22px",maxWidth:720,margin:"0 auto"}}>
-    <div style={{display:"flex",alignItems:"center",gap:12,marginBottom:20,flexWrap:"wrap"}}>
+  return(<div style={{padding:"22px",maxWidth:900,margin:"0 auto"}}>
+    <div style={{display:"flex",alignItems:"center",gap:12,marginBottom:16,flexWrap:"wrap"}}>
       <button className="btn btn-ol btn-sm" onClick={onBack}>← Volver</button>
-      <div style={{fontFamily:"'Bebas Neue',cursive",fontSize:38,color:"var(--gold)",letterSpacing:"5px",lineHeight:1,flex:1}}>Tabla de Posiciones</div>
-      <button className={`btn btn-sm ${showSt?"btn-bl":"btn-ol"}`} onClick={()=>setShowSt(!showSt)}>📈 Estadísticas</button>
+      <div style={{fontFamily:"'Bebas Neue',cursive",fontSize:36,color:"var(--gold)",letterSpacing:"5px",lineHeight:1,flex:1}}>Polla Mundialista 2026</div>
     </div>
-    {haRes&&lb.length>=2&&<><div className="stit">El show de la polla</div><FunStats lb={lb}/></>}
-    {showSt&&<StatsPanel users={users} lb={lb}/>}
-    <div className="stit">Clasificación general</div>
-    {lb.length===0&&<div style={{textAlign:"center",color:"var(--txs)",fontFamily:"'Barlow Condensed',sans-serif",fontSize:17,marginTop:36}}>Nadie ha ingresado pronósticos aún. ¡Sé el primero! ⚽</div>}
-    {lb.map((u,i)=>(
-      <div key={u.id} className={`lbr${i===0?" first":""}`}>
-        <span className={`rnk ${i<3?rc[i]:""}`}>{i<3?re[i]:`${i+1}°`}</span>
-        <div style={{flex:1}}>
-          <div className="lbn">{u.name}{u.equipoFav&&u.equipoFav!=="— Sin preferencia —"&&<span style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:11,color:"var(--txs)",fontWeight:400,marginLeft:6}}>({u.equipoFav.split(" ")[0]})</span>}</div>
-          <div className="lbsub">{u.ciudad&&<span>📍{u.ciudad}</span>}<span>⚽ {u.group||0}</span>{hasKO&&<span>⚔️ {u.knockout||0}</span>}<span>🌟 {u.special||0}</span></div>
+    <div className="atab" style={{marginBottom:18}}>
+      {[["tabla","🏆 Tabla"],["apuestas","👁️ Ver Apuestas"],["stats","📈 Estadísticas"]].map(([k,l])=>(
+        <button key={k} className={`atb${tab===k?" act":""}`} onClick={()=>setTab(k)}>{l}</button>
+      ))}
+    </div>
+
+    {tab==="tabla"&&<>
+      {haRes&&lb.length>=2&&<><div className="stit">El show de la polla</div><FunStats lb={lb}/></>}
+      <div className="stit">Clasificación general</div>
+      {lb.length===0&&<div style={{textAlign:"center",color:"var(--txs)",fontFamily:"'Barlow Condensed',sans-serif",fontSize:17,marginTop:36}}>Nadie ha ingresado pronósticos aún. ¡Sé el primero! ⚽</div>}
+      {lb.map((u,i)=>(
+        <div key={u.id} className={`lbr${i===0?" first":""}`}>
+          <span className={`rnk ${i<3?rc[i]:""}`}>{i<3?re[i]:`${i+1}°`}</span>
+          <div style={{flex:1}}>
+            <div className="lbn">{u.name}{u.equipoFav&&u.equipoFav!=="— Sin preferencia —"&&<span style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:11,color:"var(--txs)",fontWeight:400,marginLeft:6}}>({u.equipoFav.split(" ")[0]})</span>}</div>
+            <div className="lbsub">{u.ciudad&&<span>📍{u.ciudad}</span>}<span>⚽ {u.group||0}</span>{hasKO&&<span>⚔️ {u.knockout||0}</span>}<span>🌟 {u.special||0}</span></div>
+          </div>
+          <div className="lbp">{u.total}<span style={{fontSize:12,color:"var(--txs)"}}> pts</span></div>
         </div>
-        <div className="lbp">{u.total}<span style={{fontSize:12,color:"var(--txs)"}}> pts</span></div>
-      </div>
-    ))}
+      ))}
     <div className="sbox" style={{marginTop:20}}>
       <div className="stit" style={{marginTop:0,marginBottom:8}}>Sistema de puntuación</div>
       <div style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:12,lineHeight:"1.8",color:"var(--txs)"}}>
@@ -1311,8 +1319,312 @@ function LBView({lb,results,koUnlocked,users,onBack}){
         {[["👟 Goleador del torneo","15"],["⭐ Balón de Oro","10"]].map(([l,p])=><div key={l} className="srow" style={{padding:"1px 0"}}><span style={{flex:1}}>{l}</span><span className="spts" style={{fontSize:13}}>{p} pts</span></div>)}
       </div>
     </div>
+    </>}
+
+    {tab==="apuestas"&&<ApuestasView users={users} allPreds={allPreds} results={results} lb={lb}/>}
+    {tab==="stats"&&<StatsPanel users={users} lb={lb}/>}
   </div>);
 }
+// ═══ HOY VIEW — Partidos del día ══════════════════════════════════════
+function HoyView({results,allPreds,users,lb,onBack}){
+  // Fecha actual en formato "Jun 11" para comparar con SCHEDULE
+  const now = new Date();
+  const monthNames=["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
+  const todayStr = `${monthNames[now.getMonth()]} ${now.getDate()}`;
+
+  // Simula una fecha específica para pruebas antes del mundial
+  // Cuando el mundial arranque esto apunta a la fecha real
+  const worldcupStart = new Date('2026-06-11');
+  const isBeforeWC = now < worldcupStart;
+
+  // Partidos de hoy: buscar en SCHEDULE los que coincidan con todayStr
+  const todayMatches = Object.entries(SCHEDULE)
+    .filter(([,v]) => v.d === todayStr)
+    .map(([k,v]) => {
+      // Find group and teams from the key
+      const gk = k.split('|')[0];
+      const teams = GROUPS[gk];
+      // Find the match in the group
+      const match = mkM(gk).find(m => {
+        const nid = m.id.replace(/ v/g,'v');
+        const nk = k.replace(/ v/g,'v');
+        return nid === nk || `${gk}|${m.a.n}v${m.h.n}`.replace(/ v/g,'v') === nk;
+      });
+      return match ? {id:match.id, h:match.h, a:match.a, gk, sch:v} : null;
+    })
+    .filter(Boolean)
+    .sort((a,b) => a.sch.h.localeCompare(b.sch.h));
+
+  const [selMatch, setSelMatch] = useState(todayMatches[0]?.id || null);
+
+  // Predictions for selected match
+  const matchPreds = selMatch ? users.map(u => {
+    const p = allPreds?.[u.id]?.matches?.[selMatch];
+    const rp = results?.matches?.[selMatch];
+    const hasResult = rp && rp.h !== "" && rp.a !== "";
+    const pts = p && p.h !== "" && p.a !== "" && hasResult ? sMatch(p.h, p.a, rp.h, rp.a) : null;
+    return {...u, pred:p, pts, rp, hasResult};
+  }).filter(u => u.pred && u.pred.h !== "" && u.pred.a !== "") : [];
+
+  const selData = todayMatches.find(m => m.id === selMatch);
+  const rp = selMatch ? results?.matches?.[selMatch] : null;
+  const hasResult = rp && rp.h !== "" && rp.a !== "";
+
+  return(
+    <div style={{padding:"22px",maxWidth:800,margin:"0 auto"}}>
+      {/* Header */}
+      <div style={{display:"flex",alignItems:"center",gap:12,marginBottom:6,flexWrap:"wrap"}}>
+        <button className="btn btn-ol btn-sm" onClick={onBack}>← Volver</button>
+        <div style={{flex:1}}>
+          <div style={{fontFamily:"'Bebas Neue',cursive",fontSize:36,color:"var(--gold)",letterSpacing:"5px",lineHeight:1}}>
+            Partidos de Hoy
+          </div>
+          <div style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:13,color:"var(--txs)",marginTop:2,letterSpacing:"1px"}}>
+            {now.toLocaleDateString('es-CO',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}
+          </div>
+        </div>
+      </div>
+
+      {/* Before WC or no matches today */}
+      {isBeforeWC && (
+        <div style={{background:"var(--sur)",border:"1px solid var(--gbor)",borderRadius:12,padding:"24px",textAlign:"center",marginTop:16}}>
+          <div style={{fontSize:40,marginBottom:10}}>⏳</div>
+          <div style={{fontFamily:"'Bebas Neue',cursive",fontSize:24,color:"var(--gold)",letterSpacing:"3px",marginBottom:8}}>
+            EL MUNDIAL ARRANCA EL 11 DE JUNIO
+          </div>
+          <div style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:14,color:"var(--txs)",lineHeight:1.6}}>
+            Faltan <strong style={{color:"var(--txt)"}}>{Math.ceil((worldcupStart-now)/86400000)} días</strong> para el primer pitazo.<br/>
+            ¡Aprovecha para llenar todos tus pronósticos antes de que cierre la polla!
+          </div>
+        </div>
+      )}
+
+      {!isBeforeWC && todayMatches.length === 0 && (
+        <div style={{background:"var(--sur)",border:"1px solid var(--bos)",borderRadius:12,padding:"24px",textAlign:"center",marginTop:16}}>
+          <div style={{fontSize:36,marginBottom:8}}>🌙</div>
+          <div style={{fontFamily:"'Bebas Neue',cursive",fontSize:22,color:"var(--txs)",letterSpacing:"3px",marginBottom:6}}>DÍA DE DESCANSO</div>
+          <div style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:13,color:"var(--txs)"}}>No hay partidos programados para hoy.</div>
+        </div>
+      )}
+
+      {!isBeforeWC && todayMatches.length > 0 && (<>
+        {/* Match selector */}
+        <div style={{marginTop:14,marginBottom:16}}>
+          <div className="stit" style={{marginTop:0}}>Partidos de hoy — selecciona para ver las apuestas</div>
+          <div style={{display:"flex",flexDirection:"column",gap:7}}>
+            {todayMatches.map(m=>{
+              const mrp=results?.matches?.[m.id];
+              const mHasResult=mrp&&mrp.h!==""&&mrp.a!=="";
+              const isSelected=selMatch===m.id;
+              const predCount=users.filter(u=>{const p=allPreds?.[u.id]?.matches?.[m.id];return p&&p.h!==""&&p.a!=="";}).length;
+              return(
+                <button key={m.id} onClick={()=>setSelMatch(m.id)}
+                  style={{display:"flex",alignItems:"center",gap:12,padding:"11px 14px",background:isSelected?"var(--gdim)":"var(--sur)",border:`1px solid ${isSelected?"var(--gold)":"var(--bos)"}`,borderRadius:10,cursor:"pointer",transition:"all .2s",textAlign:"left",width:"100%"}}>
+                  <div style={{flex:1}}>
+                    <div style={{fontFamily:"'Bebas Neue',cursive",fontSize:18,color:isSelected?"var(--gold)":"var(--txt)",letterSpacing:"2px"}}>
+                      {m.h.f} {m.h.n} <span style={{opacity:.5,fontSize:14}}>VS</span> {m.a.n} {m.a.f}
+                    </div>
+                    <div style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:11,color:"var(--txs)",marginTop:2}}>
+                      🕐 {m.sch.h} COL · 🏟️ {m.sch.st} · <span style={{color:"var(--green)"}}>{predCount} apuesta{predCount!==1?"s":""}</span>
+                    </div>
+                  </div>
+                  {mHasResult?(
+                    <div style={{textAlign:"center"}}>
+                      <div style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:9,color:"var(--gold)",letterSpacing:"2px"}}>FINAL</div>
+                      <div style={{fontFamily:"'Bebas Neue',cursive",fontSize:24,color:"var(--gold)",lineHeight:1}}>{mrp.h} — {mrp.a}</div>
+                    </div>
+                  ):(
+                    <span style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:11,color:"var(--txs)",opacity:.5,fontStyle:"italic",flexShrink:0}}>Por jugar</span>
+                  )}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Predictions for selected match */}
+        {selData&&(
+          <div style={{background:"var(--sur)",border:"1px solid var(--bos)",borderRadius:12,overflow:"hidden"}}>
+            {/* Header */}
+            <div style={{padding:"12px 16px",borderBottom:"1px solid var(--bos)",background:"rgba(240,180,41,.04)"}}>
+              <div style={{fontFamily:"'Bebas Neue',cursive",fontSize:22,color:"var(--gold)",letterSpacing:"3px"}}>
+                👁️ Apuestas — {selData.h.f} {selData.h.n} vs {selData.a.n} {selData.a.f}
+              </div>
+              {hasResult&&(
+                <div style={{marginTop:4,fontFamily:"'Barlow Condensed',sans-serif",fontSize:13,color:"var(--txs)"}}>
+                  Resultado real: <strong style={{color:"var(--gold)",fontFamily:"'Bebas Neue',cursive",fontSize:18}}>{rp.h} — {rp.a}</strong>
+                </div>
+              )}
+            </div>
+
+            {matchPreds.length===0?(
+              <div style={{padding:"16px",color:"var(--txs)",fontFamily:"'Barlow Condensed',sans-serif",fontSize:13,textAlign:"center"}}>
+                Ningún participante ha ingresado pronóstico para este partido.
+              </div>
+            ):(
+              <div style={{overflowX:"auto"}}>
+                <table style={{width:"100%",borderCollapse:"collapse",fontFamily:"'Barlow Condensed',sans-serif"}}>
+                  <thead>
+                    <tr style={{borderBottom:"1px solid var(--bos)"}}>
+                      <th style={{textAlign:"left",padding:"8px 16px",fontSize:10,letterSpacing:"2px",color:"var(--txs)",textTransform:"uppercase"}}>Participante</th>
+                      <th style={{textAlign:"center",padding:"8px",fontSize:10,letterSpacing:"2px",color:"var(--txs)",textTransform:"uppercase"}}>Pronóstico</th>
+                      <th style={{textAlign:"center",padding:"8px",fontSize:10,letterSpacing:"2px",color:"var(--txs)",textTransform:"uppercase"}}>Estado</th>
+                      <th style={{textAlign:"center",padding:"8px 16px",fontSize:10,letterSpacing:"2px",color:"var(--txs)",textTransform:"uppercase"}}>Pts</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {matchPreds.sort((a,b)=>(b.pts||0)-(a.pts||0)-(a.pts===null&&b.pts===null?0:0)).map((u,i)=>{
+                      const isExact=u.pts===5,isOk=u.pts===3,isFail=u.pts===0&&u.hasResult;
+                      const predSign=+u.pred.h>+u.pred.a?"Gana "+selData.h.n:+u.pred.a>+u.pred.h?"Gana "+selData.a.n:"Empate";
+                      return(
+                        <tr key={u.id} style={{borderBottom:"1px solid rgba(255,255,255,.03)",background:i%2===0?"transparent":"rgba(255,255,255,.015)"}}>
+                          <td style={{padding:"10px 16px",fontSize:14,fontWeight:700,color:"var(--txt)"}}>
+                            {i===0&&u.hasResult&&u.pts>0&&<span style={{marginRight:6}}>🏆</span>}{u.name}
+                          </td>
+                          <td style={{textAlign:"center",padding:"10px 8px"}}>
+                            <div style={{fontFamily:"'Bebas Neue',cursive",fontSize:22,color:isExact?"var(--gold)":isOk?"var(--green)":isFail?"var(--red)":"var(--txt)",lineHeight:1}}>
+                              {u.pred.h} — {u.pred.a}
+                            </div>
+                            <div style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:10,color:"var(--txs)",opacity:.7,marginTop:2}}>{predSign}</div>
+                          </td>
+                          <td style={{textAlign:"center",padding:"10px 8px"}}>
+                            {isExact&&<span className="badge badge-g">🎯 Exacto</span>}
+                            {isOk&&<span className="badge badge-gr">✅ Correcto</span>}
+                            {isFail&&<span className="badge badge-r">✗ Falló</span>}
+                            {!u.hasResult&&<span style={{color:"var(--txs)",fontSize:11,opacity:.6}}>En espera</span>}
+                          </td>
+                          <td style={{textAlign:"center",padding:"10px 16px"}}>
+                            {u.pts!==null
+                              ?<span style={{fontFamily:"'Bebas Neue',cursive",fontSize:22,color:isExact?"var(--gold)":isOk?"var(--green)":"var(--red)"}}>+{u.pts}</span>
+                              :<span style={{color:"var(--txs)",fontSize:12}}>—</span>
+                            }
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+        )}
+      </>)}
+    </div>
+  );
+}
+
+
+// ═══ APUESTAS VIEW ════════════════════════════════════════════════════
+function ApuestasView({users,allPreds,results,lb}){
+  const [selGk,setSelGk]=useState("A");
+  const lbMap={};lb.forEach(u=>lbMap[u.id]={total:u.total,group:u.group||0});
+
+  // For selected group, show all matches and all users' predictions
+  const matches=mkM(selGk);
+  const rMatches=results?.matches||{};
+
+  return(<div style={{animation:"fi .3s ease"}}>
+    <div style={{fontFamily:"'Bebas Neue',cursive",fontSize:26,color:"var(--gold)",letterSpacing:"4px",marginBottom:4}}>👁️ APUESTAS DE TODOS</div>
+    <div style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:13,color:"var(--txs)",marginBottom:14,lineHeight:1.5}}>
+      Transparencia total — todos pueden ver los pronósticos de todos. Los resultados reales aparecen en dorado cuando el partido ya se jugó.
+    </div>
+
+    {/* Group selector */}
+    <div style={{display:"flex",gap:5,flexWrap:"wrap",marginBottom:16}}>
+      {GKS.map(gk=>(
+        <button key={gk} className={`atb${selGk===gk?" act":""}`} onClick={()=>setSelGk(gk)}>
+          Grupo {gk}
+        </button>
+      ))}
+    </div>
+
+    {/* Group teams */}
+    <div className="gts" style={{marginBottom:16}}>
+      {GROUPS[selGk].map(t=><span key={t.n} className="tc">{t.f} {t.n}</span>)}
+    </div>
+
+    {/* Each match */}
+    {matches.map(({id,h,a})=>{
+      const rp=rMatches[id];
+      const hasResult=rp&&rp.h!==""&&rp.a!=="";
+      const sch=Object.entries(SCHEDULE).find(([k])=>k.replace(/ v/g,'v')===id.replace(/ v/g,'v'))?.[1];
+
+      // Collect all predictions for this match
+      const preds=users.map(u=>{
+        const p=allPreds?.[u.id]?.matches?.[id];
+        const pts=p&&p.h!==""&&p.a!==""&&hasResult?sMatch(p.h,p.a,rp.h,rp.a):null;
+        return{...u,pred:p,pts};
+      }).filter(u=>u.pred&&u.pred.h!==""&&u.pred.a!=="");
+
+      return(
+        <div key={id} style={{marginBottom:18,background:"var(--sur)",border:"1px solid var(--bos)",borderRadius:12,overflow:"hidden"}}>
+          {/* Match header */}
+          <div style={{padding:"10px 14px",borderBottom:"1px solid var(--bos)",display:"flex",alignItems:"center",gap:12,flexWrap:"wrap"}}>
+            <div style={{flex:1}}>
+              <div style={{fontFamily:"'Bebas Neue',cursive",fontSize:18,letterSpacing:"2px",color:"var(--txt)"}}>{h.f} {h.n} <span style={{color:"var(--txs)",fontSize:14}}>VS</span> {a.n} {a.f}</div>
+              {sch&&<div style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:11,color:"var(--txs)",marginTop:2}}>📅 {sch.d} · 🕐 {sch.h} COL · 🏟️ {sch.st}</div>}
+            </div>
+            {hasResult&&(
+              <div style={{textAlign:"center"}}>
+                <div style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:9,color:"var(--gold)",letterSpacing:"2px",marginBottom:2}}>RESULTADO REAL</div>
+                <div style={{fontFamily:"'Bebas Neue',cursive",fontSize:28,color:"var(--gold)",lineHeight:1}}>{rp.h} — {rp.a}</div>
+              </div>
+            )}
+            {!hasResult&&(
+              <div style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:11,color:"var(--txs)",opacity:.5,fontStyle:"italic"}}>Partido no jugado aún</div>
+            )}
+          </div>
+
+          {/* Predictions table */}
+          {preds.length===0?(
+            <div style={{padding:"12px 14px",color:"var(--txs)",fontFamily:"'Barlow Condensed',sans-serif",fontSize:13}}>Ningún participante ha ingresado pronóstico para este partido.</div>
+          ):(
+            <div style={{overflowX:"auto"}}>
+              <table style={{width:"100%",borderCollapse:"collapse",fontFamily:"'Barlow Condensed',sans-serif"}}>
+                <thead>
+                  <tr style={{borderBottom:"1px solid var(--bos)"}}>
+                    <th style={{textAlign:"left",padding:"7px 14px",fontSize:10,letterSpacing:"2px",color:"var(--txs)",textTransform:"uppercase",minWidth:120}}>Participante</th>
+                    <th style={{textAlign:"center",padding:"7px 10px",fontSize:10,letterSpacing:"2px",color:"var(--txs)",textTransform:"uppercase"}}>Pronóstico</th>
+                    <th style={{textAlign:"center",padding:"7px 10px",fontSize:10,letterSpacing:"2px",color:"var(--txs)",textTransform:"uppercase"}}>Resultado</th>
+                    <th style={{textAlign:"center",padding:"7px 10px",fontSize:10,letterSpacing:"2px",color:"var(--txs)",textTransform:"uppercase"}}>Pts</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {preds.sort((a,b)=>(b.pts||0)-(a.pts||0)).map((u,i)=>{
+                    const isExact=u.pts===5,isOk=u.pts===3,isFail=u.pts===0&&hasResult;
+                    const predRes=u.pred.h>u.pred.a?"L":u.pred.a>u.pred.h?"V":"E";
+                    return(
+                      <tr key={u.id} style={{borderBottom:"1px solid rgba(255,255,255,.03)",background:i%2===0?"transparent":"rgba(255,255,255,.015)"}}>
+                        <td style={{padding:"8px 14px",fontSize:14,fontWeight:700,color:"var(--txt)"}}>{u.name}</td>
+                        <td style={{textAlign:"center",padding:"8px 10px"}}>
+                          <span style={{fontFamily:"'Bebas Neue',cursive",fontSize:20,color:isExact?"var(--gold)":isOk?"var(--green)":isFail?"var(--red)":"var(--txt)"}}>{u.pred.h} — {u.pred.a}</span>
+                          <span style={{marginLeft:6,fontFamily:"'Barlow Condensed',sans-serif",fontSize:11,color:"var(--txs)",opacity:.7}}>{predRes}</span>
+                        </td>
+                        <td style={{textAlign:"center",padding:"8px 10px"}}>
+                          {isExact&&<span className="badge badge-g">🎯 Exacto</span>}
+                          {isOk&&<span className="badge badge-gr">✅ Correcto</span>}
+                          {isFail&&<span className="badge badge-r">✗ Fallo</span>}
+                          {!hasResult&&<span style={{color:"var(--txs)",fontSize:11,fontFamily:"'Barlow Condensed',sans-serif"}}>—</span>}
+                        </td>
+                        <td style={{textAlign:"center",padding:"8px 10px"}}>
+                          {u.pts!==null?(
+                            <span style={{fontFamily:"'Bebas Neue',cursive",fontSize:20,color:isExact?"var(--gold)":isOk?"var(--green)":"var(--red)"}}>+{u.pts}</span>
+                          ):<span style={{color:"var(--txs)",fontSize:12}}>—</span>}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
+      );
+    })}
+  </div>);
+}
+
+
 function FunStats({lb}){
   if(lb.length<2)return null;
   const top=lb[0],bot=lb[lb.length-1],avg=Math.round(lb.reduce((s,u)=>s+u.total,0)/lb.length),gap=lb.length>=2?lb[0].total-lb[1].total:0;
