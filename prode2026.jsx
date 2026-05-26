@@ -534,11 +534,10 @@ function cStand(gk,matches){
     else{s[h.n].pe++;s[h.n].pts++;s[a.n].pe++;s[a.n].pts++;}
   });
   const tvs=Object.values(s);
-  // FIFA tiebreaker: head-to-head stats among subset
   function h2h(sub){
     const hh={};sub.forEach(t=>{hh[t.n]={pts:0,gd:0,gf:0};});
     mList.forEach(({h,a,id})=>{
-      if(!sub.find(t=>t.n===h.n)||!sub.find(t=>t.n===a.n))return;
+      if(!sub.some(t=>t.n===h.n)||!sub.some(t=>t.n===a.n))return;
       const m=matches?.[id];if(!m||m.h===""||m.a==="")return;
       const hi=+m.h,ai=+m.a;
       hh[h.n].gd+=hi-ai;hh[h.n].gf+=hi;hh[a.n].gd+=ai-hi;hh[a.n].gf+=ai;
@@ -546,20 +545,22 @@ function cStand(gk,matches){
     });
     return hh;
   }
+  // Orden FIFA oficial 2026:
+  // 1. Puntos generales → 2. H2H puntos → 3. H2H DG → 4. H2H GF
+  // 5. DG general → 6. GF general → 7. Fair Play → 8. Sorteo
   function cmp(a,b){
     if(b.pts!==a.pts)return b.pts-a.pts;
-    const agd=a.gf-a.gc,bgd=b.gf-b.gc;
-    if(bgd!==agd)return bgd-agd;
-    if(b.gf!==a.gf)return b.gf-a.gf;
-    // Head-to-head among equally ranked teams
-    const tied=tvs.filter(t=>t.pts===a.pts&&(t.gf-t.gc)===agd&&t.gf===a.gf);
-    if(tied.length>=2&&tied.length<4){
+    const tied=tvs.filter(t=>t.pts===a.pts);
+    if(tied.length>=2&&tied.length<=3){
       const hh=h2h(tied);
       const ha=hh[a.n],hb=hh[b.n];
       if(hb.pts!==ha.pts)return hb.pts-ha.pts;
       if(hb.gd!==ha.gd)return hb.gd-ha.gd;
       if(hb.gf!==ha.gf)return hb.gf-ha.gf;
     }
+    const agd=a.gf-a.gc,bgd=b.gf-b.gc;
+    if(bgd!==agd)return bgd-agd;
+    if(b.gf!==a.gf)return b.gf-a.gf;
     return 0;
   }
   return tvs.sort(cmp);
@@ -705,11 +706,10 @@ const COUNTRIES_LIST = Object.keys(PLAYERS_BY_COUNTRY).sort();
 
 
 // ── Flag image component (uses flagcdn.com) ──────────────────────────
-function Flag({c,size=18}){
-  if(!c) return null;
-  return <img src={`https://flagcdn.com/${size}x${Math.round(size*0.75)}/${c}.png`}
-    style={{borderRadius:2,verticalAlign:"middle",flexShrink:0,display:"inline-block"}}
-    alt="" loading="lazy"/>;
+function Flag({c,f,size=20}){
+  // Use emoji flag stored in team.f - works cross-platform
+  if(!f&&!c) return null;
+  return <span style={{fontSize:size,lineHeight:1,flexShrink:0}}>{f||""}</span>;
 }
 
 // ═══ CSS ══════════════════════════════════════════════════════════════
@@ -886,6 +886,12 @@ export default function App(){
   const saveKR=async r=>{setKoResults(r);await ST.set("wc26:ko_results",r);};
   const saveKU=async u=>{setKoUnlocked(u);await ST.set("wc26:ko_unlocked",u);};
   const saveSR=async s=>{setSpRes(s);await ST.set("wc26:special_results",s);};
+  const deleteUser=async uid=>{
+    const nu=users.filter(u=>u.id!==uid);
+    setUsers(nu);await ST.set("wc26:users",nu);
+    const np={...allPreds};delete np[uid];
+    setAllPreds(np);await ST.set("wc26:preds",np);
+  };
   const toggleLock=async()=>{const nl=!locked;setLocked(nl);await ST.set("wc26:locked",nl);};
 
   const lb=users.map(u=>({...u,...calcScore(allPreds[u.id]||{matches:{},standings:{},ko:{},special:{}},results,koTeams,koResults,koUnlocked,spRes)})).sort((a,b)=>b.total-a.total);
@@ -900,7 +906,7 @@ export default function App(){
         {view==="predict"&&user&&<PredictView user={user} preds={up} onSave={p=>saveP(user.id,p)} onLB={()=>setView("lb")} onOut={()=>{setUser(null);setView("landing");}} onHoy={()=>setView("hoy")} locked={locked} nav={nav} setNav={setNav} results={results} koTeams={koTeams} koResults={koResults} koUnlocked={koUnlocked} spRes={spRes}/>}
         {view==="lb"&&<LBView lb={lb} results={results} koUnlocked={koUnlocked} users={users} allPreds={allPreds} onBack={()=>setView(user?"predict":"landing")}/>}
         {view==="hoy"&&<HoyView results={results} allPreds={allPreds} users={users} lb={lb} onBack={()=>setView(user?"predict":"landing")}/>}
-        {view==="admin"&&<AdminView results={results} onSaveR={saveR} locked={locked} onToggle={toggleLock} onBack={()=>setView("landing")} users={users} allPreds={allPreds} lb={lb} koTeams={koTeams} onSaveKT={saveKT} koResults={koResults} onSaveKR={saveKR} koUnlocked={koUnlocked} onSaveKU={saveKU} spRes={spRes} onSaveSR={saveSR}/>}
+        {view==="admin"&&<AdminView results={results} onSaveR={saveR} locked={locked} onToggle={toggleLock} onBack={()=>setView("landing")} users={users} allPreds={allPreds} lb={lb} koTeams={koTeams} onSaveKT={saveKT} koResults={koResults} onSaveKR={saveKR} koUnlocked={koUnlocked} onSaveKU={saveKU} spRes={spRes} onSaveSR={saveSR} onDeleteUser={deleteUser}/>}
       </div>
     </div>
   );
@@ -1115,10 +1121,6 @@ function DailyFact(){
         <span className="fe">{fact.e}</span>
         <div className="ft">{fact.t}</div>
         <div style={{marginTop:10,display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:6}}>
-          <a href="https://www.fifa.com/en/football/news" target="_blank" rel="noreferrer"
-            style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:10,color:"var(--gold)",opacity:.65,letterSpacing:"1px",textDecoration:"none",border:"1px solid var(--gbor)",padding:"2px 8px",borderRadius:10}}>
-            📰 Noticias FIFA ↗
-          </a>
           <span style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:9,color:"var(--txs)",opacity:.4,letterSpacing:"1.5px"}}>
             DÍA {dayOffset+1} · {(dayOffset%cat.facts.length)+1}/{cat.facts.length}
           </span>
@@ -1176,7 +1178,7 @@ function GroupPanel({gk,preds,results,onMC,onSC,locked}){
   return(
     <div style={{animation:"fi .3s ease"}}>
       <div className="gh">GRUPO {gk}</div>
-      <div className="gts">{teams.map(t=><span key={t.n} className="tc" style={{display:"inline-flex",alignItems:"center",gap:5}}><Flag c={t.c}/>{t.n}</span>)}</div>
+      <div className="gts">{teams.map(t=><span key={t.n} className="tc" style={{display:"inline-flex",alignItems:"center",gap:5}}><Flag c={t.c} f={t.f}/>{t.n}</span>)}</div>
       <div className="stit">Marcadores</div>
       {ml.map(({id,h,a})=>{
         const mp=preds?.matches?.[id]||{h:"",a:""},rp=results?.matches?.[id];
@@ -1191,11 +1193,11 @@ function GroupPanel({gk,preds,results,onMC,onSC,locked}){
             <span className="sch-stad">🏟️ {sch.st}</span>
           </div>}
           <div className="mr" style={{borderColor:bc,marginBottom:0}}>
-            <span className="tn" style={{display:"flex",alignItems:"center",gap:6}}><Flag c={h.c}/>{h.n}</span>
+            <span className="tn" style={{display:"flex",alignItems:"center",gap:6}}><Flag c={h.c} f={h.f}/>{h.n}</span>
             <input className="si" type="number" min="0" max="20" value={mp.h} onChange={e=>!locked&&onMC(id,e.target.value,mp.a)} disabled={locked} placeholder="–"/>
             <span className="vs">VS</span>
             <input className="si" type="number" min="0" max="20" value={mp.a} onChange={e=>!locked&&onMC(id,mp.h,e.target.value)} disabled={locked} placeholder="–"/>
-            <span className="tn r" style={{display:"flex",alignItems:"center",gap:6,justifyContent:"flex-end"}}>{a.n}<Flag c={a.c}/></span>
+            <span className="tn r" style={{display:"flex",alignItems:"center",gap:6,justifyContent:"flex-end"}}>{a.n}<Flag c={a.c} f={a.f}/></span>
             {rp&&rp.h!==""&&rp.a!==""&&<div style={{display:"flex",flexDirection:"column",alignItems:"center",minWidth:42,marginLeft:3}}><div style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:9,color:"var(--txs)",letterSpacing:"1px"}}>REAL</div><div style={{fontFamily:"'Bebas Neue',cursive",fontSize:18}}>{rp.h}:{rp.a}</div></div>}
             {pts!==null&&<span style={{fontFamily:"'Bebas Neue',cursive",fontSize:18,minWidth:27,textAlign:"right",color:isE?"var(--gold)":isO?"var(--green)":"var(--red)"}}>+{pts}</span>}
           </div>
@@ -1226,7 +1228,7 @@ function GroupPanel({gk,preds,results,onMC,onSC,locked}){
             return(
               <div key={t.n} style={{display:"flex",alignItems:"center",gap:10,padding:"8px 4px",borderBottom:i<3?"1px solid rgba(255,255,255,.04)":"none",background:i<2?"rgba(16,185,129,.03)":"transparent"}}>
                 <span style={{fontFamily:"'Bebas Neue',cursive",fontSize:20,color:"var(--gold)",minWidth:26,textAlign:"center"}}>{medals[i]}</span>
-                <Flag c={t.c}/>
+                <Flag c={t.c} f={t.f}/>
                 <span style={{flex:1,fontFamily:"'Barlow Condensed',sans-serif",fontSize:14,fontWeight:700,color:"var(--txt)"}}>{t.n}</span>
                 <span style={{fontFamily:"'Bebas Neue',cursive",fontSize:16,color:"var(--gold)",minWidth:30,textAlign:"center"}}>{t.pts}<span style={{fontSize:10,color:"var(--txs)",fontFamily:"'Barlow Condensed',sans-serif"}}> pts</span></span>
                 <span style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:11,color:(t.gf-t.gc)>0?"var(--green)":(t.gf-t.gc)<0?"var(--red)":"var(--txs)",minWidth:28,textAlign:"right"}}>{t.gf-t.gc>0?"+":""}{t.gf-t.gc} DG</span>
@@ -1244,7 +1246,7 @@ function GroupPanel({gk,preds,results,onMC,onSC,locked}){
 function StTable({rows,acc,adv}){
   return(<div style={{background:"var(--sur)",border:`1px solid ${acc||"var(--bos)"}`,borderRadius:10,overflow:"hidden",padding:"2px 9px 8px"}}>
     <table className="sttbl"><thead><tr><th style={{textAlign:"left"}}>Equipo</th><th>PJ</th><th>PG</th><th>PE</th><th>PP</th><th>GF</th><th>GC</th><th>DG</th><th>PTS</th></tr></thead>
-    <tbody>{rows.map((t,i)=><tr key={t.n} className={adv&&i<2?"stadv":""}><td style={{display:"flex",alignItems:"center",gap:5,padding:"6px 3px"}}><Flag c={t.c}/><span style={{fontWeight:700,fontSize:11}}>{t.n}</span></td><td style={{opacity:.6}}>{t.pj}</td><td>{t.pg}</td><td>{t.pe}</td><td>{t.pp}</td><td>{t.gf}</td><td>{t.gc}</td><td style={{color:(t.gf-t.gc)>0?"var(--green)":(t.gf-t.gc)<0?"var(--red)":"var(--txs)"}}>{t.gf-t.gc>0?"+":""}{t.gf-t.gc}</td><td className="ptsc">{t.pts}</td></tr>)}</tbody></table>
+    <tbody>{rows.map((t,i)=><tr key={t.n} className={adv&&i<2?"stadv":""}><td style={{display:"flex",alignItems:"center",gap:5,padding:"6px 3px"}}><Flag c={t.c} f={t.f}/><span style={{fontWeight:700,fontSize:11}}>{t.n}</span></td><td style={{opacity:.6}}>{t.pj}</td><td>{t.pg}</td><td>{t.pe}</td><td>{t.pp}</td><td>{t.gf}</td><td>{t.gc}</td><td style={{color:(t.gf-t.gc)>0?"var(--green)":(t.gf-t.gc)<0?"var(--red)":"var(--txs)"}}>{t.gf-t.gc>0?"+":""}{t.gf-t.gc}</td><td className="ptsc">{t.pts}</td></tr>)}</tbody></table>
     {adv&&<div style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:9,color:"var(--green)",letterSpacing:"2px",marginTop:5,opacity:.7}}>✦ LOS 2 PRIMEROS CLASIFICAN</div>}
   </div>);
 }
@@ -1602,7 +1604,7 @@ function ApuestasView({users,allPreds,results,lb}){
 
     {/* Group teams */}
     <div className="gts" style={{marginBottom:16}}>
-      {GROUPS[selGk].map(t=><span key={t.n} className="tc" style={{display:"inline-flex",alignItems:"center",gap:5}}><Flag c={t.c}/>{t.n}</span>)}
+      {GROUPS[selGk].map(t=><span key={t.n} className="tc" style={{display:"inline-flex",alignItems:"center",gap:5}}><Flag c={t.c} f={t.f}/>{t.n}</span>)}
     </div>
 
     {/* Each match */}
@@ -1727,7 +1729,7 @@ function StatsPanel({users,lb}){
 }
 
 // ═══ ADMIN VIEW ═══════════════════════════════════════════════════════
-function AdminView({results,onSaveR,locked,onToggle,onBack,users,allPreds,lb,koTeams,onSaveKT,koResults,onSaveKR,koUnlocked,onSaveKU,spRes,onSaveSR}){
+function AdminView({results,onSaveR,locked,onToggle,onBack,users,allPreds,lb,koTeams,onSaveKT,koResults,onSaveKR,koUnlocked,onSaveKU,spRes,onSaveSR,onDeleteUser}){
   const [auth,setAuth]=useState(false);
   const [pw,setPw]=useState("");
   const [tab,setTab]=useState("groups");
@@ -1771,7 +1773,7 @@ function AdminView({results,onSaveR,locked,onToggle,onBack,users,allPreds,lb,koT
       <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:16,alignItems:"start"}}>
         <div>
           <div style={{fontFamily:"'Bebas Neue',cursive",fontSize:27,color:"var(--gold)",letterSpacing:"4px",marginBottom:8}}>GRUPO {aG}</div>
-          {mkM(aG).map(({id,h,a})=>{const r=lr?.matches?.[id]||{h:"",a:""};return(<div key={id} className="mr"><span className="tn" style={{display:"flex",alignItems:"center",gap:6}}><Flag c={h.c}/>{h.n}</span><input className="si" type="number" min="0" max="20" value={r.h||""} onChange={e=>updR(id,e.target.value,r.a||"")} placeholder="–"/><span className="vs">–</span><input className="si" type="number" min="0" max="20" value={r.a||""} onChange={e=>updR(id,r.h||"",e.target.value)} placeholder="–"/><span className="tn r" style={{display:"flex",alignItems:"center",gap:6,justifyContent:"flex-end"}}>{a.n}<Flag c={a.c}/></span></div>);})}
+          {mkM(aG).map(({id,h,a})=>{const r=lr?.matches?.[id]||{h:"",a:""};return(<div key={id} className="mr"><span className="tn" style={{display:"flex",alignItems:"center",gap:6}}><Flag c={h.c} f={h.f}/>{h.n}</span><input className="si" type="number" min="0" max="20" value={r.h||""} onChange={e=>updR(id,e.target.value,r.a||"")} placeholder="–"/><span className="vs">–</span><input className="si" type="number" min="0" max="20" value={r.a||""} onChange={e=>updR(id,r.h||"",e.target.value)} placeholder="–"/><span className="tn r" style={{display:"flex",alignItems:"center",gap:6,justifyContent:"flex-end"}}>{a.n}<Flag c={a.c} f={a.f}/></span></div>);})}
           <div className="stit" style={{marginTop:14}}>Clasificación real</div>
           {[0,1,2,3].map(i=>{const med=["🥇","🥈","🥉","4️⃣"],st=lr?.standings?.[aG]||[null,null,null,null];return(<div key={i} className="sr"><span className="pos">{med[i]}</span><select className="tsel" value={st[i]||""} onChange={e=>updRSt(aG,i,e.target.value||null)}><option value="">— Seleccionar —</option>{GROUPS[aG].map(t=><option key={t.n} value={t.n} disabled={st.includes(t.n)&&st[i]!==t.n}>{t.f} {t.n}</option>)}</select></div>);})}
         </div>
@@ -1818,7 +1820,24 @@ function AdminView({results,onSaveR,locked,onToggle,onBack,users,allPreds,lb,koT
 
     {tab==="users"&&(<>
       <div className="stit">{users.length} participante{users.length!==1?"s":""} en la polla</div>
-      {users.map(u=>{const done=GKS.filter(gk=>mkM(gk).every(({id})=>{const p=allPreds?.[u.id]?.matches?.[id];return p&&p.h!==""&&p.a!=="";})&&(allPreds?.[u.id]?.standings?.[gk]||[]).filter(Boolean).length===4).length;return(<div key={u.id} className="lbr"><div style={{flex:1}}><div className="lbn">{u.name}</div><div className="lbsub">{u.sexo&&<span>{u.sexo}</span>}{u.edad&&<span>{u.edad}</span>}{u.equipoFav&&u.equipoFav!=="— Sin preferencia —"&&<span>⭐{u.equipoFav.split(" ").slice(0,2).join(" ")}</span>}{u.ciudad&&<span>📍{u.ciudad}</span>}</div></div><span style={{fontFamily:"'Barlow Condensed',sans-serif",color:"var(--txs)",fontSize:12}}>{done}/12 grupos</span></div>);})}
+      {users.map(u=>{const done=GKS.filter(gk=>mkM(gk).every(({id})=>{const p=allPreds?.[u.id]?.matches?.[id];return p&&p.h!==""&&p.a!=="";})&&(allPreds?.[u.id]?.standings?.[gk]||[]).filter(Boolean).length===4).length;return(<div key={u.id} className="lbr" style={{gap:8}}>
+          <div style={{flex:1}}>
+            <div className="lbn">{u.name}</div>
+            <div className="lbsub">
+              {u.sexo&&<span>{u.sexo}</span>}
+              {u.edad&&<span>{u.edad}</span>}
+              {u.equipoFav&&u.equipoFav!=="— Sin preferencia —"&&<span>⭐{u.equipoFav.split(" ").slice(0,2).join(" ")}</span>}
+              {u.ciudad&&<span>📍{u.ciudad}</span>}
+            </div>
+          </div>
+          <span style={{fontFamily:"'Barlow Condensed',sans-serif",color:"var(--txs)",fontSize:12}}>{done}/12 grupos</span>
+          <button
+            onClick={()=>{if(window.confirm(`¿Eliminar a "${u.name}" y todos sus pronósticos?`)){onDeleteUser(u.id);}}}
+            style={{padding:"4px 10px",border:"1px solid rgba(244,63,94,.3)",borderRadius:6,background:"transparent",color:"#fca5a5",cursor:"pointer",fontFamily:"'Barlow Condensed',sans-serif",fontSize:11,fontWeight:700,flexShrink:0}}
+            title="Eliminar participante">
+            🗑️ Eliminar
+          </button>
+        </div>);})}
     </>)}
     {tab==="stats"&&<StatsPanel users={users} lb={lb}/>}
     {tab==="lb"&&(<>
