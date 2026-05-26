@@ -353,18 +353,18 @@ const FACT_CATS = [
 
 // ═══ GRUPOS Y CONSTANTES ══════════════════════════════════════════════
 const GROUPS = {
-  A:[{n:"México",f:"🇲🇽"},{n:"Sudáfrica",f:"🇿🇦"},{n:"Corea del Sur",f:"🇰🇷"},{n:"Chequia",f:"🇨🇿"}],
-  B:[{n:"Canadá",f:"🇨🇦"},{n:"Bosnia-Herz.",f:"🇧🇦"},{n:"Catar",f:"🇶🇦"},{n:"Suiza",f:"🇨🇭"}],
-  C:[{n:"Brasil",f:"🇧🇷"},{n:"Marruecos",f:"🇲🇦"},{n:"Haití",f:"🇭🇹"},{n:"Escocia",f:"🏴󠁧󠁢󠁳󠁣󠁴󠁿"}],
-  D:[{n:"EE.UU.",f:"🇺🇸"},{n:"Paraguay",f:"🇵🇾"},{n:"Australia",f:"🇦🇺"},{n:"Türkiye",f:"🇹🇷"}],
-  E:[{n:"Alemania",f:"🇩🇪"},{n:"Curazao",f:"🇨🇼"},{n:"C. de Marfil",f:"🇨🇮"},{n:"Ecuador",f:"🇪🇨"}],
-  F:[{n:"P. Bajos",f:"🇳🇱"},{n:"Japón",f:"🇯🇵"},{n:"Suecia",f:"🇸🇪"},{n:"Túnez",f:"🇹🇳"}],
-  G:[{n:"Bélgica",f:"🇧🇪"},{n:"Egipto",f:"🇪🇬"},{n:"Irán",f:"🇮🇷"},{n:"N. Zelanda",f:"🇳🇿"}],
-  H:[{n:"España",f:"🇪🇸"},{n:"A. Saudita",f:"🇸🇦"},{n:"Uruguay",f:"🇺🇾"},{n:"Cabo Verde",f:"🇨🇻"}],
-  I:[{n:"Francia",f:"🇫🇷"},{n:"Senegal",f:"🇸🇳"},{n:"Iraq",f:"🇮🇶"},{n:"Noruega",f:"🇳🇴"}],
-  J:[{n:"Argentina",f:"🇦🇷"},{n:"Argelia",f:"🇩🇿"},{n:"Austria",f:"🇦🇹"},{n:"Jordania",f:"🇯🇴"}],
-  K:[{n:"Portugal",f:"🇵🇹"},{n:"DR Congo",f:"🇨🇩"},{n:"Uzbekistán",f:"🇺🇿"},{n:"Colombia",f:"🇨🇴"}],
-  L:[{n:"Inglaterra",f:"🏴󠁧󠁢󠁥󠁮󠁧󠁿"},{n:"Croacia",f:"🇭🇷"},{n:"Ghana",f:"🇬🇭"},{n:"Panamá",f:"🇵🇦"}],
+  A:[{n:"México",f:"🇲🇽",c:"mx"},{n:"Sudáfrica",f:"🇿🇦",c:"za"},{n:"Corea del Sur",f:"🇰🇷",c:"kr"},{n:"Chequia",f:"🇨🇿",c:"cz"}],
+  B:[{n:"Canadá",f:"🇨🇦",c:"ca"},{n:"Bosnia-Herz.",f:"🇧🇦",c:"ba"},{n:"Catar",f:"🇶🇦",c:"qa"},{n:"Suiza",f:"🇨🇭",c:"ch"}],
+  C:[{n:"Brasil",f:"🇧🇷",c:"br"},{n:"Marruecos",f:"🇲🇦",c:"ma"},{n:"Haití",f:"🇭🇹",c:"ht"},{n:"Escocia",f:"🏴󠁧󠁢󠁳󠁣󠁴󠁿",c:"gb-sct"}],
+  D:[{n:"EE.UU.",f:"🇺🇸",c:"us"},{n:"Paraguay",f:"🇵🇾",c:"py"},{n:"Australia",f:"🇦🇺",c:"au"},{n:"Türkiye",f:"🇹🇷",c:"tr"}],
+  E:[{n:"Alemania",f:"🇩🇪",c:"de"},{n:"Curazao",f:"🇨🇼",c:"cw"},{n:"C. de Marfil",f:"🇨🇮",c:"ci"},{n:"Ecuador",f:"🇪🇨",c:"ec"}],
+  F:[{n:"P. Bajos",f:"🇳🇱",c:"nl"},{n:"Japón",f:"🇯🇵",c:"jp"},{n:"Suecia",f:"🇸🇪",c:"se"},{n:"Túnez",f:"🇹🇳",c:"tn"}],
+  G:[{n:"Bélgica",f:"🇧🇪",c:"be"},{n:"Egipto",f:"🇪🇬",c:"eg"},{n:"Irán",f:"🇮🇷",c:"ir"},{n:"N. Zelanda",f:"🇳🇿",c:"nz"}],
+  H:[{n:"España",f:"🇪🇸",c:"es"},{n:"A. Saudita",f:"🇸🇦",c:"sa"},{n:"Uruguay",f:"🇺🇾",c:"uy"},{n:"Cabo Verde",f:"🇨🇻",c:"cv"}],
+  I:[{n:"Francia",f:"🇫🇷",c:"fr"},{n:"Senegal",f:"🇸🇳",c:"sn"},{n:"Iraq",f:"🇮🇶",c:"iq"},{n:"Noruega",f:"🇳🇴",c:"no"}],
+  J:[{n:"Argentina",f:"🇦🇷",c:"ar"},{n:"Argelia",f:"🇩🇿",c:"dz"},{n:"Austria",f:"🇦🇹",c:"at"},{n:"Jordania",f:"🇯🇴",c:"jo"}],
+  K:[{n:"Portugal",f:"🇵🇹",c:"pt"},{n:"DR Congo",f:"🇨🇩",c:"cd"},{n:"Uzbekistán",f:"🇺🇿",c:"uz"},{n:"Colombia",f:"🇨🇴",c:"co"}],
+  L:[{n:"Inglaterra",f:"🏴󠁧󠁢󠁥󠁮󠁧󠁿",c:"gb-eng"},{n:"Croacia",f:"🇭🇷",c:"hr"},{n:"Ghana",f:"🇬🇭",c:"gh"},{n:"Panamá",f:"🇵🇦",c:"pa"}],
 };
 const GKS=["A","B","C","D","E","F","G","H","I","J","K","L"];
 const ALL_TEAMS=[...new Set(Object.values(GROUPS).flat().map(t=>t.n))].sort();
@@ -522,17 +522,59 @@ function sKO(pred,result){
 }
 function tPts(gk,mp){const p={};GROUPS[gk].forEach(t=>p[t.n]=0);mkM(gk).forEach(({h,a,id})=>{const m=mp?.[id];if(!m||m.h===""||m.a==="")return;const hi=+m.h,ai=+m.a;if(hi>ai)p[h.n]+=3;else if(ai>hi)p[a.n]+=3;else{p[h.n]++;p[a.n]++;}});return p;}
 function cStand(gk,matches){
-  const s={};GROUPS[gk].forEach(t=>{s[t.n]={n:t.n,f:t.f,pj:0,pg:0,pe:0,pp:0,gf:0,gc:0,pts:0};});
-  mkM(gk).forEach(({h,a,id})=>{const m=matches?.[id];if(!m||m.h===""||m.a==="")return;const hi=+m.h,ai=+m.a;s[h.n].pj++;s[a.n].pj++;s[h.n].gf+=hi;s[h.n].gc+=ai;s[a.n].gf+=ai;s[a.n].gc+=hi;if(hi>ai){s[h.n].pg++;s[h.n].pts+=3;s[a.n].pp++;}else if(ai>hi){s[a.n].pg++;s[a.n].pts+=3;s[h.n].pp++;}else{s[h.n].pe++;s[h.n].pts++;s[a.n].pe++;s[a.n].pts++;}});
-  return Object.values(s).sort((a,b)=>b.pts-a.pts||(b.gf-b.gc)-(a.gf-a.gc)||b.gf-a.gf);
+  const s={};
+  GROUPS[gk].forEach(t=>{s[t.n]={n:t.n,f:t.f,c:t.c||"",pj:0,pg:0,pe:0,pp:0,gf:0,gc:0,pts:0};});
+  const mList=mkM(gk);
+  mList.forEach(({h,a,id})=>{
+    const m=matches?.[id];if(!m||m.h===""||m.a==="")return;
+    const hi=+m.h,ai=+m.a;
+    s[h.n].pj++;s[a.n].pj++;s[h.n].gf+=hi;s[h.n].gc+=ai;s[a.n].gf+=ai;s[a.n].gc+=hi;
+    if(hi>ai){s[h.n].pg++;s[h.n].pts+=3;s[a.n].pp++;}
+    else if(ai>hi){s[a.n].pg++;s[a.n].pts+=3;s[h.n].pp++;}
+    else{s[h.n].pe++;s[h.n].pts++;s[a.n].pe++;s[a.n].pts++;}
+  });
+  const tvs=Object.values(s);
+  // FIFA tiebreaker: head-to-head stats among subset
+  function h2h(sub){
+    const hh={};sub.forEach(t=>{hh[t.n]={pts:0,gd:0,gf:0};});
+    mList.forEach(({h,a,id})=>{
+      if(!sub.find(t=>t.n===h.n)||!sub.find(t=>t.n===a.n))return;
+      const m=matches?.[id];if(!m||m.h===""||m.a==="")return;
+      const hi=+m.h,ai=+m.a;
+      hh[h.n].gd+=hi-ai;hh[h.n].gf+=hi;hh[a.n].gd+=ai-hi;hh[a.n].gf+=ai;
+      if(hi>ai)hh[h.n].pts+=3;else if(ai>hi)hh[a.n].pts+=3;else{hh[h.n].pts++;hh[a.n].pts++;}
+    });
+    return hh;
+  }
+  function cmp(a,b){
+    if(b.pts!==a.pts)return b.pts-a.pts;
+    const agd=a.gf-a.gc,bgd=b.gf-b.gc;
+    if(bgd!==agd)return bgd-agd;
+    if(b.gf!==a.gf)return b.gf-a.gf;
+    // Head-to-head among equally ranked teams
+    const tied=tvs.filter(t=>t.pts===a.pts&&(t.gf-t.gc)===agd&&t.gf===a.gf);
+    if(tied.length>=2&&tied.length<4){
+      const hh=h2h(tied);
+      const ha=hh[a.n],hb=hh[b.n];
+      if(hb.pts!==ha.pts)return hb.pts-ha.pts;
+      if(hb.gd!==ha.gd)return hb.gd-ha.gd;
+      if(hb.gf!==ha.gf)return hb.gf-ha.gf;
+    }
+    return 0;
+  }
+  return tvs.sort(cmp);
 }
+
 function calcScore(preds,results,koTeams,koResults,koUnlocked,spRes){
   let group=0,knockout=0,special=0;
   GKS.forEach(gk=>{
     let aEx=true,aSt=true;
     mkM(gk).forEach(({id})=>{const p=preds?.matches?.[id],r=results?.matches?.[id];if(!p||!r||p.h===""||p.a===""||r.h===""||r.a===""){aEx=false;return;}const pts=sMatch(p.h,p.a,r.h,r.a);if(+p.h!==+r.h||+p.a!==+r.a)aEx=false;group+=pts;});
-    const rs=results?.standings?.[gk],ps=preds?.standings?.[gk];
-    if(rs&&ps){for(let i=0;i<4;i++){if(ps[i]&&rs[i]&&ps[i]===rs[i])group+=2;else aSt=false;}const ptp=tPts(gk,preds?.matches),rtp=tPts(gk,results?.matches);GROUPS[gk].forEach(t=>{if(ptp[t.n]===rtp[t.n])group+=1;});if(aEx&&aSt)group+=10;}else aSt=false;
+    const rs=results?.standings?.[gk];
+    // Auto-computed predicted standings using FIFA tiebreakers
+    const psAuto=cStand(gk,preds?.matches).map(t=>t.n);
+    const allFilled=mkM(gk).every(({id})=>{const p=preds?.matches?.[id];return p&&p.h!==""&&p.a!=="";});
+    if(rs&&allFilled){for(let i=0;i<4;i++){if(psAuto[i]&&rs[i]&&psAuto[i]===rs[i])group+=2;else aSt=false;}const ptp=tPts(gk,preds?.matches),rtp=tPts(gk,results?.matches);GROUPS[gk].forEach(t=>{if(ptp[t.n]===rtp[t.n])group+=1;});if(aEx&&aSt)group+=10;}else aSt=false;
   });
   KO_ROUNDS.forEach(({id:rid})=>{
     if(!koUnlocked?.[rid])return;
@@ -660,6 +702,15 @@ const PLAYERS_BY_COUNTRY = {
 };
 
 const COUNTRIES_LIST = Object.keys(PLAYERS_BY_COUNTRY).sort();
+
+
+// ── Flag image component (uses flagcdn.com) ──────────────────────────
+function Flag({c,size=18}){
+  if(!c) return null;
+  return <img src={`https://flagcdn.com/${size}x${Math.round(size*0.75)}/${c}.png`}
+    style={{borderRadius:2,verticalAlign:"middle",flexShrink:0,display:"inline-block"}}
+    alt="" loading="lazy"/>;
+}
 
 // ═══ CSS ══════════════════════════════════════════════════════════════
 const CSS=`
@@ -1064,9 +1115,9 @@ function DailyFact(){
         <span className="fe">{fact.e}</span>
         <div className="ft">{fact.t}</div>
         <div style={{marginTop:10,display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:6}}>
-          <a href="https://www.fifa.com/en/archive" target="_blank" rel="noreferrer"
-            style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:10,color:"var(--gold)",opacity:.7,letterSpacing:"1px",textDecoration:"none",border:"1px solid var(--gbor)",padding:"2px 8px",borderRadius:10,display:"inline-block"}}>
-            🎬 Video del Día — FIFA Archive ↗
+          <a href="https://www.fifa.com/en/football/news" target="_blank" rel="noreferrer"
+            style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:10,color:"var(--gold)",opacity:.65,letterSpacing:"1px",textDecoration:"none",border:"1px solid var(--gbor)",padding:"2px 8px",borderRadius:10}}>
+            📰 Noticias FIFA ↗
           </a>
           <span style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:9,color:"var(--txs)",opacity:.4,letterSpacing:"1.5px"}}>
             DÍA {dayOffset+1} · {(dayOffset%cat.facts.length)+1}/{cat.facts.length}
@@ -1125,7 +1176,7 @@ function GroupPanel({gk,preds,results,onMC,onSC,locked}){
   return(
     <div style={{animation:"fi .3s ease"}}>
       <div className="gh">GRUPO {gk}</div>
-      <div className="gts">{teams.map(t=><span key={t.n} className="tc">{t.f} {t.n}</span>)}</div>
+      <div className="gts">{teams.map(t=><span key={t.n} className="tc" style={{display:"inline-flex",alignItems:"center",gap:5}}><Flag c={t.c}/>{t.n}</span>)}</div>
       <div className="stit">Marcadores</div>
       {ml.map(({id,h,a})=>{
         const mp=preds?.matches?.[id]||{h:"",a:""},rp=results?.matches?.[id];
@@ -1140,11 +1191,11 @@ function GroupPanel({gk,preds,results,onMC,onSC,locked}){
             <span className="sch-stad">🏟️ {sch.st}</span>
           </div>}
           <div className="mr" style={{borderColor:bc,marginBottom:0}}>
-            <span className="tn">{h.f} {h.n}</span>
+            <span className="tn" style={{display:"flex",alignItems:"center",gap:6}}><Flag c={h.c}/>{h.n}</span>
             <input className="si" type="number" min="0" max="20" value={mp.h} onChange={e=>!locked&&onMC(id,e.target.value,mp.a)} disabled={locked} placeholder="–"/>
             <span className="vs">VS</span>
             <input className="si" type="number" min="0" max="20" value={mp.a} onChange={e=>!locked&&onMC(id,mp.h,e.target.value)} disabled={locked} placeholder="–"/>
-            <span className="tn r">{a.n} {a.f}</span>
+            <span className="tn r" style={{display:"flex",alignItems:"center",gap:6,justifyContent:"flex-end"}}>{a.n}<Flag c={a.c}/></span>
             {rp&&rp.h!==""&&rp.a!==""&&<div style={{display:"flex",flexDirection:"column",alignItems:"center",minWidth:42,marginLeft:3}}><div style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:9,color:"var(--txs)",letterSpacing:"1px"}}>REAL</div><div style={{fontFamily:"'Bebas Neue',cursive",fontSize:18}}>{rp.h}:{rp.a}</div></div>}
             {pts!==null&&<span style={{fontFamily:"'Bebas Neue',cursive",fontSize:18,minWidth:27,textAlign:"right",color:isE?"var(--gold)":isO?"var(--green)":"var(--red)"}}>+{pts}</span>}
           </div>
@@ -1154,26 +1205,38 @@ function GroupPanel({gk,preds,results,onMC,onSC,locked}){
         {haP&&<div><div className="stit" style={{marginTop:0,color:"var(--green)"}}>Tu tabla predicha</div><StTable rows={pRows} acc="rgba(16,185,129,.3)"/></div>}
         {haR&&<div><div className="stit" style={{marginTop:0,color:"var(--gold)"}}>Tabla real</div><StTable rows={rRows} acc="rgba(240,180,41,.3)" adv/></div>}
       </div>}
-      <div style={{display:"flex",alignItems:"center",gap:10,marginTop:22,marginBottom:9}}>
-        <div className="stit" style={{marginTop:0,marginBottom:0}}>Clasificación final — tu pronóstico</div>
-        {pRows.some(r=>r.pj>0)&&!st.every(Boolean)&&(
-          <button className="btn btn-sm btn-ol" style={{padding:"4px 10px",fontSize:11,letterSpacing:"1px"}}
-            onClick={()=>{
-              const s=cStand(gk,preds?.matches);
-              if(s.length===4) s.forEach((t,i)=>onSC(gk,i,t.n));
-            }}>
-            🔄 Sugerir por resultados
-          </button>
-        )}
-      </div>
-      {[0,1,2,3].map(i=>{const rp=results?.standings?.[gk]?.[i],pp=st[i],ok=rp&&pp&&rp===pp;return(<div key={i} className="sr" style={{borderColor:ok?"rgba(240,180,41,.35)":"var(--bos)"}}>
-        <span className="pos">{med[i]}</span>
-        <select className="tsel" value={st[i]||""} disabled={locked} onChange={e=>onSC(gk,i,e.target.value||null)}>
-          <option value="">— Seleccionar equipo —</option>
-          {teams.map(t=><option key={t.n} value={t.n} disabled={st.includes(t.n)&&st[i]!==t.n}>{t.f} {t.n}</option>)}
-        </select>
-        {rp&&<span className={`badge ${ok?"badge-g":"badge-r"}`}>{ok?"✓":"✗"} {rp}</span>}
-      </div>);})}
+      {/* Auto-computed standings based on predicted scores */}
+      {pRows.some(r=>r.pj>0)&&(<>
+        <div style={{marginTop:22,marginBottom:8}}>
+          <div style={{display:"flex",alignItems:"center",gap:10,flexWrap:"wrap"}}>
+            <div className="stit" style={{marginTop:0,marginBottom:0}}>
+              🏆 Tu clasificación — calculada automáticamente
+            </div>
+            {!pRows.every(r=>r.pj>0)&&<span style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:11,color:"var(--txs)",opacity:.7}}>Completa todos los partidos para ver la clasificación final</span>}
+          </div>
+          <div style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:11,color:"var(--txs)",marginTop:3,opacity:.7,lineHeight:1.5}}>
+            Ordenada por: puntos → diferencia de goles → goles anotados → h2h (criterios FIFA)
+          </div>
+        </div>
+        <div style={{background:"var(--sur)",border:"1px solid var(--bos)",borderRadius:10,overflow:"hidden",padding:"2px 9px 8px"}}>
+          {pRows.map((t,i)=>{
+            const medals=["🥇","🥈","🥉","4️⃣"];
+            const rp=results?.standings?.[gk]?.[i];
+            const ok=rp&&rp===t.n;
+            return(
+              <div key={t.n} style={{display:"flex",alignItems:"center",gap:10,padding:"8px 4px",borderBottom:i<3?"1px solid rgba(255,255,255,.04)":"none",background:i<2?"rgba(16,185,129,.03)":"transparent"}}>
+                <span style={{fontFamily:"'Bebas Neue',cursive",fontSize:20,color:"var(--gold)",minWidth:26,textAlign:"center"}}>{medals[i]}</span>
+                <Flag c={t.c}/>
+                <span style={{flex:1,fontFamily:"'Barlow Condensed',sans-serif",fontSize:14,fontWeight:700,color:"var(--txt)"}}>{t.n}</span>
+                <span style={{fontFamily:"'Bebas Neue',cursive",fontSize:16,color:"var(--gold)",minWidth:30,textAlign:"center"}}>{t.pts}<span style={{fontSize:10,color:"var(--txs)",fontFamily:"'Barlow Condensed',sans-serif"}}> pts</span></span>
+                <span style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:11,color:(t.gf-t.gc)>0?"var(--green)":(t.gf-t.gc)<0?"var(--red)":"var(--txs)",minWidth:28,textAlign:"right"}}>{t.gf-t.gc>0?"+":""}{t.gf-t.gc} DG</span>
+                {rp&&<span className={`badge ${ok?"badge-g":"badge-r"}`} style={{marginLeft:4}}>{ok?"✓":"✗"} Real: {i+1}°</span>}
+              </div>
+            );
+          })}
+        </div>
+        {pRows.every(r=>r.pj>0)&&<div style={{marginTop:6,fontFamily:"'Barlow Condensed',sans-serif",fontSize:10,color:"var(--green)",letterSpacing:"2px",opacity:.7}}>✦ LOS 2 PRIMEROS CLASIFICAN DIRECTAMENTE AL R32</div>}
+      </>)}
       <ScoreInfo/>
     </div>
   );
@@ -1181,7 +1244,7 @@ function GroupPanel({gk,preds,results,onMC,onSC,locked}){
 function StTable({rows,acc,adv}){
   return(<div style={{background:"var(--sur)",border:`1px solid ${acc||"var(--bos)"}`,borderRadius:10,overflow:"hidden",padding:"2px 9px 8px"}}>
     <table className="sttbl"><thead><tr><th style={{textAlign:"left"}}>Equipo</th><th>PJ</th><th>PG</th><th>PE</th><th>PP</th><th>GF</th><th>GC</th><th>DG</th><th>PTS</th></tr></thead>
-    <tbody>{rows.map((t,i)=><tr key={t.n} className={adv&&i<2?"stadv":""}><td><span style={{marginRight:4}}>{t.f}</span><span style={{fontWeight:700,fontSize:11}}>{t.n}</span></td><td style={{opacity:.6}}>{t.pj}</td><td>{t.pg}</td><td>{t.pe}</td><td>{t.pp}</td><td>{t.gf}</td><td>{t.gc}</td><td style={{color:(t.gf-t.gc)>0?"var(--green)":(t.gf-t.gc)<0?"var(--red)":"var(--txs)"}}>{t.gf-t.gc>0?"+":""}{t.gf-t.gc}</td><td className="ptsc">{t.pts}</td></tr>)}</tbody></table>
+    <tbody>{rows.map((t,i)=><tr key={t.n} className={adv&&i<2?"stadv":""}><td style={{display:"flex",alignItems:"center",gap:5,padding:"6px 3px"}}><Flag c={t.c}/><span style={{fontWeight:700,fontSize:11}}>{t.n}</span></td><td style={{opacity:.6}}>{t.pj}</td><td>{t.pg}</td><td>{t.pe}</td><td>{t.pp}</td><td>{t.gf}</td><td>{t.gc}</td><td style={{color:(t.gf-t.gc)>0?"var(--green)":(t.gf-t.gc)<0?"var(--red)":"var(--txs)"}}>{t.gf-t.gc>0?"+":""}{t.gf-t.gc}</td><td className="ptsc">{t.pts}</td></tr>)}</tbody></table>
     {adv&&<div style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:9,color:"var(--green)",letterSpacing:"2px",marginTop:5,opacity:.7}}>✦ LOS 2 PRIMEROS CLASIFICAN</div>}
   </div>);
 }
@@ -1539,7 +1602,7 @@ function ApuestasView({users,allPreds,results,lb}){
 
     {/* Group teams */}
     <div className="gts" style={{marginBottom:16}}>
-      {GROUPS[selGk].map(t=><span key={t.n} className="tc">{t.f} {t.n}</span>)}
+      {GROUPS[selGk].map(t=><span key={t.n} className="tc" style={{display:"inline-flex",alignItems:"center",gap:5}}><Flag c={t.c}/>{t.n}</span>)}
     </div>
 
     {/* Each match */}
@@ -1708,7 +1771,7 @@ function AdminView({results,onSaveR,locked,onToggle,onBack,users,allPreds,lb,koT
       <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:16,alignItems:"start"}}>
         <div>
           <div style={{fontFamily:"'Bebas Neue',cursive",fontSize:27,color:"var(--gold)",letterSpacing:"4px",marginBottom:8}}>GRUPO {aG}</div>
-          {mkM(aG).map(({id,h,a})=>{const r=lr?.matches?.[id]||{h:"",a:""};return(<div key={id} className="mr"><span className="tn">{h.f} {h.n}</span><input className="si" type="number" min="0" max="20" value={r.h||""} onChange={e=>updR(id,e.target.value,r.a||"")} placeholder="–"/><span className="vs">–</span><input className="si" type="number" min="0" max="20" value={r.a||""} onChange={e=>updR(id,r.h||"",e.target.value)} placeholder="–"/><span className="tn r">{a.n} {a.f}</span></div>);})}
+          {mkM(aG).map(({id,h,a})=>{const r=lr?.matches?.[id]||{h:"",a:""};return(<div key={id} className="mr"><span className="tn" style={{display:"flex",alignItems:"center",gap:6}}><Flag c={h.c}/>{h.n}</span><input className="si" type="number" min="0" max="20" value={r.h||""} onChange={e=>updR(id,e.target.value,r.a||"")} placeholder="–"/><span className="vs">–</span><input className="si" type="number" min="0" max="20" value={r.a||""} onChange={e=>updR(id,r.h||"",e.target.value)} placeholder="–"/><span className="tn r" style={{display:"flex",alignItems:"center",gap:6,justifyContent:"flex-end"}}>{a.n}<Flag c={a.c}/></span></div>);})}
           <div className="stit" style={{marginTop:14}}>Clasificación real</div>
           {[0,1,2,3].map(i=>{const med=["🥇","🥈","🥉","4️⃣"],st=lr?.standings?.[aG]||[null,null,null,null];return(<div key={i} className="sr"><span className="pos">{med[i]}</span><select className="tsel" value={st[i]||""} onChange={e=>updRSt(aG,i,e.target.value||null)}><option value="">— Seleccionar —</option>{GROUPS[aG].map(t=><option key={t.n} value={t.n} disabled={st.includes(t.n)&&st[i]!==t.n}>{t.f} {t.n}</option>)}</select></div>);})}
         </div>
