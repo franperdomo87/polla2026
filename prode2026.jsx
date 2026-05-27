@@ -353,18 +353,18 @@ const FACT_CATS = [
 
 // ═══ GRUPOS Y CONSTANTES ══════════════════════════════════════════════
 const GROUPS = {
-  A:[{n:"México",f:"🇲🇽",c:"mx"},{n:"Sudáfrica",f:"🇿🇦",c:"za"},{n:"Corea del Sur",f:"🇰🇷",c:"kr"},{n:"Chequia",f:"🇨🇿",c:"cz"}],
-  B:[{n:"Canadá",f:"🇨🇦",c:"ca"},{n:"Bosnia-Herz.",f:"🇧🇦",c:"ba"},{n:"Catar",f:"🇶🇦",c:"qa"},{n:"Suiza",f:"🇨🇭",c:"ch"}],
-  C:[{n:"Brasil",f:"🇧🇷",c:"br"},{n:"Marruecos",f:"🇲🇦",c:"ma"},{n:"Haití",f:"🇭🇹",c:"ht"},{n:"Escocia",f:"🏴󠁧󠁢󠁳󠁣󠁴󠁿",c:"gb-sct"}],
-  D:[{n:"EE.UU.",f:"🇺🇸",c:"us"},{n:"Paraguay",f:"🇵🇾",c:"py"},{n:"Australia",f:"🇦🇺",c:"au"},{n:"Türkiye",f:"🇹🇷",c:"tr"}],
-  E:[{n:"Alemania",f:"🇩🇪",c:"de"},{n:"Curazao",f:"🇨🇼",c:"cw"},{n:"C. de Marfil",f:"🇨🇮",c:"ci"},{n:"Ecuador",f:"🇪🇨",c:"ec"}],
-  F:[{n:"P. Bajos",f:"🇳🇱",c:"nl"},{n:"Japón",f:"🇯🇵",c:"jp"},{n:"Suecia",f:"🇸🇪",c:"se"},{n:"Túnez",f:"🇹🇳",c:"tn"}],
-  G:[{n:"Bélgica",f:"🇧🇪",c:"be"},{n:"Egipto",f:"🇪🇬",c:"eg"},{n:"Irán",f:"🇮🇷",c:"ir"},{n:"N. Zelanda",f:"🇳🇿",c:"nz"}],
-  H:[{n:"España",f:"🇪🇸",c:"es"},{n:"A. Saudita",f:"🇸🇦",c:"sa"},{n:"Uruguay",f:"🇺🇾",c:"uy"},{n:"Cabo Verde",f:"🇨🇻",c:"cv"}],
-  I:[{n:"Francia",f:"🇫🇷",c:"fr"},{n:"Senegal",f:"🇸🇳",c:"sn"},{n:"Iraq",f:"🇮🇶",c:"iq"},{n:"Noruega",f:"🇳🇴",c:"no"}],
-  J:[{n:"Argentina",f:"🇦🇷",c:"ar"},{n:"Argelia",f:"🇩🇿",c:"dz"},{n:"Austria",f:"🇦🇹",c:"at"},{n:"Jordania",f:"🇯🇴",c:"jo"}],
-  K:[{n:"Portugal",f:"🇵🇹",c:"pt"},{n:"DR Congo",f:"🇨🇩",c:"cd"},{n:"Uzbekistán",f:"🇺🇿",c:"uz"},{n:"Colombia",f:"🇨🇴",c:"co"}],
-  L:[{n:"Inglaterra",f:"🏴󠁧󠁢󠁥󠁮󠁧󠁿",c:"gb-eng"},{n:"Croacia",f:"🇭🇷",c:"hr"},{n:"Ghana",f:"🇬🇭",c:"gh"},{n:"Panamá",f:"🇵🇦",c:"pa"}],
+  A:[{n:"México",f:"🇲🇽"},{n:"Sudáfrica",f:"🇿🇦"},{n:"Corea del Sur",f:"🇰🇷"},{n:"Chequia",f:"🇨🇿"}],
+  B:[{n:"Canadá",f:"🇨🇦"},{n:"Bosnia-Herz.",f:"🇧🇦"},{n:"Catar",f:"🇶🇦"},{n:"Suiza",f:"🇨🇭"}],
+  C:[{n:"Brasil",f:"🇧🇷"},{n:"Marruecos",f:"🇲🇦"},{n:"Haití",f:"🇭🇹"},{n:"Escocia",f:"🏴󠁧󠁢󠁳󠁣󠁴󠁿"}],
+  D:[{n:"EE.UU.",f:"🇺🇸"},{n:"Paraguay",f:"🇵🇾"},{n:"Australia",f:"🇦🇺"},{n:"Türkiye",f:"🇹🇷"}],
+  E:[{n:"Alemania",f:"🇩🇪"},{n:"Curazao",f:"🇨🇼"},{n:"C. de Marfil",f:"🇨🇮"},{n:"Ecuador",f:"🇪🇨"}],
+  F:[{n:"P. Bajos",f:"🇳🇱"},{n:"Japón",f:"🇯🇵"},{n:"Suecia",f:"🇸🇪"},{n:"Túnez",f:"🇹🇳"}],
+  G:[{n:"Bélgica",f:"🇧🇪"},{n:"Egipto",f:"🇪🇬"},{n:"Irán",f:"🇮🇷"},{n:"N. Zelanda",f:"🇳🇿"}],
+  H:[{n:"España",f:"🇪🇸"},{n:"A. Saudita",f:"🇸🇦"},{n:"Uruguay",f:"🇺🇾"},{n:"Cabo Verde",f:"🇨🇻"}],
+  I:[{n:"Francia",f:"🇫🇷"},{n:"Senegal",f:"🇸🇳"},{n:"Iraq",f:"🇮🇶"},{n:"Noruega",f:"🇳🇴"}],
+  J:[{n:"Argentina",f:"🇦🇷"},{n:"Argelia",f:"🇩🇿"},{n:"Austria",f:"🇦🇹"},{n:"Jordania",f:"🇯🇴"}],
+  K:[{n:"Portugal",f:"🇵🇹"},{n:"DR Congo",f:"🇨🇩"},{n:"Uzbekistán",f:"🇺🇿"},{n:"Colombia",f:"🇨🇴"}],
+  L:[{n:"Inglaterra",f:"🏴󠁧󠁢󠁥󠁮󠁧󠁿"},{n:"Croacia",f:"🇭🇷"},{n:"Ghana",f:"🇬🇭"},{n:"Panamá",f:"🇵🇦"}],
 };
 const GKS=["A","B","C","D","E","F","G","H","I","J","K","L"];
 const ALL_TEAMS=[...new Set(Object.values(GROUPS).flat().map(t=>t.n))].sort();
@@ -391,95 +391,108 @@ const PLAYERS=[
 ];
 
 
-// ═══ CALENDARIO FASE DE GRUPOS ══════════════════════════════════════
+// ═══ CALENDARIO FASE DE GRUPOS ════════════════════════════════════════
+// Fuente: FIFA / Al Jazeera — Horas en hora Colombia (ET+1)
 const SCHEDULE = {
-  "A|MéxicovSudáfrica": {d:"Jun 11",h:"14:00",st:"SoFi Stadium, LA"},
-  "A|Corea del SurvChequia": {d:"Jun 12",h:"20:00",st:"Estadio Guadalajara"},
-  "A|MéxicovCorea del Sur": {d:"Jun 18",h:"20:00",st:"SoFi Stadium, LA"},
-  "A|SudáfricavChequia": {d:"Jun 18",h:"17:00",st:"AT&T Stadium, Dallas"},
-  "A|SudáfricavCorea del Sur": {d:"Jun 26",h:"21:00",st:"AT&T Stadium, Dallas"},
-  "A|MéxicovChequia": {d:"Jun 26",h:"21:00",st:"Estadio Guadalajara"},
-  "B|CanadávBosnia-Herz.": {d:"Jun 12",h:"17:00",st:"BC Place, Vancouver"},
-  "B|CatarvSuiza": {d:"Jun 13",h:"17:00",st:"Levi's Stadium, SF"},
-  "B|CanadávCatar": {d:"Jun 18",h:"20:00",st:"BC Place, Vancouver"},
-  "B|Bosnia-Herz.vSuiza": {d:"Jun 18",h:"14:00",st:"SoFi Stadium, LA"},
-  "B|Bosnia-Herz.vCatar": {d:"Jun 26",h:"18:00",st:"Lincoln Financial, Phila."},
-  "B|CanadávSuiza": {d:"Jun 26",h:"18:00",st:"BC Place, Vancouver"},
-  "C|BrasilvMarruecos": {d:"Jun 13",h:"21:00",st:"MetLife Stadium, NY/NJ"},
-  "C|HaitívEscocia": {d:"Jun 13",h:"18:00",st:"Gillette Stadium, Boston"},
-  "C|MarruecosvEscocia": {d:"Jun 19",h:"21:00",st:"Gillette Stadium, Boston"},
-  "C|BrasilvHaití": {d:"Jun 19",h:"21:00",st:"Lincoln Financial, Phila."},
-  "C|MarruecosvHaití": {d:"Jun 26",h:"21:00",st:"Hard Rock Stadium, Miami"},
-  "C|BrasilvEscocia": {d:"Jun 26",h:"21:00",st:"SoFi Stadium, LA"},
-  "D|EE.UU.vParaguay": {d:"Jun 12",h:"21:00",st:"SoFi Stadium, LA"},
-  "D|AustraliavTürkiye": {d:"Jun 13",h:"21:00",st:"BC Place, Vancouver"},
-  "D|EE.UU.vAustralia": {d:"Jun 19",h:"18:00",st:"Lumen Field, Seattle"},
-  "D|ParaguayvTürkiye": {d:"Jun 20",h:"03:00",st:"Levi's Stadium, SF"},
-  "D|ParaguayvAustralia": {d:"Jun 26",h:"18:00",st:"NRG Stadium, Houston"},
-  "D|EE.UU.vTürkiye": {d:"Jun 26",h:"18:00",st:"AT&T Stadium, Dallas"},
-  "E|AlemaniavCurazao": {d:"Jun 14",h:"14:00",st:"NRG Stadium, Houston"},
-  "E|C. de MarfilvEcuador": {d:"Jun 14",h:"20:00",st:"Lincoln Financial, Phila."},
-  "E|AlemaniavC. de Marfil": {d:"Jun 20",h:"17:00",st:"BC Place, Vancouver"},
-  "E|CurazaovEcuador": {d:"Jun 20",h:"20:00",st:"Arrowhead, Kansas City"},
-  "E|CurazaovC. de Marfil": {d:"Jun 25",h:"21:00",st:"AT&T Stadium, Dallas"},
-  "E|AlemaniavEcuador": {d:"Jun 25",h:"21:00",st:"Mercedes-Benz, Atlanta"},
-  "F|P. BajosvJapón": {d:"Jun 14",h:"17:00",st:"AT&T Stadium, Dallas"},
-  "F|SueciavTúnez": {d:"Jun 14",h:"23:00",st:"Estadio Monterrey"},
-  "F|P. BajosvSuecia": {d:"Jun 20",h:"14:00",st:"NRG Stadium, Houston"},
-  "F|JapónvTúnez": {d:"Jun 21",h:"03:00",st:"Estadio Monterrey"},
-  "F|JapónvSuecia": {d:"Jun 25",h:"21:00",st:"Lumen Field, Seattle"},
-  "F|P. BajosvTúnez": {d:"Jun 25",h:"21:00",st:"Gillette Stadium, Boston"},
-  "G|BélgicavEgipto": {d:"Jun 15",h:"15:00",st:"BC Place, Vancouver"},
-  "G|IránvN. Zelanda": {d:"Jun 15",h:"21:00",st:"SoFi Stadium, LA"},
-  "G|BélgicavIrán": {d:"Jun 21",h:"15:00",st:"SoFi Stadium, LA"},
-  "G|EgiptovN. Zelanda": {d:"Jun 21",h:"21:00",st:"BC Place, Vancouver"},
-  "G|EgiptovIrán": {d:"Jun 26",h:"20:00",st:"Mercedes-Benz, Atlanta"},
-  "G|BélgicavN. Zelanda": {d:"Jun 26",h:"20:00",st:"Lumen Field, Seattle"},
-  "H|EspañavA. Saudita": {d:"Jun 15",h:"12:00",st:"Mercedes-Benz, Atlanta"},
-  "H|UruguayvCabo Verde": {d:"Jun 15",h:"18:00",st:"Hard Rock Stadium, Miami"},
-  "H|EspañavUruguay": {d:"Jun 21",h:"12:00",st:"Mercedes-Benz, Atlanta"},
-  "H|A. SauditavCabo Verde": {d:"Jun 21",h:"18:00",st:"Hard Rock Stadium, Miami"},
-  "H|A. SauditavUruguay": {d:"Jun 27",h:"20:00",st:"Levi's Stadium, SF"},
-  "H|EspañavCabo Verde": {d:"Jun 27",h:"20:00",st:"Arrowhead, Kansas City"},
-  "I|FranciavSenegal": {d:"Jun 16",h:"15:00",st:"MetLife Stadium, NY/NJ"},
-  "I|IraqvNoruega": {d:"Jun 16",h:"18:00",st:"Gillette Stadium, Boston"},
-  "I|FranciavIraq": {d:"Jun 22",h:"17:00",st:"Lincoln Financial, Phila."},
-  "I|SenegalvNoruega": {d:"Jun 22",h:"20:00",st:"MetLife Stadium, NY/NJ"},
-  "I|SenegalvIraq": {d:"Jun 27",h:"20:00",st:"Hard Rock Stadium, Miami"},
-  "I|FranciavNoruega": {d:"Jun 27",h:"20:00",st:"BC Place, Vancouver"},
-  "J|ArgentinavArgelia": {d:"Jun 16",h:"21:00",st:"Arrowhead, Kansas City"},
-  "J|AustriavJordania": {d:"Jun 17",h:"03:00",st:"Levi's Stadium, SF"},
-  "J|ArgentinavAustria": {d:"Jun 22",h:"14:00",st:"AT&T Stadium, Dallas"},
-  "J|ArgeliavJordania": {d:"Jun 23",h:"03:00",st:"Levi's Stadium, SF"},
-  "J|ArgeliavAustria": {d:"Jun 27",h:"20:00",st:"SoFi Stadium, LA"},
-  "J|ArgentinavJordania": {d:"Jun 27",h:"20:00",st:"Lincoln Financial, Phila."},
-  "K|PortugalvDR Congo": {d:"Jun 17",h:"14:00",st:"NRG Stadium, Houston"},
-  "K|UzbekistánvColombia": {d:"Jun 17",h:"23:00",st:"Estadio Azteca, México"},
-  "K|PortugalvUzbekistán": {d:"Jun 23",h:"17:00",st:"Mercedes-Benz, Atlanta"},
-  "K|DR CongovColombia": {d:"Jun 23",h:"20:00",st:"Levi's Stadium, SF"},
-  "K|DR CongovUzbekistán": {d:"Jun 27",h:"17:00",st:"NRG Stadium, Houston"},
-  "K|PortugalvColombia": {d:"Jun 27",h:"17:00",st:"AT&T Stadium, Dallas"},
-  "L|InglaterravCroacia": {d:"Jun 17",h:"17:00",st:"AT&T Stadium, Dallas"},
-  "L|GhanavPanamá": {d:"Jun 17",h:"20:00",st:"BC Place, Vancouver"},
-  "L|InglaterravGhana": {d:"Jun 24",h:"14:00",st:"Mercedes-Benz, Atlanta"},
-  "L|CroaciavPanamá": {d:"Jun 24",h:"17:00",st:"Arrowhead, Kansas City"},
-  "L|CroaciavGhana": {d:"Jun 27",h:"17:00",st:"Lincoln Financial, Phila."},
-  "L|InglaterravPanamá": {d:"Jun 27",h:"17:00",st:"MetLife Stadium, NY/NJ"},
+  "A|México vSudáfrica":           {d:"Jun 11",h:"15:00",st:"Estadio Guadalajara"},
+  "A|Corea del SurvChequia":       {d:"Jun 11",h:"22:00",st:"Estadio Guadalajara"},
+  "A|México vCorea del Sur":       {d:"Jun 18",h:"21:00",st:"Estadio Guadalajara"},
+  "A|Chequia vSudáfrica":          {d:"Jun 18",h:"12:00",st:"Atlanta Stadium"},
+  "A|Sudáfrica vCorea del Sur":    {d:"Jun 26",h:"20:00",st:"Kansas City Stadium"},
+  "A|México vChequia":             {d:"Jun 26",h:"20:00",st:"Estadio Guadalajara"},
+
+  "B|Canadá vBosnia-Herz.":        {d:"Jun 12",h:"15:00",st:"Toronto Stadium"},
+  "B|Catar vSuiza":                {d:"Jun 13",h:"15:00",st:"San Francisco Bay Area Stadium"},
+  "B|Suiza vBosnia-Herz.":         {d:"Jun 18",h:"15:00",st:"Los Angeles Stadium"},
+  "B|Canadá vCatar":               {d:"Jun 18",h:"18:00",st:"BC Place, Vancouver"},
+  "B|Bosnia-Herz. vCatar":         {d:"Jun 26",h:"17:00",st:"Philadelphia Stadium"},
+  "B|Canadá vSuiza":               {d:"Jun 26",h:"17:00",st:"Toronto Stadium"},
+
+  "C|Brasil vMarruecos":            {d:"Jun 13",h:"18:00",st:"New York NJ Stadium"},
+  "C|Haití vEscocia":              {d:"Jun 13",h:"21:00",st:"Boston Stadium"},
+  "C|Escocia vMarruecos":          {d:"Jun 19",h:"18:00",st:"Boston Stadium"},
+  "C|Brasil vHaití":               {d:"Jun 19",h:"21:00",st:"Philadelphia Stadium"},
+  "C|Marruecos vHaití":            {d:"Jun 26",h:"21:00",st:"Miami Stadium"},
+  "C|Brasil vEscocia":             {d:"Jun 26",h:"21:00",st:"Los Angeles Stadium"},
+
+  "D|EE.UU. vParaguay":            {d:"Jun 12",h:"21:00",st:"Los Angeles Stadium"},
+  "D|Australia vTürkiye":          {d:"Jun 13",h:"21:00",st:"BC Place, Vancouver"},
+  "D|EE.UU. vAustralia":           {d:"Jun 19",h:"15:00",st:"Seattle Stadium"},
+  "D|Türkiye vParaguay":           {d:"Jun 19",h:"00:00",st:"San Francisco Bay Area Stadium"},
+  "D|Paraguay vAustralia":         {d:"Jun 26",h:"17:00",st:"Houston Stadium"},
+  "D|EE.UU. vTürkiye":             {d:"Jun 26",h:"17:00",st:"Dallas Stadium"},
+
+  "E|Alemania vCurazao":           {d:"Jun 14",h:"13:00",st:"Houston Stadium"},
+  "E|C. de Marfil vEcuador":       {d:"Jun 14",h:"19:00",st:"Philadelphia Stadium"},
+  "E|Alemania vC. de Marfil":      {d:"Jun 20",h:"16:00",st:"Toronto Stadium"},
+  "E|Ecuador vCurazao":            {d:"Jun 20",h:"20:00",st:"Kansas City Stadium"},
+  "E|Curazao vC. de Marfil":       {d:"Jun 25",h:"21:00",st:"Dallas Stadium"},
+  "E|Alemania vEcuador":           {d:"Jun 25",h:"21:00",st:"Atlanta Stadium"},
+
+  "F|P. Bajos vJapón":             {d:"Jun 14",h:"16:00",st:"Dallas Stadium"},
+  "F|Suecia vTúnez":               {d:"Jun 14",h:"22:00",st:"Estadio Monterrey"},
+  "F|P. Bajos vSuecia":            {d:"Jun 20",h:"13:00",st:"Houston Stadium"},
+  "F|Túnez vJapón":                {d:"Jun 20",h:"00:00",st:"Estadio Monterrey"},
+  "F|Japón vSuecia":               {d:"Jun 25",h:"21:00",st:"Seattle Stadium"},
+  "F|P. Bajos vTúnez":             {d:"Jun 25",h:"21:00",st:"Boston Stadium"},
+
+  "G|Bélgica vEgipto":             {d:"Jun 15",h:"15:00",st:"BC Place, Vancouver"},
+  "G|Irán vN. Zelanda":            {d:"Jun 15",h:"21:00",st:"Los Angeles Stadium"},
+  "G|Bélgica vIrán":               {d:"Jun 21",h:"15:00",st:"Los Angeles Stadium"},
+  "G|N. Zelanda vEgipto":          {d:"Jun 21",h:"21:00",st:"BC Place, Vancouver"},
+  "G|Egipto vIrán":                {d:"Jun 26",h:"20:00",st:"Atlanta Stadium"},
+  "G|Bélgica vN. Zelanda":         {d:"Jun 26",h:"20:00",st:"Seattle Stadium"},
+
+  "H|España vA. Saudita":          {d:"Jun 15",h:"12:00",st:"Atlanta Stadium"},
+  "H|Uruguay vCabo Verde":         {d:"Jun 15",h:"18:00",st:"Miami Stadium"},
+  "H|España vUruguay":             {d:"Jun 21",h:"12:00",st:"Atlanta Stadium"},
+  "H|A. Saudita vCabo Verde":      {d:"Jun 21",h:"18:00",st:"Miami Stadium"},
+  "H|Cabo Verde vUruguay":         {d:"Jun 27",h:"20:00",st:"San Francisco Bay Area Stadium"},
+  "H|España vCabo Verde":          {d:"Jun 27",h:"20:00",st:"Kansas City Stadium"},
+
+  "I|Francia vSenegal":            {d:"Jun 16",h:"15:00",st:"New York NJ Stadium"},
+  "I|Iraq vNoruega":               {d:"Jun 16",h:"18:00",st:"Boston Stadium"},
+  "I|Francia vIraq":               {d:"Jun 22",h:"17:00",st:"Philadelphia Stadium"},
+  "I|Noruega vSenegal":            {d:"Jun 22",h:"20:00",st:"New York NJ Stadium"},
+  "I|Senegal vIraq":               {d:"Jun 27",h:"20:00",st:"Miami Stadium"},
+  "I|Francia vNoruega":            {d:"Jun 27",h:"20:00",st:"Toronto Stadium"},
+
+  "J|Argentina vArgelia":          {d:"Jun 16",h:"21:00",st:"Kansas City Stadium"},
+  "J|Austria vJordania":           {d:"Jun 16",h:"00:00",st:"San Francisco Bay Area Stadium"},
+  "J|Argentina vAustria":          {d:"Jun 22",h:"13:00",st:"Dallas Stadium"},
+  "J|Jordania vArgelia":           {d:"Jun 22",h:"23:00",st:"San Francisco Bay Area Stadium"},
+  "J|Argelia vAustria":            {d:"Jun 27",h:"20:00",st:"Los Angeles Stadium"},
+  "J|Argentina vJordania":         {d:"Jun 27",h:"20:00",st:"Philadelphia Stadium"},
+
+  "K|Portugal vDR Congo":          {d:"Jun 17",h:"13:00",st:"Houston Stadium"},
+  "K|Uzbekistán vColombia":        {d:"Jun 17",h:"22:00",st:"Estadio Azteca, México"},
+  "K|Portugal vUzbekistán":        {d:"Jun 23",h:"17:00",st:"Atlanta Stadium"},
+  "K|Colombia vDR Congo":          {d:"Jun 23",h:"20:00",st:"San Francisco Bay Area Stadium"},
+  "K|DR Congo vUzbekistán":        {d:"Jun 27",h:"17:00",st:"Houston Stadium"},
+  "K|Portugal vColombia":          {d:"Jun 27",h:"17:00",st:"Dallas Stadium"},
+
+  "L|Inglaterra vCroacia":         {d:"Jun 17",h:"16:00",st:"Dallas Stadium"},
+  "L|Ghana vPanamá":               {d:"Jun 17",h:"19:00",st:"Toronto Stadium"},
+  "L|Inglaterra vGhana":           {d:"Jun 24",h:"13:00",st:"Atlanta Stadium"},
+  "L|Panamá vCroacia":             {d:"Jun 24",h:"16:00",st:"Kansas City Stadium"},
+  "L|Croacia vGhana":              {d:"Jun 27",h:"17:00",st:"Philadelphia Stadium"},
+  "L|Panamá vInglaterra":          {d:"Jun 27",h:"17:00",st:"New York NJ Stadium"},
 };
 
+// Orden cronológico de partidos por grupo
 const GROUP_ORDER = {
-  A:["A|MéxicovSudáfrica","A|Corea del SurvChequia","A|SudáfricavChequia","A|MéxicovCorea del Sur","A|SudáfricavCorea del Sur","A|MéxicovChequia"],
-  B:["B|CanadávBosnia-Herz.","B|CatarvSuiza","B|Bosnia-Herz.vSuiza","B|CanadávCatar","B|Bosnia-Herz.vCatar","B|CanadávSuiza"],
-  C:["C|HaitívEscocia","C|BrasilvMarruecos","C|MarruecosvEscocia","C|BrasilvHaití","C|MarruecosvHaití","C|BrasilvEscocia"],
-  D:["D|EE.UU.vParaguay","D|AustraliavTürkiye","D|EE.UU.vAustralia","D|ParaguayvTürkiye","D|ParaguayvAustralia","D|EE.UU.vTürkiye"],
-  E:["E|AlemaniavCurazao","E|C. de MarfilvEcuador","E|AlemaniavC. de Marfil","E|CurazaovEcuador","E|CurazaovC. de Marfil","E|AlemaniavEcuador"],
-  F:["F|P. BajosvJapón","F|SueciavTúnez","F|P. BajosvSuecia","F|JapónvTúnez","F|JapónvSuecia","F|P. BajosvTúnez"],
-  G:["G|BélgicavEgipto","G|IránvN. Zelanda","G|BélgicavIrán","G|EgiptovN. Zelanda","G|EgiptovIrán","G|BélgicavN. Zelanda"],
-  H:["H|EspañavA. Saudita","H|UruguayvCabo Verde","H|EspañavUruguay","H|A. SauditavCabo Verde","H|A. SauditavUruguay","H|EspañavCabo Verde"],
-  I:["I|FranciavSenegal","I|IraqvNoruega","I|FranciavIraq","I|SenegalvNoruega","I|SenegalvIraq","I|FranciavNoruega"],
-  J:["J|ArgentinavArgelia","J|AustriavJordania","J|ArgentinavAustria","J|ArgeliavJordania","J|ArgeliavAustria","J|ArgentinavJordania"],
-  K:["K|PortugalvDR Congo","K|UzbekistánvColombia","K|PortugalvUzbekistán","K|DR CongovColombia","K|DR CongovUzbekistán","K|PortugalvColombia"],
-  L:["L|InglaterravCroacia","L|GhanavPanamá","L|InglaterravGhana","L|CroaciavPanamá","L|CroaciavGhana","L|InglaterravPanamá"],
+  A: ["A|México vSudáfrica","A|Corea del SurvChequia","A|México vCorea del Sur","A|Chequia vSudáfrica","A|Sudáfrica vCorea del Sur","A|México vChequia"],
+  B: ["B|Canadá vBosnia-Herz.","B|Catar vSuiza","B|Suiza vBosnia-Herz.","B|Canadá vCatar","B|Bosnia-Herz. vCatar","B|Canadá vSuiza"],
+  C: ["C|Brasil vMarruecos","C|Haití vEscocia","C|Escocia vMarruecos","C|Brasil vHaití","C|Marruecos vHaití","C|Brasil vEscocia"],
+  D: ["D|EE.UU. vParaguay","D|Australia vTürkiye","D|EE.UU. vAustralia","D|Türkiye vParaguay","D|Paraguay vAustralia","D|EE.UU. vTürkiye"],
+  E: ["E|Alemania vCurazao","E|C. de Marfil vEcuador","E|Alemania vC. de Marfil","E|Ecuador vCurazao","E|Curazao vC. de Marfil","E|Alemania vEcuador"],
+  F: ["F|P. Bajos vJapón","F|Suecia vTúnez","F|P. Bajos vSuecia","F|Túnez vJapón","F|Japón vSuecia","F|P. Bajos vTúnez"],
+  G: ["G|Bélgica vEgipto","G|Irán vN. Zelanda","G|Bélgica vIrán","G|N. Zelanda vEgipto","G|Egipto vIrán","G|Bélgica vN. Zelanda"],
+  H: ["H|España vA. Saudita","H|Uruguay vCabo Verde","H|España vUruguay","H|A. Saudita vCabo Verde","H|Cabo Verde vUruguay","H|España vCabo Verde"],
+  I: ["I|Francia vSenegal","I|Iraq vNoruega","I|Francia vIraq","I|Noruega vSenegal","I|Senegal vIraq","I|Francia vNoruega"],
+  J: ["J|Argentina vArgelia","J|Austria vJordania","J|Argentina vAustria","J|Jordania vArgelia","J|Argelia vAustria","J|Argentina vJordania"],
+  K: ["K|Portugal vDR Congo","K|Uzbekistán vColombia","K|Portugal vUzbekistán","K|Colombia vDR Congo","K|DR Congo vUzbekistán","K|Portugal vColombia"],
+  L: ["L|Inglaterra vCroacia","L|Ghana vPanamá","L|Inglaterra vGhana","L|Panamá vCroacia","L|Croacia vGhana","L|Panamá vInglaterra"],
 };
 
 function mkKODefs(){
@@ -497,15 +510,19 @@ const KO_DEFS=mkKODefs();
 
 // ═══ UTILIDADES ═══════════════════════════════════════════════════════
 function mkM(gk){
+  // Build match map keyed by sorted team names
   const t=GROUPS[gk],raw=[];
   for(let i=0;i<t.length;i++)for(let j=i+1;j<t.length;j++){
     const id=`${gk}|${t[i].n}v${t[j].n}`;
     raw.push({h:t[i],a:t[j],id});
   }
+  // Sort by schedule order if available
   const order=GROUP_ORDER[gk];
   if(!order) return raw;
-  const ordered=order.map(sid=>raw.find(m=>m.id===sid)).filter(Boolean);
-  return ordered.length===6?ordered:raw;
+  return order.map(sid=>{
+    const nsid=sid.replace(/ v/g,'v');
+    return raw.find(m=>m.id===nsid||`${gk}|${m.a.n}v${m.h.n}`===nsid)||null;
+  }).filter(Boolean);
 }
 function gW(h,a){const hi=parseInt(h),ai=parseInt(a);if(isNaN(hi)||isNaN(ai)||h===""||a==="")return null;return hi>ai?"H":ai>hi?"A":"D";}
 function sMatch(ph,pa,rh,ra){const pw=gW(ph,pa),rw=gW(rh,ra);if(!pw||!rw||pw!==rw)return 0;return+ph===+rh&&+pa===+ra?5:3;}
@@ -522,60 +539,17 @@ function sKO(pred,result){
 }
 function tPts(gk,mp){const p={};GROUPS[gk].forEach(t=>p[t.n]=0);mkM(gk).forEach(({h,a,id})=>{const m=mp?.[id];if(!m||m.h===""||m.a==="")return;const hi=+m.h,ai=+m.a;if(hi>ai)p[h.n]+=3;else if(ai>hi)p[a.n]+=3;else{p[h.n]++;p[a.n]++;}});return p;}
 function cStand(gk,matches){
-  const s={};
-  GROUPS[gk].forEach(t=>{s[t.n]={n:t.n,f:t.f,c:t.c||"",pj:0,pg:0,pe:0,pp:0,gf:0,gc:0,pts:0};});
-  const mList=mkM(gk);
-  mList.forEach(({h,a,id})=>{
-    const m=matches?.[id];if(!m||m.h===""||m.a==="")return;
-    const hi=+m.h,ai=+m.a;
-    s[h.n].pj++;s[a.n].pj++;s[h.n].gf+=hi;s[h.n].gc+=ai;s[a.n].gf+=ai;s[a.n].gc+=hi;
-    if(hi>ai){s[h.n].pg++;s[h.n].pts+=3;s[a.n].pp++;}
-    else if(ai>hi){s[a.n].pg++;s[a.n].pts+=3;s[h.n].pp++;}
-    else{s[h.n].pe++;s[h.n].pts++;s[a.n].pe++;s[a.n].pts++;}
-  });
-  const tvs=Object.values(s);
-  function h2h(sub){
-    const hh={};sub.forEach(t=>{hh[t.n]={pts:0,gd:0,gf:0};});
-    mList.forEach(({h,a,id})=>{
-      if(!sub.some(t=>t.n===h.n)||!sub.some(t=>t.n===a.n))return;
-      const m=matches?.[id];if(!m||m.h===""||m.a==="")return;
-      const hi=+m.h,ai=+m.a;
-      hh[h.n].gd+=hi-ai;hh[h.n].gf+=hi;hh[a.n].gd+=ai-hi;hh[a.n].gf+=ai;
-      if(hi>ai)hh[h.n].pts+=3;else if(ai>hi)hh[a.n].pts+=3;else{hh[h.n].pts++;hh[a.n].pts++;}
-    });
-    return hh;
-  }
-  // Orden FIFA oficial 2026:
-  // 1. Puntos generales → 2. H2H puntos → 3. H2H DG → 4. H2H GF
-  // 5. DG general → 6. GF general → 7. Fair Play → 8. Sorteo
-  function cmp(a,b){
-    if(b.pts!==a.pts)return b.pts-a.pts;
-    const tied=tvs.filter(t=>t.pts===a.pts);
-    if(tied.length>=2&&tied.length<=3){
-      const hh=h2h(tied);
-      const ha=hh[a.n],hb=hh[b.n];
-      if(hb.pts!==ha.pts)return hb.pts-ha.pts;
-      if(hb.gd!==ha.gd)return hb.gd-ha.gd;
-      if(hb.gf!==ha.gf)return hb.gf-ha.gf;
-    }
-    const agd=a.gf-a.gc,bgd=b.gf-b.gc;
-    if(bgd!==agd)return bgd-agd;
-    if(b.gf!==a.gf)return b.gf-a.gf;
-    return 0;
-  }
-  return tvs.sort(cmp);
+  const s={};GROUPS[gk].forEach(t=>{s[t.n]={n:t.n,f:t.f,pj:0,pg:0,pe:0,pp:0,gf:0,gc:0,pts:0};});
+  mkM(gk).forEach(({h,a,id})=>{const m=matches?.[id];if(!m||m.h===""||m.a==="")return;const hi=+m.h,ai=+m.a;s[h.n].pj++;s[a.n].pj++;s[h.n].gf+=hi;s[h.n].gc+=ai;s[a.n].gf+=ai;s[a.n].gc+=hi;if(hi>ai){s[h.n].pg++;s[h.n].pts+=3;s[a.n].pp++;}else if(ai>hi){s[a.n].pg++;s[a.n].pts+=3;s[h.n].pp++;}else{s[h.n].pe++;s[h.n].pts++;s[a.n].pe++;s[a.n].pts++;}});
+  return Object.values(s).sort((a,b)=>b.pts-a.pts||(b.gf-b.gc)-(a.gf-a.gc)||b.gf-a.gf);
 }
-
 function calcScore(preds,results,koTeams,koResults,koUnlocked,spRes){
   let group=0,knockout=0,special=0;
   GKS.forEach(gk=>{
     let aEx=true,aSt=true;
     mkM(gk).forEach(({id})=>{const p=preds?.matches?.[id],r=results?.matches?.[id];if(!p||!r||p.h===""||p.a===""||r.h===""||r.a===""){aEx=false;return;}const pts=sMatch(p.h,p.a,r.h,r.a);if(+p.h!==+r.h||+p.a!==+r.a)aEx=false;group+=pts;});
-    const rs=results?.standings?.[gk];
-    // Auto-computed predicted standings using FIFA tiebreakers
-    const psAuto=cStand(gk,preds?.matches).map(t=>t.n);
-    const allFilled=mkM(gk).every(({id})=>{const p=preds?.matches?.[id];return p&&p.h!==""&&p.a!=="";});
-    if(rs&&allFilled){for(let i=0;i<4;i++){if(psAuto[i]&&rs[i]&&psAuto[i]===rs[i])group+=2;else aSt=false;}const ptp=tPts(gk,preds?.matches),rtp=tPts(gk,results?.matches);GROUPS[gk].forEach(t=>{if(ptp[t.n]===rtp[t.n])group+=1;});if(aEx&&aSt)group+=10;}else aSt=false;
+    const rs=results?.standings?.[gk],ps=preds?.standings?.[gk];
+    if(rs&&ps){for(let i=0;i<4;i++){if(ps[i]&&rs[i]&&ps[i]===rs[i])group+=2;else aSt=false;}const ptp=tPts(gk,preds?.matches),rtp=tPts(gk,results?.matches);GROUPS[gk].forEach(t=>{if(ptp[t.n]===rtp[t.n])group+=1;});if(aEx&&aSt)group+=10;}else aSt=false;
   });
   KO_ROUNDS.forEach(({id:rid})=>{
     if(!koUnlocked?.[rid])return;
@@ -703,14 +677,6 @@ const PLAYERS_BY_COUNTRY = {
 };
 
 const COUNTRIES_LIST = Object.keys(PLAYERS_BY_COUNTRY).sort();
-
-
-// ── Flag image component (uses flagcdn.com) ──────────────────────────
-function Flag({c,f,size=20}){
-  // Use emoji flag stored in team.f - works cross-platform
-  if(!f&&!c) return null;
-  return <span style={{fontSize:size,lineHeight:1,flexShrink:0}}>{f||""}</span>;
-}
 
 // ═══ CSS ══════════════════════════════════════════════════════════════
 const CSS=`
@@ -902,7 +868,7 @@ export default function App(){
   return(
     <div className="app">
       <div className="bg"/><div className="rel">
-        {view==="landing"&&<Landing onLogin={login} onAdmin={()=>setView("admin")} onLB={()=>setView("lb")} onHoy={()=>setView("hoy")} locked={locked}/>}
+        {view==="landing"&&<Landing onLogin={login} onAdmin={()=>setView("admin")} onLB={()=>setView("lb")} onHoy={()=>setView("hoy")} locked={locked} users={users} allPreds={allPreds}/>}
         {view==="predict"&&user&&<PredictView user={user} preds={up} onSave={p=>saveP(user.id,p)} onLB={()=>setView("lb")} onOut={()=>{setUser(null);setView("landing");}} onHoy={()=>setView("hoy")} locked={locked} nav={nav} setNav={setNav} results={results} koTeams={koTeams} koResults={koResults} koUnlocked={koUnlocked} spRes={spRes}/>}
         {view==="lb"&&<LBView lb={lb} results={results} koUnlocked={koUnlocked} users={users} allPreds={allPreds} onBack={()=>setView(user?"predict":"landing")}/>}
         {view==="hoy"&&<HoyView results={results} allPreds={allPreds} users={users} lb={lb} onBack={()=>setView(user?"predict":"landing")}/>}
@@ -944,7 +910,7 @@ function CityAutocomplete({value,onChange}){
   );
 }
 
-function Landing({onLogin,onAdmin,onLB,onHoy,locked}){
+function Landing({onLogin,onAdmin,onLB,onHoy,locked,users=[],allPreds={}}){
   const [name,setName]=useState("");
   const [step,setStep]=useState("home");
   const [demo,setDemo]=useState({sexo:"",edad:"",equipoFav:"",ciudad:""});
@@ -968,10 +934,17 @@ function Landing({onLogin,onAdmin,onLB,onHoy,locked}){
       {step==="name"&&(
         <div style={{display:"flex",flexDirection:"column",gap:12,alignItems:"center",animation:"fi .4s ease"}}>
           <div style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:13,color:"var(--txs)",letterSpacing:"3px",textTransform:"uppercase"}}>¿Con qué nombre juegas?</div>
-          <input className="ni" placeholder="Tu nombre o apodo..." value={name} onChange={e=>setName(e.target.value)} onKeyDown={e=>e.key==="Enter"&&name.trim()&&setStep("demo")} autoFocus/>
+          <input className="ni" placeholder="Tu nombre o apodo..." value={name} onChange={e=>setName(e.target.value)} onKeyDown={e=>{if(e.key==="Enter"&&name.trim()){
+              const ex=users.find(u=>u.name.toLowerCase()===name.trim().toLowerCase());
+              const hasPreds=ex&&Object.keys(allPreds[ex.id]?.matches||{}).length>0;
+              setStep(hasPreds?"instrucciones":"demo");}}} autoFocus/>
           <div style={{display:"flex",gap:9}}>
             <button className="btn btn-ol btn-sm" onClick={()=>setStep("home")}>← Volver</button>
-            <button className="btn btn-gold" onClick={()=>name.trim()&&setStep("demo")} disabled={!name.trim()}>Continuar →</button>
+            <button className="btn btn-gold" onClick={()=>{if(!name.trim())return;
+              const ex=users.find(u=>u.name.toLowerCase()===name.trim().toLowerCase());
+              const hasPreds=ex&&Object.keys(allPreds[ex.id]?.matches||{}).length>0;
+              setStep(hasPreds?"instrucciones":"demo");
+            }} disabled={!name.trim()}>Continuar →</button>
           </div>
           <div style={{color:"var(--txs)",fontSize:11,fontFamily:"'Barlow Condensed',sans-serif",opacity:.7}}>El mismo nombre recupera tus pronósticos anteriores</div>
         </div>
@@ -1101,7 +1074,7 @@ function DailyFact(){
   // Dato del día: uno fijo por categoría según la fecha real (no navegable)
   const today=Math.floor(Date.now()/86400000);
   // Fecha base: 11 Jun 2026 (día 0 del mundial)
-  const BASE_DAY=Math.floor(new Date('2026-05-26').getTime()/86400000); // Desde hoy
+  const BASE_DAY=Math.floor(new Date('2026-06-11').getTime()/86400000);
   const dayOffset=Math.max(0,today-BASE_DAY); // días desde apertura
   const [ci,setCi]=useState(0);
   const cat=FACT_CATS[ci];
@@ -1120,10 +1093,8 @@ function DailyFact(){
       <div className="fcard">
         <span className="fe">{fact.e}</span>
         <div className="ft">{fact.t}</div>
-        <div style={{marginTop:10,display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:6}}>
-          <span style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:9,color:"var(--txs)",opacity:.4,letterSpacing:"1.5px"}}>
-            DÍA {dayOffset+1} · {(dayOffset%cat.facts.length)+1}/{cat.facts.length}
-          </span>
+        <div style={{marginTop:10,fontFamily:"'Barlow Condensed',sans-serif",fontSize:9,color:"var(--txs)",opacity:.45,letterSpacing:"1.5px",textAlign:"right"}}>
+          DÍA {dayOffset+1} DEL TORNEO · {(dayOffset%cat.facts.length)+1}/{cat.facts.length}
         </div>
       </div>
     </div>
@@ -1178,14 +1149,15 @@ function GroupPanel({gk,preds,results,onMC,onSC,locked}){
   return(
     <div style={{animation:"fi .3s ease"}}>
       <div className="gh">GRUPO {gk}</div>
-      <div className="gts">{teams.map(t=><span key={t.n} className="tc" style={{display:"inline-flex",alignItems:"center",gap:5}}><Flag c={t.c} f={t.f}/>{t.n}</span>)}</div>
+      <div className="gts">{teams.map(t=><span key={t.n} className="tc">{t.f} {t.n}</span>)}</div>
       <div className="stit">Marcadores</div>
       {ml.map(({id,h,a})=>{
         const mp=preds?.matches?.[id]||{h:"",a:""},rp=results?.matches?.[id];
         const pts=(rp&&rp.h!==""&&rp.a!==""&&mp.h!==""&&mp.a!=="")?sMatch(mp.h,mp.a,rp.h,rp.a):null;
         const isE=pts===5,isO=pts===3;
         let bc="var(--bos)";if(pts!==null)bc=isE?"rgba(240,180,41,.4)":isO?"rgba(16,185,129,.35)":"rgba(244,63,94,.35)";
-        const sch=SCHEDULE[id]||SCHEDULE[`${gk}|${a.n}v${h.n}`];
+        const _nid=id.replace(/ v/g,'v'),_rid=`${gk}|${a.n}v${h.n}`.replace(/ v/g,'v');
+        const sch=Object.entries(SCHEDULE).find(([k])=>k.replace(/ v/g,'v')===_nid||k.replace(/ v/g,'v')===_rid)?.[1];
         return(<div key={id} style={{marginBottom:8}}>
           {sch&&<div className="sch-meta">
             <span className="sch-date">📅 {sch.d}</span>
@@ -1193,11 +1165,11 @@ function GroupPanel({gk,preds,results,onMC,onSC,locked}){
             <span className="sch-stad">🏟️ {sch.st}</span>
           </div>}
           <div className="mr" style={{borderColor:bc,marginBottom:0}}>
-            <span className="tn" style={{display:"flex",alignItems:"center",gap:6}}><Flag c={h.c} f={h.f}/>{h.n}</span>
+            <span className="tn">{h.f} {h.n}</span>
             <input className="si" type="number" min="0" max="20" value={mp.h} onChange={e=>!locked&&onMC(id,e.target.value,mp.a)} disabled={locked} placeholder="–"/>
             <span className="vs">VS</span>
             <input className="si" type="number" min="0" max="20" value={mp.a} onChange={e=>!locked&&onMC(id,mp.h,e.target.value)} disabled={locked} placeholder="–"/>
-            <span className="tn r" style={{display:"flex",alignItems:"center",gap:6,justifyContent:"flex-end"}}>{a.n}<Flag c={a.c} f={a.f}/></span>
+            <span className="tn r">{a.n} {a.f}</span>
             {rp&&rp.h!==""&&rp.a!==""&&<div style={{display:"flex",flexDirection:"column",alignItems:"center",minWidth:42,marginLeft:3}}><div style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:9,color:"var(--txs)",letterSpacing:"1px"}}>REAL</div><div style={{fontFamily:"'Bebas Neue',cursive",fontSize:18}}>{rp.h}:{rp.a}</div></div>}
             {pts!==null&&<span style={{fontFamily:"'Bebas Neue',cursive",fontSize:18,minWidth:27,textAlign:"right",color:isE?"var(--gold)":isO?"var(--green)":"var(--red)"}}>+{pts}</span>}
           </div>
@@ -1207,38 +1179,15 @@ function GroupPanel({gk,preds,results,onMC,onSC,locked}){
         {haP&&<div><div className="stit" style={{marginTop:0,color:"var(--green)"}}>Tu tabla predicha</div><StTable rows={pRows} acc="rgba(16,185,129,.3)"/></div>}
         {haR&&<div><div className="stit" style={{marginTop:0,color:"var(--gold)"}}>Tabla real</div><StTable rows={rRows} acc="rgba(240,180,41,.3)" adv/></div>}
       </div>}
-      {/* Auto-computed standings based on predicted scores */}
-      {pRows.some(r=>r.pj>0)&&(<>
-        <div style={{marginTop:22,marginBottom:8}}>
-          <div style={{display:"flex",alignItems:"center",gap:10,flexWrap:"wrap"}}>
-            <div className="stit" style={{marginTop:0,marginBottom:0}}>
-              🏆 Tu clasificación — calculada automáticamente
-            </div>
-            {!pRows.every(r=>r.pj>0)&&<span style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:11,color:"var(--txs)",opacity:.7}}>Completa todos los partidos para ver la clasificación final</span>}
-          </div>
-          <div style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:11,color:"var(--txs)",marginTop:3,opacity:.7,lineHeight:1.5}}>
-            Ordenada por: puntos → diferencia de goles → goles anotados → h2h (criterios FIFA)
-          </div>
-        </div>
-        <div style={{background:"var(--sur)",border:"1px solid var(--bos)",borderRadius:10,overflow:"hidden",padding:"2px 9px 8px"}}>
-          {pRows.map((t,i)=>{
-            const medals=["🥇","🥈","🥉","4️⃣"];
-            const rp=results?.standings?.[gk]?.[i];
-            const ok=rp&&rp===t.n;
-            return(
-              <div key={t.n} style={{display:"flex",alignItems:"center",gap:10,padding:"8px 4px",borderBottom:i<3?"1px solid rgba(255,255,255,.04)":"none",background:i<2?"rgba(16,185,129,.03)":"transparent"}}>
-                <span style={{fontFamily:"'Bebas Neue',cursive",fontSize:20,color:"var(--gold)",minWidth:26,textAlign:"center"}}>{medals[i]}</span>
-                <Flag c={t.c} f={t.f}/>
-                <span style={{flex:1,fontFamily:"'Barlow Condensed',sans-serif",fontSize:14,fontWeight:700,color:"var(--txt)"}}>{t.n}</span>
-                <span style={{fontFamily:"'Bebas Neue',cursive",fontSize:16,color:"var(--gold)",minWidth:30,textAlign:"center"}}>{t.pts}<span style={{fontSize:10,color:"var(--txs)",fontFamily:"'Barlow Condensed',sans-serif"}}> pts</span></span>
-                <span style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:11,color:(t.gf-t.gc)>0?"var(--green)":(t.gf-t.gc)<0?"var(--red)":"var(--txs)",minWidth:28,textAlign:"right"}}>{t.gf-t.gc>0?"+":""}{t.gf-t.gc} DG</span>
-                {rp&&<span className={`badge ${ok?"badge-g":"badge-r"}`} style={{marginLeft:4}}>{ok?"✓":"✗"} Real: {i+1}°</span>}
-              </div>
-            );
-          })}
-        </div>
-        {pRows.every(r=>r.pj>0)&&<div style={{marginTop:6,fontFamily:"'Barlow Condensed',sans-serif",fontSize:10,color:"var(--green)",letterSpacing:"2px",opacity:.7}}>✦ LOS 2 PRIMEROS CLASIFICAN DIRECTAMENTE AL R32</div>}
-      </>)}
+      <div className="stit" style={{marginTop:22}}>Clasificación final — tu pronóstico</div>
+      {[0,1,2,3].map(i=>{const rp=results?.standings?.[gk]?.[i],pp=st[i],ok=rp&&pp&&rp===pp;return(<div key={i} className="sr" style={{borderColor:ok?"rgba(240,180,41,.35)":"var(--bos)"}}>
+        <span className="pos">{med[i]}</span>
+        <select className="tsel" value={st[i]||""} disabled={locked} onChange={e=>onSC(gk,i,e.target.value||null)}>
+          <option value="">— Seleccionar equipo —</option>
+          {teams.map(t=><option key={t.n} value={t.n} disabled={st.includes(t.n)&&st[i]!==t.n}>{t.f} {t.n}</option>)}
+        </select>
+        {rp&&<span className={`badge ${ok?"badge-g":"badge-r"}`}>{ok?"✓":"✗"} {rp}</span>}
+      </div>);})}
       <ScoreInfo/>
     </div>
   );
@@ -1246,7 +1195,7 @@ function GroupPanel({gk,preds,results,onMC,onSC,locked}){
 function StTable({rows,acc,adv}){
   return(<div style={{background:"var(--sur)",border:`1px solid ${acc||"var(--bos)"}`,borderRadius:10,overflow:"hidden",padding:"2px 9px 8px"}}>
     <table className="sttbl"><thead><tr><th style={{textAlign:"left"}}>Equipo</th><th>PJ</th><th>PG</th><th>PE</th><th>PP</th><th>GF</th><th>GC</th><th>DG</th><th>PTS</th></tr></thead>
-    <tbody>{rows.map((t,i)=><tr key={t.n} className={adv&&i<2?"stadv":""}><td style={{display:"flex",alignItems:"center",gap:5,padding:"6px 3px"}}><Flag c={t.c} f={t.f}/><span style={{fontWeight:700,fontSize:11}}>{t.n}</span></td><td style={{opacity:.6}}>{t.pj}</td><td>{t.pg}</td><td>{t.pe}</td><td>{t.pp}</td><td>{t.gf}</td><td>{t.gc}</td><td style={{color:(t.gf-t.gc)>0?"var(--green)":(t.gf-t.gc)<0?"var(--red)":"var(--txs)"}}>{t.gf-t.gc>0?"+":""}{t.gf-t.gc}</td><td className="ptsc">{t.pts}</td></tr>)}</tbody></table>
+    <tbody>{rows.map((t,i)=><tr key={t.n} className={adv&&i<2?"stadv":""}><td><span style={{marginRight:4}}>{t.f}</span><span style={{fontWeight:700,fontSize:11}}>{t.n}</span></td><td style={{opacity:.6}}>{t.pj}</td><td>{t.pg}</td><td>{t.pe}</td><td>{t.pp}</td><td>{t.gf}</td><td>{t.gc}</td><td style={{color:(t.gf-t.gc)>0?"var(--green)":(t.gf-t.gc)<0?"var(--red)":"var(--txs)"}}>{t.gf-t.gc>0?"+":""}{t.gf-t.gc}</td><td className="ptsc">{t.pts}</td></tr>)}</tbody></table>
     {adv&&<div style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:9,color:"var(--green)",letterSpacing:"2px",marginTop:5,opacity:.7}}>✦ LOS 2 PRIMEROS CLASIFICAN</div>}
   </div>);
 }
@@ -1604,7 +1553,7 @@ function ApuestasView({users,allPreds,results,lb}){
 
     {/* Group teams */}
     <div className="gts" style={{marginBottom:16}}>
-      {GROUPS[selGk].map(t=><span key={t.n} className="tc" style={{display:"inline-flex",alignItems:"center",gap:5}}><Flag c={t.c} f={t.f}/>{t.n}</span>)}
+      {GROUPS[selGk].map(t=><span key={t.n} className="tc">{t.f} {t.n}</span>)}
     </div>
 
     {/* Each match */}
@@ -1773,7 +1722,7 @@ function AdminView({results,onSaveR,locked,onToggle,onBack,users,allPreds,lb,koT
       <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:16,alignItems:"start"}}>
         <div>
           <div style={{fontFamily:"'Bebas Neue',cursive",fontSize:27,color:"var(--gold)",letterSpacing:"4px",marginBottom:8}}>GRUPO {aG}</div>
-          {mkM(aG).map(({id,h,a})=>{const r=lr?.matches?.[id]||{h:"",a:""};return(<div key={id} className="mr"><span className="tn" style={{display:"flex",alignItems:"center",gap:6}}><Flag c={h.c} f={h.f}/>{h.n}</span><input className="si" type="number" min="0" max="20" value={r.h||""} onChange={e=>updR(id,e.target.value,r.a||"")} placeholder="–"/><span className="vs">–</span><input className="si" type="number" min="0" max="20" value={r.a||""} onChange={e=>updR(id,r.h||"",e.target.value)} placeholder="–"/><span className="tn r" style={{display:"flex",alignItems:"center",gap:6,justifyContent:"flex-end"}}>{a.n}<Flag c={a.c} f={a.f}/></span></div>);})}
+          {mkM(aG).map(({id,h,a})=>{const r=lr?.matches?.[id]||{h:"",a:""};return(<div key={id} className="mr"><span className="tn">{h.f} {h.n}</span><input className="si" type="number" min="0" max="20" value={r.h||""} onChange={e=>updR(id,e.target.value,r.a||"")} placeholder="–"/><span className="vs">–</span><input className="si" type="number" min="0" max="20" value={r.a||""} onChange={e=>updR(id,r.h||"",e.target.value)} placeholder="–"/><span className="tn r">{a.n} {a.f}</span></div>);})}
           <div className="stit" style={{marginTop:14}}>Clasificación real</div>
           {[0,1,2,3].map(i=>{const med=["🥇","🥈","🥉","4️⃣"],st=lr?.standings?.[aG]||[null,null,null,null];return(<div key={i} className="sr"><span className="pos">{med[i]}</span><select className="tsel" value={st[i]||""} onChange={e=>updRSt(aG,i,e.target.value||null)}><option value="">— Seleccionar —</option>{GROUPS[aG].map(t=><option key={t.n} value={t.n} disabled={st.includes(t.n)&&st[i]!==t.n}>{t.f} {t.n}</option>)}</select></div>);})}
         </div>
@@ -1821,22 +1770,9 @@ function AdminView({results,onSaveR,locked,onToggle,onBack,users,allPreds,lb,koT
     {tab==="users"&&(<>
       <div className="stit">{users.length} participante{users.length!==1?"s":""} en la polla</div>
       {users.map(u=>{const done=GKS.filter(gk=>mkM(gk).every(({id})=>{const p=allPreds?.[u.id]?.matches?.[id];return p&&p.h!==""&&p.a!=="";})&&mkM(gk).length===6).length;return(<div key={u.id} className="lbr" style={{gap:8}}>
-          <div style={{flex:1}}>
-            <div className="lbn">{u.name}</div>
-            <div className="lbsub">
-              {u.sexo&&<span>{u.sexo}</span>}
-              {u.edad&&<span>{u.edad}</span>}
-              {u.equipoFav&&u.equipoFav!=="— Sin preferencia —"&&<span>⭐{u.equipoFav.split(" ").slice(0,2).join(" ")}</span>}
-              {u.ciudad&&<span>📍{u.ciudad}</span>}
-            </div>
-          </div>
+          <div style={{flex:1}}><div className="lbn">{u.name}</div><div className="lbsub">{u.sexo&&<span>{u.sexo}</span>}{u.edad&&<span>{u.edad}</span>}{u.equipoFav&&u.equipoFav!=="— Sin preferencia —"&&<span>⭐{u.equipoFav.split(" ").slice(0,2).join(" ")}</span>}{u.ciudad&&<span>📍{u.ciudad}</span>}</div></div>
           <span style={{fontFamily:"'Barlow Condensed',sans-serif",color:"var(--txs)",fontSize:12}}>{done}/12 grupos</span>
-          <button
-            onClick={()=>{if(window.confirm(`¿Eliminar a "${u.name}" y todos sus pronósticos?`)){onDeleteUser(u.id);}}}
-            style={{padding:"4px 10px",border:"1px solid rgba(244,63,94,.3)",borderRadius:6,background:"transparent",color:"#fca5a5",cursor:"pointer",fontFamily:"'Barlow Condensed',sans-serif",fontSize:11,fontWeight:700,flexShrink:0}}
-            title="Eliminar participante">
-            🗑️ Eliminar
-          </button>
+          <button onClick={()=>{if(window.confirm(`¿Eliminar a "${u.name}" y todos sus pronósticos?`)){onDeleteUser(u.id);}}} style={{padding:"4px 10px",border:"1px solid rgba(244,63,94,.3)",borderRadius:6,background:"transparent",color:"#fca5a5",cursor:"pointer",fontFamily:"'Barlow Condensed',sans-serif",fontSize:11,fontWeight:700,flexShrink:0}}>🗑️ Eliminar</button>
         </div>);})}
     </>)}
     {tab==="stats"&&<StatsPanel users={users} lb={lb}/>}
