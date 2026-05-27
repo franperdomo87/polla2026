@@ -1135,7 +1135,7 @@ function PredictView({user,preds,onSave,onLB,onOut,onHoy,locked,nav,setNav,resul
   const [lp,setLp]=useState(preds);
   const [saving,setSaving]=useState(false);
   const [saved,setSaved]=useState(false);
-  const gDone=GKS.filter(gk=>mkM(gk).every(({id})=>{const p=lp?.matches?.[id];return p&&p.h!==""&&p.a!=="";})&&(lp?.standings?.[gk]||[]).filter(Boolean).length===4).length;
+  const gDone=GKS.filter(gk=>mkM(gk).every(({id})=>{const p=lp?.matches?.[id];return p&&p.h!==""&&p.a!=="";})&&mkM(gk).length===6).length;
   const save=async()=>{setSaving(true);await onSave(lp);setSaving(false);setSaved(true);setTimeout(()=>setSaved(false),2500);};
   const updM=(id,h,a)=>setLp(p=>({...p,matches:{...p?.matches,[id]:{h,a}}}));
   const updSt=(gk,pos,t)=>{const c=[...(lp?.standings?.[gk]||[null,null,null,null])];for(let i=0;i<4;i++)if(c[i]===t&&i!==pos)c[i]=null;c[pos]=t||null;setLp(p=>({...p,standings:{...p?.standings,[gk]:c}}));};
@@ -1148,7 +1148,7 @@ function PredictView({user,preds,onSave,onLB,onOut,onHoy,locked,nav,setNav,resul
         <div style={{color:"var(--txs)",fontSize:11,fontFamily:"'Barlow Condensed',sans-serif",padding:"0 7px 6px",letterSpacing:"1px"}}>Hola, <strong style={{color:"var(--txt)"}}>{user.name}</strong></div>
         <div style={{padding:"0 7px 8px"}}><div className="pb"><div className="pf" style={{width:`${(gDone/12)*100}%`}}/></div><div style={{color:"var(--txs)",fontSize:10,fontFamily:"'Barlow Condensed',sans-serif",letterSpacing:"1px"}}>{gDone}/12 grupos</div></div>
         <div className="sbs">Fase de Grupos</div>
-        {GKS.map(gk=>{const done=mkM(gk).every(({id})=>{const p=lp?.matches?.[id];return p&&p.h!==""&&p.a!=="";})&&(lp?.standings?.[gk]||[]).filter(Boolean).length===4;const a=nav.type==="group"&&nav.id===gk;return(<button key={gk} className={`gb${a?" act":""}`} onClick={()=>setNav({type:"group",id:gk})}><span style={{fontFamily:"'Bebas Neue',cursive",fontSize:12}}>Grupo {gk}</span><span style={{flex:1,fontSize:10}}>{GROUPS[gk].slice(0,2).map(t=>t.f).join("")}</span>{done&&<span style={{color:"var(--green)",fontSize:10}}>✓</span>}</button>);})}
+        {GKS.map(gk=>{const done=mkM(gk).every(({id})=>{const p=lp?.matches?.[id];return p&&p.h!==""&&p.a!=="";});const a=nav.type==="group"&&nav.id===gk;return(<button key={gk} className={`gb${a?" act":""}`} onClick={()=>setNav({type:"group",id:gk})}><span style={{fontFamily:"'Bebas Neue',cursive",fontSize:12}}>Grupo {gk}</span><span style={{flex:1,fontSize:10}}>{GROUPS[gk].slice(0,2).map(t=>t.f).join("")}</span>{done&&<span style={{color:"var(--green)",fontSize:10}}>✓</span>}</button>);})}
         <div className="sbs">Eliminación Directa</div>
         {KO_ROUNDS.map(r=>{const u=koUnlocked?.[r.id],a=nav.type==="ko"&&nav.id===r.id;return(<button key={r.id} className={`gb${a?" ko":""}`} onClick={()=>setNav({type:"ko",id:r.id})}><span style={{fontFamily:"'Bebas Neue',cursive",fontSize:11}}>{r.short}</span><span style={{flex:1,fontSize:10,color:"var(--txs)"}}>{r.emoji}</span><span className={`rndb${!u?" lk":""}`}>{u?"OK":"PRÓX"}</span></button>);})}
         <div className="sbs">Picks Especiales</div>
@@ -1820,7 +1820,7 @@ function AdminView({results,onSaveR,locked,onToggle,onBack,users,allPreds,lb,koT
 
     {tab==="users"&&(<>
       <div className="stit">{users.length} participante{users.length!==1?"s":""} en la polla</div>
-      {users.map(u=>{const done=GKS.filter(gk=>mkM(gk).every(({id})=>{const p=allPreds?.[u.id]?.matches?.[id];return p&&p.h!==""&&p.a!=="";})&&(allPreds?.[u.id]?.standings?.[gk]||[]).filter(Boolean).length===4).length;return(<div key={u.id} className="lbr" style={{gap:8}}>
+      {users.map(u=>{const done=GKS.filter(gk=>mkM(gk).every(({id})=>{const p=allPreds?.[u.id]?.matches?.[id];return p&&p.h!==""&&p.a!=="";})&&mkM(gk).length===6).length;return(<div key={u.id} className="lbr" style={{gap:8}}>
           <div style={{flex:1}}>
             <div className="lbn">{u.name}</div>
             <div className="lbsub">
