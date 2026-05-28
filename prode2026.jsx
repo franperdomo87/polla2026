@@ -914,6 +914,7 @@ export default function App(){
     const np={...allPreds};delete np[uid];
     setAllPreds(np);await ST.set("wc26:preds",np);
   };
+  const saveUsers=async nu=>{setUsers(nu);await ST.set("wc26:users",nu);};
   const toggleLock=async()=>{const nl=!locked;setLocked(nl);await ST.set("wc26:locked",nl);};
 
   const lb=users.map(u=>({...u,...calcScore(allPreds[u.id]||{matches:{},standings:{},ko:{},special:{}},results,koTeams,koResults,koUnlocked,spRes)})).sort((a,b)=>b.total-a.total);
@@ -928,7 +929,7 @@ export default function App(){
         {view==="predict"&&user&&<PredictView user={user} preds={up} onSave={p=>saveP(user.id,p)} onLB={()=>setView("lb")} onOut={()=>{setUser(null);setView("landing");}} onHoy={()=>setView("hoy")} locked={locked} nav={nav} setNav={setNav} results={results} koTeams={koTeams} koResults={koResults} koUnlocked={koUnlocked} spRes={spRes}/>}
         {view==="lb"&&<LBView lb={lb} results={results} koUnlocked={koUnlocked} users={users} allPreds={allPreds} onBack={()=>setView(user?"predict":"landing")}/>}
         {view==="hoy"&&<HoyView results={results} allPreds={allPreds} users={users} lb={lb} onBack={()=>setView(user?"predict":"landing")}/>}
-        {view==="admin"&&<AdminView results={results} onSaveR={saveR} locked={locked} onToggle={toggleLock} onBack={()=>setView("landing")} users={users} allPreds={allPreds} lb={lb} koTeams={koTeams} onSaveKT={saveKT} koResults={koResults} onSaveKR={saveKR} koUnlocked={koUnlocked} onSaveKU={saveKU} spRes={spRes} onSaveSR={saveSR} onDeleteUser={deleteUser}/>}
+        {view==="admin"&&<AdminView results={results} onSaveR={saveR} locked={locked} onToggle={toggleLock} onBack={()=>setView("landing")} users={users} allPreds={allPreds} lb={lb} koTeams={koTeams} onSaveKT={saveKT} koResults={koResults} onSaveKR={saveKR} koUnlocked={koUnlocked} onSaveKU={saveKU} spRes={spRes} onSaveSR={saveSR} onDeleteUser={deleteUser} onSaveUsers={saveUsers}/>}
       </div>
     </div>
   );
@@ -965,6 +966,82 @@ function CityAutocomplete({value,onChange}){
     </div>
   );
 }
+
+function Instructions(){
+  const [tab,setTab]=useState("grupos");
+  const tabs=[["grupos","⚽ Grupos"],["ko","⚔️ Eliminación"],["especiales","🌟 Especiales"],["puntos","📊 Puntos"]];
+  return(
+    <div style={{width:"100%",background:"var(--sur)",border:"1px solid var(--bos)",borderRadius:12,overflow:"hidden"}}>
+      <div style={{display:"flex",borderBottom:"1px solid var(--bos)"}}>
+        {tabs.map(([k,l])=><button key={k} onClick={()=>setTab(k)} style={{flex:1,padding:"9px 4px",border:"none",background:tab===k?"var(--gdim)":"transparent",color:tab===k?"var(--gold)":"var(--txs)",fontFamily:"'Barlow Condensed',sans-serif",fontSize:11,fontWeight:700,letterSpacing:"1px",cursor:"pointer",transition:"all .15s"}}>{l}</button>)}
+      </div>
+      <div style={{padding:"15px 17px",fontFamily:"'Barlow Condensed',sans-serif",fontSize:14,color:"var(--txs)",lineHeight:1.7,maxHeight:320,overflowY:"auto"}}>
+        {tab==="grupos"&&<div>
+          <div style={{color:"var(--gold)",fontWeight:700,fontSize:15,marginBottom:8,fontFamily:"'Bebas Neue',cursive",letterSpacing:"2px"}}>FASE DE GRUPOS (11 — 27 JUN)</div>
+          <p>El mundial tiene <strong style={{color:"var(--txt)"}}>12 grupos (A a L)</strong>, cada uno con 4 equipos. Cada equipo juega 3 partidos contra los otros del grupo.</p>
+          <p style={{marginTop:7}}>Para cada partido debes predecir el <strong style={{color:"var(--txt)"}}>marcador exacto</strong> (ej: 2-1). La clasificación final del grupo se calcula automáticamente según los criterios FIFA.</p>
+          <div style={{marginTop:10,background:"rgba(240,180,41,.06)",border:"1px solid var(--gbor)",borderRadius:8,padding:"9px 11px",fontSize:13}}>
+            <div style={{color:"var(--gold)",marginBottom:3}}>💡 Tip</div>
+            Los partidos aparecen en orden cronológico. Los últimos 2 de cada grupo se juegan <strong style={{color:"var(--txt)"}}>simultáneamente</strong>.
+          </div>
+        </div>}
+        {tab==="ko"&&<div>
+          <div style={{color:"var(--blue)",fontWeight:700,fontSize:15,marginBottom:8,fontFamily:"'Bebas Neue',cursive",letterSpacing:"2px"}}>FASE ELIMINATORIA (28 JUN — 19 JUL)</div>
+          <p>Clasifican los <strong style={{color:"var(--txt)"}}>2 primeros de cada grupo + 8 mejores terceros</strong> = 32 equipos.</p>
+          <div style={{marginTop:7,display:"flex",flexDirection:"column",gap:4}}>
+            {[["⚔️","Dieciseisavos","Jun 28–Jul 3"],["🏟️","Octavos de Final","Jul 4–7"],["⚡","Cuartos de Final","Jul 9–11"],["🔥","Semifinales","Jul 14–15"],["🥉","Tercer Puesto","Jul 18"],["🏆","GRAN FINAL","Jul 19 — MetLife, NJ"]].map(([e,n,d])=>(
+              <div key={n} style={{display:"flex",gap:8,alignItems:"center",background:"rgba(255,255,255,.03)",borderRadius:6,padding:"5px 9px"}}>
+                <span style={{fontSize:15}}>{e}</span>
+                <span style={{color:"var(--txt)",flex:1,fontWeight:700,fontSize:13}}>{n}</span>
+                <span style={{color:"var(--gold)",fontSize:11}}>{d}</span>
+              </div>
+            ))}
+          </div>
+          <div style={{marginTop:9,background:"rgba(96,165,250,.06)",border:"1px solid rgba(96,165,250,.2)",borderRadius:8,padding:"9px 11px",fontSize:13}}>
+            <div style={{color:"var(--blue)",marginBottom:3}}>💡 ¿Cuándo puedo hacer los pronósticos?</div>
+            El administrador <strong style={{color:"var(--txt)"}}>activa cada fase</strong> cuando están definidos los clasificados.
+          </div>
+        </div>}
+        {tab==="especiales"&&<div>
+          <div style={{color:"var(--gold)",fontWeight:700,fontSize:15,marginBottom:8,fontFamily:"'Bebas Neue',cursive",letterSpacing:"2px"}}>PICKS ESPECIALES</div>
+          {[["👟","Goleador del Torneo","15 pts","El que más goles marque en todo el mundial"],["⭐","Balón de Oro","10 pts","El mejor jugador según la FIFA al finalizar"]].map(([e,t,p,d])=>(
+            <div key={t} style={{background:"rgba(240,180,41,.05)",border:"1px solid var(--gbor)",borderRadius:8,padding:"10px 12px",marginBottom:8}}>
+              <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:3}}>
+                <span style={{fontSize:18}}>{e}</span>
+                <span style={{color:"var(--txt)",fontWeight:700,fontSize:13,flex:1}}>{t}</span>
+                <span style={{background:"var(--gdim)",padding:"2px 9px",borderRadius:20,color:"var(--gold)",fontSize:12,fontWeight:700,border:"1px solid var(--gbor)"}}>{p}</span>
+              </div>
+              <div style={{fontSize:12,color:"var(--txs)"}}>{d}</div>
+            </div>
+          ))}
+          <div style={{background:"rgba(244,63,94,.06)",border:"1px solid rgba(244,63,94,.2)",borderRadius:8,padding:"9px 11px",fontSize:12,marginTop:4}}>
+            <span style={{color:"#fca5a5"}}>⚠️ Importante:</span> Los resultados se revelan al final del torneo (19 Jul).
+          </div>
+        </div>}
+        {tab==="puntos"&&<div>
+          <div style={{color:"var(--gold)",fontWeight:700,fontSize:15,marginBottom:8,fontFamily:"'Bebas Neue',cursive",letterSpacing:"2px"}}>SISTEMA DE PUNTUACIÓN</div>
+          <div style={{color:"var(--green)",fontSize:10,letterSpacing:"2px",marginBottom:5,opacity:.8}}>FASE DE GRUPOS</div>
+          {[["✅","Resultado correcto","3 pts"],["🎯","Marcador exacto","5 pts"],["📊","Posición exacta en el grupo","2 pts"],["🔢","Puntos exactos del equipo","1 pt"],["⭐","Grupo perfecto (todo exacto)","+10 BONUS"]].map(([e,l,p])=>(
+            <div key={l} style={{display:"flex",gap:8,alignItems:"center",padding:"3px 0",borderBottom:"1px solid rgba(255,255,255,.03)"}}>
+              <span style={{fontSize:14}}>{e}</span>
+              <span style={{flex:1,fontSize:13,color:"var(--txt)"}}>{l}</span>
+              <span style={{fontFamily:"'Bebas Neue',cursive",fontSize:16,color:"var(--gold)"}}>{p}</span>
+            </div>
+          ))}
+          <div style={{color:"var(--blue)",fontSize:10,letterSpacing:"2px",margin:"9px 0 5px",opacity:.8}}>ELIMINACIÓN DIRECTA</div>
+          {[["✅","Ganador correcto","4 pts"],["🎯","Marcador exacto","8 pts"],["🥊","Ganador por penales","+3 pts"],["⭐","Ronda perfecta","+5 BONUS"]].map(([e,l,p])=>(
+            <div key={l} style={{display:"flex",gap:8,alignItems:"center",padding:"3px 0"}}>
+              <span style={{fontSize:14}}>{e}</span>
+              <span style={{flex:1,fontSize:13,color:"var(--txt)"}}>{l}</span>
+              <span style={{fontFamily:"'Bebas Neue',cursive",fontSize:16,color:"var(--gold)"}}>{p}</span>
+            </div>
+          ))}
+        </div>}
+      </div>
+    </div>
+  );
+}
+
 
 function Landing({onLogin,onAdmin,onLB,onHoy,locked,users=[],allPreds={}}){
   const [name,setName]=useState("");
@@ -1671,7 +1748,7 @@ function StatsPanel({users,lb}){
 }
 
 // ═══ ADMIN VIEW ═══════════════════════════════════════════════════════
-function AdminView({results,onSaveR,locked,onToggle,onBack,users,allPreds,lb,koTeams,onSaveKT,koResults,onSaveKR,koUnlocked,onSaveKU,spRes,onSaveSR,onDeleteUser}){
+function AdminView({results,onSaveR,locked,onToggle,onBack,users,allPreds,lb,koTeams,onSaveKT,koResults,onSaveKR,koUnlocked,onSaveKU,spRes,onSaveSR,onDeleteUser,onSaveUsers}){
   const [auth,setAuth]=useState(false);
   const [pw,setPw]=useState("");
   const [tab,setTab]=useState("groups");
@@ -1684,6 +1761,7 @@ function AdminView({results,onSaveR,locked,onToggle,onBack,users,allPreds,lb,koT
   const [lsp,setLsp]=useState(spRes);
   const [saving,setSaving]=useState(false);
   const [saved,setSaved]=useState(false);
+  const [editingUser,setEditingUser]=useState(null);
   const PASS="polla2026";
 
   if(!auth)return(<div style={{minHeight:"100vh",display:"flex",alignItems:"center",justifyContent:"center",flexDirection:"column",gap:14}}>
@@ -1762,11 +1840,90 @@ function AdminView({results,onSaveR,locked,onToggle,onBack,users,allPreds,lb,koT
 
     {tab==="users"&&(<>
       <div className="stit">{users.length} participante{users.length!==1?"s":""} en la polla</div>
-      {users.map(u=>{const done=GKS.filter(gk=>mkM(gk).every(({id})=>{const p=allPreds?.[u.id]?.matches?.[id];return p&&p.h!==""&&p.a!=="";})&&mkM(gk).length===6).length;return(<div key={u.id} className="lbr" style={{gap:8}}>
-          <div style={{flex:1}}><div className="lbn">{u.name}</div><div className="lbsub">{u.sexo&&<span>{u.sexo}</span>}{u.edad&&<span>{u.edad}</span>}{u.equipoFav&&u.equipoFav!=="— Sin preferencia —"&&<span>⭐{u.equipoFav.split(" ").slice(0,2).join(" ")}</span>}{u.ciudad&&<span>📍{u.ciudad}</span>}</div></div>
-          <span style={{fontFamily:"'Barlow Condensed',sans-serif",color:"var(--txs)",fontSize:12}}>{done}/12 grupos</span>
-          <button onClick={()=>{if(window.confirm(`¿Eliminar a "${u.name}" y todos sus pronósticos?`)){onDeleteUser(u.id);}}} style={{padding:"4px 10px",border:"1px solid rgba(244,63,94,.3)",borderRadius:6,background:"transparent",color:"#fca5a5",cursor:"pointer",fontFamily:"'Barlow Condensed',sans-serif",fontSize:11,fontWeight:700,flexShrink:0}}>🗑️ Eliminar</button>
-        </div>);})}
+      {users.map(u=>{
+        const done=GKS.filter(gk=>mkM(gk).every(({id})=>{const p=allPreds?.[u.id]?.matches?.[id];return p&&p.h!==""&&p.a!=="";})&&mkM(gk).length===6).length;
+        return(
+          <div key={u.id} className="lbr" style={{gap:8,flexWrap:"wrap"}}>
+            <div style={{flex:1,minWidth:180}}>
+              <div className="lbn">{u.name}</div>
+              <div className="lbsub">
+                {u.sexo&&<span>{u.sexo}</span>}
+                {u.edad&&<span>{u.edad}</span>}
+                {u.equipoFav&&u.equipoFav!=="— Sin preferencia —"&&<span>⭐{u.equipoFav.split(" ").slice(0,2).join(" ")}</span>}
+                {u.ciudad&&<span>📍{u.ciudad}</span>}
+                {!u.sexo&&!u.edad&&!u.ciudad&&<span style={{opacity:.4,fontStyle:"italic"}}>Sin perfil</span>}
+              </div>
+            </div>
+            <span style={{fontFamily:"'Barlow Condensed',sans-serif",color:"var(--txs)",fontSize:12,flexShrink:0}}>{done}/12 grupos</span>
+            <button
+              onClick={()=>setEditingUser(u)}
+              style={{padding:"4px 10px",border:"1px solid rgba(96,165,250,.3)",borderRadius:6,background:"transparent",color:"var(--blue)",cursor:"pointer",fontFamily:"'Barlow Condensed',sans-serif",fontSize:11,fontWeight:700,flexShrink:0}}>
+              ✏️ Editar
+            </button>
+            <button
+              onClick={()=>{if(window.confirm(`¿Eliminar a "${u.name}" y todos sus pronósticos?`)){onDeleteUser(u.id);}}}
+              style={{padding:"4px 10px",border:"1px solid rgba(244,63,94,.3)",borderRadius:6,background:"transparent",color:"#fca5a5",cursor:"pointer",fontFamily:"'Barlow Condensed',sans-serif",fontSize:11,fontWeight:700,flexShrink:0}}>
+              🗑️ Eliminar
+            </button>
+          </div>
+        );
+      })}
+      {/* Edit user modal */}
+      {editingUser&&(
+        <div style={{position:"fixed",inset:0,background:"rgba(0,0,0,.75)",zIndex:999,display:"flex",alignItems:"center",justifyContent:"center",padding:16}}>
+          <div style={{background:"var(--su2)",border:"1px solid var(--gbor)",borderRadius:14,padding:"22px 24px",width:"100%",maxWidth:400,boxShadow:"0 24px 60px rgba(0,0,0,.5)"}}>
+            <div style={{fontFamily:"'Bebas Neue',cursive",fontSize:24,color:"var(--gold)",letterSpacing:"4px",marginBottom:14}}>✏️ EDITAR PERFIL</div>
+            <div style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:13,color:"var(--txs)",marginBottom:16}}>
+              Editando a: <strong style={{color:"var(--txt)"}}>{editingUser.name}</strong>
+            </div>
+            <div style={{display:"flex",flexDirection:"column",gap:10}}>
+              {/* Nombre */}
+              <div>
+                <div className="dl">Nombre / Apodo</div>
+                <input className="ni" style={{width:"100%",textAlign:"left",fontSize:14,padding:"8px 12px"}}
+                  value={editingUser.name}
+                  onChange={e=>setEditingUser(u=>({...u,name:e.target.value}))}/>
+              </div>
+              {/* Sexo */}
+              <div>
+                <div className="dl">Sexo</div>
+                <select className="ds" value={editingUser.sexo||""} onChange={e=>setEditingUser(u=>({...u,sexo:e.target.value}))}>
+                  {["","Hombre","Mujer"].map(o=><option key={o} value={o}>{o||"— Seleccionar —"}</option>)}
+                </select>
+              </div>
+              {/* Edad */}
+              <div>
+                <div className="dl">Rango de edad</div>
+                <select className="ds" value={editingUser.edad||""} onChange={e=>setEditingUser(u=>({...u,edad:e.target.value}))}>
+                  {["","Menor de 18","18–25","26–35","36–45","46–55","Mayor de 55"].map(o=><option key={o} value={o}>{o||"— Seleccionar —"}</option>)}
+                </select>
+              </div>
+              {/* Equipo favorito */}
+              <div>
+                <div className="dl">Equipo favorito</div>
+                <select className="ds" value={editingUser.equipoFav||""} onChange={e=>setEditingUser(u=>({...u,equipoFav:e.target.value}))}>
+                  {["","— Sin preferencia —",...ALL_TEAMS].map(o=><option key={o} value={o}>{o||"— Seleccionar —"}</option>)}
+                </select>
+              </div>
+              {/* Ciudad */}
+              <div>
+                <div className="dl">Ciudad / País de nacimiento</div>
+                <CityAutocomplete value={editingUser.ciudad||""} onChange={v=>setEditingUser(u=>({...u,ciudad:v}))}/>
+              </div>
+            </div>
+            <div style={{display:"flex",gap:9,marginTop:18,justifyContent:"flex-end"}}>
+              <button className="btn btn-ol btn-sm" onClick={()=>setEditingUser(null)}>Cancelar</button>
+              <button className="btn btn-gold btn-sm" onClick={async()=>{
+                const nu=users.map(x=>x.id===editingUser.id?editingUser:x);
+                await onSaveUsers(nu);
+                setSaved(true);
+                setTimeout(()=>setSaved(false),1500);
+                setEditingUser(null);
+              }}>💾 Guardar cambios</button>
+            </div>
+          </div>
+        </div>
+      )}
     </>)}
     {tab==="stats"&&<StatsPanel users={users} lb={lb}/>}
     {tab==="lb"&&(<>
