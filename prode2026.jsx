@@ -508,19 +508,17 @@ const GROUP_ORDER = {
 };
 
 function mkM(gk){
-  // Build match map keyed by sorted team names
-  const t=GROUPS[gk],raw=[];
+  const t=GROUPS[gk];
+  const rawMap={};
   for(let i=0;i<t.length;i++)for(let j=i+1;j<t.length;j++){
     const id=`${gk}|${t[i].n}v${t[j].n}`;
-    raw.push({h:t[i],a:t[j],id});
+    rawMap[id]={h:t[i],a:t[j],id};
   }
-  // Sort by schedule order if available
   const order=GROUP_ORDER[gk];
-  if(!order) return raw;
-  return order.map(sid=>{
-    const nsid=sid.replace(/ v/g,'v');
-    return raw.find(m=>m.id===nsid||`${gk}|${m.a.n}v${m.h.n}`===nsid)||null;
-  }).filter(Boolean);
+  if(!order) return Object.values(rawMap);
+  const ordered=order.map(sid=>rawMap[sid]).filter(Boolean);
+  // Fallback: if ordering incomplete, return all raw matches
+  return ordered.length===6?ordered:Object.values(rawMap);
 }
 function gW(h,a){const hi=parseInt(h),ai=parseInt(a);if(isNaN(hi)||isNaN(ai)||h===""||a==="")return null;return hi>ai?"H":ai>hi?"A":"D";}
 function sMatch(ph,pa,rh,ra){const pw=gW(ph,pa),rw=gW(rh,ra);if(!pw||!rw||pw!==rw)return 0;return+ph===+rh&&+pa===+ra?5:3;}
@@ -1198,8 +1196,8 @@ function PredictView({user,preds,onSave,onLB,onOut,onHoy,locked,nav,setNav,resul
       </div>
       <div className="ma">
         {locked&&<div style={{background:"var(--rdim)",border:"1px solid rgba(244,63,94,.25)",borderRadius:8,padding:"9px 14px",marginBottom:14,fontFamily:"'Barlow Condensed',sans-serif",fontSize:13,color:"#fca5a5",letterSpacing:"1px"}}>🔒 La polla está cerrada. Solo puedes ver tus pronósticos.</div>}
-        {nav.type==="group"&&<GroupPanel gk={nav.id} preds={lp} results={results} onMC={updM} onSC={updSt} locked={locked}/>}
-        {nav.type==="ko"&&<KOPanel rid={nav.id} preds={lp} koTeams={koTeams} koResults={koResults} koUnlocked={koUnlocked} onUpd={updKO}/>}
+        {nav.type==="group"&&<GroupPanel key={nav.id} gk={nav.id} preds={lp} results={results} onMC={updM} onSC={updSt} locked={locked}/>}
+        {nav.type==="ko"&&<KOPanel key={nav.id} rid={nav.id} preds={lp} koTeams={koTeams} koResults={koResults} koUnlocked={koUnlocked} onUpd={updKO}/>}
         {nav.type==="special"&&<SpecialPanel preds={lp} spRes={spRes} onUpd={updSp} locked={locked}/>}
       </div>
     </div>
@@ -1221,8 +1219,7 @@ function GroupPanel({gk,preds,results,onMC,onSC,locked}){
         const pts=(rp&&rp.h!==""&&rp.a!==""&&mp.h!==""&&mp.a!=="")?sMatch(mp.h,mp.a,rp.h,rp.a):null;
         const isE=pts===5,isO=pts===3;
         let bc="var(--bos)";if(pts!==null)bc=isE?"rgba(240,180,41,.4)":isO?"rgba(16,185,129,.35)":"rgba(244,63,94,.35)";
-        const _nid=id.replace(/ v/g,'v'),_rid=`${gk}|${a.n}v${h.n}`.replace(/ v/g,'v');
-        const sch=Object.entries(SCHEDULE).find(([k])=>k.replace(/ v/g,'v')===_nid||k.replace(/ v/g,'v')===_rid)?.[1];
+        const sch=SCHEDULE[id]||SCHEDULE[`${gk}|${a.n}v${h.n}`];
         return(<div key={id} style={{marginBottom:8}}>
           {sch&&<div className="sch-meta">
             <span className="sch-date">📅 {sch.d}</span>
@@ -1423,11 +1420,7 @@ function HoyView({results,allPreds,users,lb,onBack}){
       const gk = k.split('|')[0];
       const teams = GROUPS[gk];
       // Find the match in the group
-      const match = mkM(gk).find(m => {
-        const nid = m.id.replace(/ v/g,'v');
-        const nk = k.replace(/ v/g,'v');
-        return nid === nk || `${gk}|${m.a.n}v${m.h.n}`.replace(/ v/g,'v') === nk;
-      });
+      const match = mkM(gk).find(m => m.id===k);
       return match ? {id:match.id, h:match.h, a:match.a, gk, sch:v} : null;
     })
     .filter(Boolean)
@@ -1625,7 +1618,7 @@ function ApuestasView({users,allPreds,results,lb}){
     {matches.map(({id,h,a})=>{
       const rp=rMatches[id];
       const hasResult=rp&&rp.h!==""&&rp.a!=="";
-      const sch=Object.entries(SCHEDULE).find(([k])=>k.replace(/ v/g,'v')===id.replace(/ v/g,'v'))?.[1];
+      const sch=SCHEDULE[id];
 
       // Collect all predictions for this match
       const preds=users.map(u=>{
