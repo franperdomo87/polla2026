@@ -391,124 +391,122 @@ const PLAYERS=[
 ];
 
 
-// ═══ CALENDARIO FASE DE GRUPOS ════════════════════════════════════════
-// Fuente: FIFA / Al Jazeera — Horas en hora Colombia (ET+1)
+// ═══ CALENDARIO FASE DE GRUPOS — Fuente: FIFA/NBC Sports — Horas Colombia (UTC-5) ════
+// ═══ CALENDARIO FASE DE GRUPOS — Fuente: FIFA/NBC Sports — Horas Colombia (UTC-5) ════
 const SCHEDULE = {
-  "A|México vSudáfrica":           {d:"Jun 11",h:"15:00",st:"Estadio Guadalajara"},
-  "A|Corea del SurvChequia":       {d:"Jun 11",h:"22:00",st:"Estadio Guadalajara"},
-  "A|México vCorea del Sur":       {d:"Jun 18",h:"21:00",st:"Estadio Guadalajara"},
-  "A|Chequia vSudáfrica":          {d:"Jun 18",h:"12:00",st:"Atlanta Stadium"},
-  "A|Sudáfrica vCorea del Sur":    {d:"Jun 26",h:"20:00",st:"Kansas City Stadium"},
-  "A|México vChequia":             {d:"Jun 26",h:"20:00",st:"Estadio Guadalajara"},
+  // Grupo A
+  "A|MéxicovSudáfrica": {d:"Jun 11",h:"14:00",st:"Estadio Azteca, México"},
+  "A|Corea del SurvChequia": {d:"Jun 11",h:"21:00",st:"Estadio Akron, Guadalajara"},
+  "A|SudáfricavChequia": {d:"Jun 18",h:"11:00",st:"Mercedes-Benz, Atlanta"},
+  "A|MéxicovCorea del Sur": {d:"Jun 18",h:"20:00",st:"Estadio Akron, Guadalajara"},
+  "A|MéxicovChequia": {d:"Jun 24",h:"20:00",st:"Estadio Azteca, México"},
+  "A|SudáfricavCorea del Sur": {d:"Jun 24",h:"20:00",st:"Estadio BBVA, Monterrey"},
 
-  "B|Canadá vBosnia-Herz.":        {d:"Jun 12",h:"15:00",st:"Toronto Stadium"},
-  "B|Catar vSuiza":                {d:"Jun 13",h:"15:00",st:"San Francisco Bay Area Stadium"},
-  "B|Suiza vBosnia-Herz.":         {d:"Jun 18",h:"15:00",st:"Los Angeles Stadium"},
-  "B|Canadá vCatar":               {d:"Jun 18",h:"18:00",st:"BC Place, Vancouver"},
-  "B|Bosnia-Herz. vCatar":         {d:"Jun 26",h:"17:00",st:"Philadelphia Stadium"},
-  "B|Canadá vSuiza":               {d:"Jun 26",h:"17:00",st:"Toronto Stadium"},
+  // Grupo B
+  "B|CanadávBosnia-Herz.": {d:"Jun 12",h:"14:00",st:"BMO Field, Toronto"},
+  "B|CatarvSuiza": {d:"Jun 13",h:"14:00",st:"Levi's Stadium, San José"},
+  "B|Bosnia-Herz.vSuiza": {d:"Jun 18",h:"14:00",st:"SoFi Stadium, Los Ángeles"},
+  "B|CanadávCatar": {d:"Jun 18",h:"17:00",st:"BC Place, Vancouver"},
+  "B|CanadávSuiza": {d:"Jun 24",h:"14:00",st:"BC Place, Vancouver"},
+  "B|Bosnia-Herz.vCatar": {d:"Jun 24",h:"14:00",st:"Lumen Field, Seattle"},
 
-  "C|Brasil vMarruecos":            {d:"Jun 13",h:"18:00",st:"New York NJ Stadium"},
-  "C|Haití vEscocia":              {d:"Jun 13",h:"21:00",st:"Boston Stadium"},
-  "C|Escocia vMarruecos":          {d:"Jun 19",h:"18:00",st:"Boston Stadium"},
-  "C|Brasil vHaití":               {d:"Jun 19",h:"21:00",st:"Philadelphia Stadium"},
-  "C|Marruecos vHaití":            {d:"Jun 26",h:"21:00",st:"Miami Stadium"},
-  "C|Brasil vEscocia":             {d:"Jun 26",h:"21:00",st:"Los Angeles Stadium"},
+  // Grupo C
+  "C|BrasilvMarruecos": {d:"Jun 13",h:"17:00",st:"MetLife Stadium, NY/NJ"},
+  "C|HaitívEscocia": {d:"Jun 13",h:"20:00",st:"Gillette Stadium, Boston"},
+  "C|MarruecosvEscocia": {d:"Jun 19",h:"17:00",st:"Gillette Stadium, Boston"},
+  "C|BrasilvHaití": {d:"Jun 19",h:"19:30",st:"Lincoln Financial, Filadelfia"},
+  "C|BrasilvEscocia": {d:"Jun 24",h:"17:00",st:"Hard Rock Stadium, Miami"},
+  "C|MarruecosvHaití": {d:"Jun 24",h:"17:00",st:"Mercedes-Benz, Atlanta"},
 
-  "D|EE.UU. vParaguay":            {d:"Jun 12",h:"21:00",st:"Los Angeles Stadium"},
-  "D|Australia vTürkiye":          {d:"Jun 13",h:"21:00",st:"BC Place, Vancouver"},
-  "D|EE.UU. vAustralia":           {d:"Jun 19",h:"15:00",st:"Seattle Stadium"},
-  "D|Türkiye vParaguay":           {d:"Jun 19",h:"00:00",st:"San Francisco Bay Area Stadium"},
-  "D|Paraguay vAustralia":         {d:"Jun 26",h:"17:00",st:"Houston Stadium"},
-  "D|EE.UU. vTürkiye":             {d:"Jun 26",h:"17:00",st:"Dallas Stadium"},
+  // Grupo D
+  "D|EE.UU.vParaguay": {d:"Jun 12",h:"20:00",st:"SoFi Stadium, Los Ángeles"},
+  "D|AustraliavTürkiye": {d:"Jun 13",h:"23:00",st:"BC Place, Vancouver"},
+  "D|EE.UU.vAustralia": {d:"Jun 19",h:"14:00",st:"Lumen Field, Seattle"},
+  "D|ParaguayvTürkiye": {d:"Jun 19",h:"22:00",st:"Levi's Stadium, San José"},
+  "D|EE.UU.vTürkiye": {d:"Jun 25",h:"21:00",st:"SoFi Stadium, Los Ángeles"},
+  "D|ParaguayvAustralia": {d:"Jun 25",h:"21:00",st:"Levi's Stadium, San José"},
 
-  "E|Alemania vCurazao":           {d:"Jun 14",h:"13:00",st:"Houston Stadium"},
-  "E|C. de Marfil vEcuador":       {d:"Jun 14",h:"19:00",st:"Philadelphia Stadium"},
-  "E|Alemania vC. de Marfil":      {d:"Jun 20",h:"16:00",st:"Toronto Stadium"},
-  "E|Ecuador vCurazao":            {d:"Jun 20",h:"20:00",st:"Kansas City Stadium"},
-  "E|Curazao vC. de Marfil":       {d:"Jun 25",h:"21:00",st:"Dallas Stadium"},
-  "E|Alemania vEcuador":           {d:"Jun 25",h:"21:00",st:"Atlanta Stadium"},
+  // Grupo E
+  "E|AlemaniavCurazao": {d:"Jun 14",h:"12:00",st:"NRG Stadium, Houston"},
+  "E|C. de MarfilvEcuador": {d:"Jun 14",h:"18:00",st:"Lincoln Financial, Filadelfia"},
+  "E|AlemaniavC. de Marfil": {d:"Jun 20",h:"15:00",st:"BMO Field, Toronto"},
+  "E|CurazaovEcuador": {d:"Jun 20",h:"19:00",st:"Arrowhead, Kansas City"},
+  "E|CurazaovC. de Marfil": {d:"Jun 25",h:"15:00",st:"Lincoln Financial, Filadelfia"},
+  "E|AlemaniavEcuador": {d:"Jun 25",h:"15:00",st:"MetLife Stadium, NY/NJ"},
 
-  "F|P. Bajos vJapón":             {d:"Jun 14",h:"16:00",st:"Dallas Stadium"},
-  "F|Suecia vTúnez":               {d:"Jun 14",h:"22:00",st:"Estadio Monterrey"},
-  "F|P. Bajos vSuecia":            {d:"Jun 20",h:"13:00",st:"Houston Stadium"},
-  "F|Túnez vJapón":                {d:"Jun 20",h:"00:00",st:"Estadio Monterrey"},
-  "F|Japón vSuecia":               {d:"Jun 25",h:"21:00",st:"Seattle Stadium"},
-  "F|P. Bajos vTúnez":             {d:"Jun 25",h:"21:00",st:"Boston Stadium"},
+  // Grupo F
+  "F|P. BajosvJapón": {d:"Jun 14",h:"15:00",st:"AT&T Stadium, Dallas"},
+  "F|SueciavTúnez": {d:"Jun 14",h:"21:00",st:"Estadio BBVA, Monterrey"},
+  "F|P. BajosvSuecia": {d:"Jun 20",h:"12:00",st:"NRG Stadium, Houston"},
+  "F|JapónvTúnez": {d:"Jun 20",h:"23:00",st:"Estadio BBVA, Monterrey"},
+  "F|JapónvSuecia": {d:"Jun 25",h:"18:00",st:"AT&T Stadium, Dallas"},
+  "F|P. BajosvTúnez": {d:"Jun 25",h:"18:00",st:"Arrowhead, Kansas City"},
 
-  "G|Bélgica vEgipto":             {d:"Jun 15",h:"15:00",st:"BC Place, Vancouver"},
-  "G|Irán vN. Zelanda":            {d:"Jun 15",h:"21:00",st:"Los Angeles Stadium"},
-  "G|Bélgica vIrán":               {d:"Jun 21",h:"15:00",st:"Los Angeles Stadium"},
-  "G|N. Zelanda vEgipto":          {d:"Jun 21",h:"21:00",st:"BC Place, Vancouver"},
-  "G|Egipto vIrán":                {d:"Jun 26",h:"20:00",st:"Atlanta Stadium"},
-  "G|Bélgica vN. Zelanda":         {d:"Jun 26",h:"20:00",st:"Seattle Stadium"},
+  // Grupo G
+  "G|BélgicavEgipto": {d:"Jun 15",h:"14:00",st:"Lumen Field, Seattle"},
+  "G|IránvN. Zelanda": {d:"Jun 15",h:"20:00",st:"SoFi Stadium, Los Ángeles"},
+  "G|BélgicavIrán": {d:"Jun 21",h:"14:00",st:"SoFi Stadium, Los Ángeles"},
+  "G|EgiptovN. Zelanda": {d:"Jun 21",h:"20:00",st:"BC Place, Vancouver"},
+  "G|EgiptovIrán": {d:"Jun 26",h:"22:00",st:"Lumen Field, Seattle"},
+  "G|BélgicavN. Zelanda": {d:"Jun 26",h:"22:00",st:"BC Place, Vancouver"},
 
-  "H|España vA. Saudita":          {d:"Jun 15",h:"12:00",st:"Atlanta Stadium"},
-  "H|Uruguay vCabo Verde":         {d:"Jun 15",h:"18:00",st:"Miami Stadium"},
-  "H|España vUruguay":             {d:"Jun 21",h:"12:00",st:"Atlanta Stadium"},
-  "H|A. Saudita vCabo Verde":      {d:"Jun 21",h:"18:00",st:"Miami Stadium"},
-  "H|Cabo Verde vUruguay":         {d:"Jun 27",h:"20:00",st:"San Francisco Bay Area Stadium"},
-  "H|España vCabo Verde":          {d:"Jun 27",h:"20:00",st:"Kansas City Stadium"},
+  // Grupo H
+  "H|EspañavCabo Verde": {d:"Jun 15",h:"11:00",st:"Mercedes-Benz, Atlanta"},
+  "H|A. SauditavUruguay": {d:"Jun 15",h:"17:00",st:"Hard Rock Stadium, Miami"},
+  "H|EspañavA. Saudita": {d:"Jun 21",h:"11:00",st:"Mercedes-Benz, Atlanta"},
+  "H|UruguayvCabo Verde": {d:"Jun 21",h:"17:00",st:"Hard Rock Stadium, Miami"},
+  "H|A. SauditavCabo Verde": {d:"Jun 26",h:"19:00",st:"NRG Stadium, Houston"},
+  "H|EspañavUruguay": {d:"Jun 26",h:"19:00",st:"Estadio Akron, Guadalajara"},
 
-  "I|Francia vSenegal":            {d:"Jun 16",h:"15:00",st:"New York NJ Stadium"},
-  "I|Iraq vNoruega":               {d:"Jun 16",h:"18:00",st:"Boston Stadium"},
-  "I|Francia vIraq":               {d:"Jun 22",h:"17:00",st:"Philadelphia Stadium"},
-  "I|Noruega vSenegal":            {d:"Jun 22",h:"20:00",st:"New York NJ Stadium"},
-  "I|Senegal vIraq":               {d:"Jun 27",h:"20:00",st:"Miami Stadium"},
-  "I|Francia vNoruega":            {d:"Jun 27",h:"20:00",st:"Toronto Stadium"},
+  // Grupo I
+  "I|FranciavSenegal": {d:"Jun 16",h:"14:00",st:"MetLife Stadium, NY/NJ"},
+  "I|IraqvNoruega": {d:"Jun 16",h:"17:00",st:"Gillette Stadium, Boston"},
+  "I|FranciavIraq": {d:"Jun 22",h:"16:00",st:"Lincoln Financial, Filadelfia"},
+  "I|SenegalvNoruega": {d:"Jun 22",h:"19:00",st:"MetLife Stadium, NY/NJ"},
+  "I|FranciavNoruega": {d:"Jun 26",h:"14:00",st:"Gillette Stadium, Boston"},
+  "I|SenegalvIraq": {d:"Jun 26",h:"14:00",st:"BMO Field, Toronto"},
 
-  "J|Argentina vArgelia":          {d:"Jun 16",h:"21:00",st:"Kansas City Stadium"},
-  "J|Austria vJordania":           {d:"Jun 16",h:"00:00",st:"San Francisco Bay Area Stadium"},
-  "J|Argentina vAustria":          {d:"Jun 22",h:"13:00",st:"Dallas Stadium"},
-  "J|Jordania vArgelia":           {d:"Jun 22",h:"23:00",st:"San Francisco Bay Area Stadium"},
-  "J|Argelia vAustria":            {d:"Jun 27",h:"20:00",st:"Los Angeles Stadium"},
-  "J|Argentina vJordania":         {d:"Jun 27",h:"20:00",st:"Philadelphia Stadium"},
+  // Grupo J
+  "J|ArgentinavArgelia": {d:"Jun 16",h:"20:00",st:"Arrowhead, Kansas City"},
+  "J|AustriavJordania": {d:"Jun 16",h:"23:00",st:"Levi's Stadium, San José"},
+  "J|ArgentinavAustria": {d:"Jun 22",h:"12:00",st:"AT&T Stadium, Dallas"},
+  "J|ArgeliavJordania": {d:"Jun 22",h:"22:00",st:"Levi's Stadium, San José"},
+  "J|ArgeliavAustria": {d:"Jun 27",h:"21:00",st:"Arrowhead, Kansas City"},
+  "J|ArgentinavJordania": {d:"Jun 27",h:"21:00",st:"AT&T Stadium, Arlington"},
 
-  "K|Portugal vDR Congo":          {d:"Jun 17",h:"13:00",st:"Houston Stadium"},
-  "K|Uzbekistán vColombia":        {d:"Jun 17",h:"22:00",st:"Estadio Azteca, México"},
-  "K|Portugal vUzbekistán":        {d:"Jun 23",h:"17:00",st:"Atlanta Stadium"},
-  "K|Colombia vDR Congo":          {d:"Jun 23",h:"20:00",st:"San Francisco Bay Area Stadium"},
-  "K|DR Congo vUzbekistán":        {d:"Jun 27",h:"17:00",st:"Houston Stadium"},
-  "K|Portugal vColombia":          {d:"Jun 27",h:"17:00",st:"Dallas Stadium"},
+  // Grupo K
+  "K|PortugalvDR Congo": {d:"Jun 17",h:"12:00",st:"NRG Stadium, Houston"},
+  "K|UzbekistánvColombia": {d:"Jun 17",h:"21:00",st:"Estadio Azteca, México"},
+  "K|PortugalvUzbekistán": {d:"Jun 23",h:"12:00",st:"NRG Stadium, Houston"},
+  "K|DR CongovColombia": {d:"Jun 23",h:"21:00",st:"Estadio Akron, Guadalajara"},
+  "K|PortugalvColombia": {d:"Jun 27",h:"18:30",st:"Hard Rock Stadium, Miami"},
+  "K|DR CongovUzbekistán": {d:"Jun 27",h:"18:30",st:"Mercedes-Benz, Atlanta"},
 
-  "L|Inglaterra vCroacia":         {d:"Jun 17",h:"16:00",st:"Dallas Stadium"},
-  "L|Ghana vPanamá":               {d:"Jun 17",h:"19:00",st:"Toronto Stadium"},
-  "L|Inglaterra vGhana":           {d:"Jun 24",h:"13:00",st:"Atlanta Stadium"},
-  "L|Panamá vCroacia":             {d:"Jun 24",h:"16:00",st:"Kansas City Stadium"},
-  "L|Croacia vGhana":              {d:"Jun 27",h:"17:00",st:"Philadelphia Stadium"},
-  "L|Panamá vInglaterra":          {d:"Jun 27",h:"17:00",st:"New York NJ Stadium"},
+  // Grupo L
+  "L|InglaterravCroacia": {d:"Jun 17",h:"15:00",st:"AT&T Stadium, Dallas"},
+  "L|GhanavPanamá": {d:"Jun 17",h:"18:00",st:"BMO Field, Toronto"},
+  "L|InglaterravGhana": {d:"Jun 23",h:"15:00",st:"Gillette Stadium, Boston"},
+  "L|CroaciavPanamá": {d:"Jun 23",h:"18:00",st:"BMO Field, Toronto"},
+  "L|InglaterravPanamá": {d:"Jun 27",h:"16:00",st:"MetLife Stadium, NY/NJ"},
+  "L|CroaciavGhana": {d:"Jun 27",h:"16:00",st:"Lincoln Financial, Filadelfia"},
+
 };
 
-// Orden cronológico de partidos por grupo
 const GROUP_ORDER = {
-  A: ["A|México vSudáfrica","A|Corea del SurvChequia","A|México vCorea del Sur","A|Chequia vSudáfrica","A|Sudáfrica vCorea del Sur","A|México vChequia"],
-  B: ["B|Canadá vBosnia-Herz.","B|Catar vSuiza","B|Suiza vBosnia-Herz.","B|Canadá vCatar","B|Bosnia-Herz. vCatar","B|Canadá vSuiza"],
-  C: ["C|Brasil vMarruecos","C|Haití vEscocia","C|Escocia vMarruecos","C|Brasil vHaití","C|Marruecos vHaití","C|Brasil vEscocia"],
-  D: ["D|EE.UU. vParaguay","D|Australia vTürkiye","D|EE.UU. vAustralia","D|Türkiye vParaguay","D|Paraguay vAustralia","D|EE.UU. vTürkiye"],
-  E: ["E|Alemania vCurazao","E|C. de Marfil vEcuador","E|Alemania vC. de Marfil","E|Ecuador vCurazao","E|Curazao vC. de Marfil","E|Alemania vEcuador"],
-  F: ["F|P. Bajos vJapón","F|Suecia vTúnez","F|P. Bajos vSuecia","F|Túnez vJapón","F|Japón vSuecia","F|P. Bajos vTúnez"],
-  G: ["G|Bélgica vEgipto","G|Irán vN. Zelanda","G|Bélgica vIrán","G|N. Zelanda vEgipto","G|Egipto vIrán","G|Bélgica vN. Zelanda"],
-  H: ["H|España vA. Saudita","H|Uruguay vCabo Verde","H|España vUruguay","H|A. Saudita vCabo Verde","H|Cabo Verde vUruguay","H|España vCabo Verde"],
-  I: ["I|Francia vSenegal","I|Iraq vNoruega","I|Francia vIraq","I|Noruega vSenegal","I|Senegal vIraq","I|Francia vNoruega"],
-  J: ["J|Argentina vArgelia","J|Austria vJordania","J|Argentina vAustria","J|Jordania vArgelia","J|Argelia vAustria","J|Argentina vJordania"],
-  K: ["K|Portugal vDR Congo","K|Uzbekistán vColombia","K|Portugal vUzbekistán","K|Colombia vDR Congo","K|DR Congo vUzbekistán","K|Portugal vColombia"],
-  L: ["L|Inglaterra vCroacia","L|Ghana vPanamá","L|Inglaterra vGhana","L|Panamá vCroacia","L|Croacia vGhana","L|Panamá vInglaterra"],
+  A:["A|MéxicovSudáfrica","A|Corea del SurvChequia","A|SudáfricavChequia","A|MéxicovCorea del Sur","A|MéxicovChequia","A|SudáfricavCorea del Sur"],
+  B:["B|CanadávBosnia-Herz.","B|CatarvSuiza","B|Bosnia-Herz.vSuiza","B|CanadávCatar","B|CanadávSuiza","B|Bosnia-Herz.vCatar"],
+  C:["C|BrasilvMarruecos","C|HaitívEscocia","C|MarruecosvEscocia","C|BrasilvHaití","C|BrasilvEscocia","C|MarruecosvHaití"],
+  D:["D|EE.UU.vParaguay","D|AustraliavTürkiye","D|EE.UU.vAustralia","D|ParaguayvTürkiye","D|EE.UU.vTürkiye","D|ParaguayvAustralia"],
+  E:["E|AlemaniavCurazao","E|C. de MarfilvEcuador","E|AlemaniavC. de Marfil","E|CurazaovEcuador","E|CurazaovC. de Marfil","E|AlemaniavEcuador"],
+  F:["F|P. BajosvJapón","F|SueciavTúnez","F|P. BajosvSuecia","F|JapónvTúnez","F|JapónvSuecia","F|P. BajosvTúnez"],
+  G:["G|BélgicavEgipto","G|IránvN. Zelanda","G|BélgicavIrán","G|EgiptovN. Zelanda","G|EgiptovIrán","G|BélgicavN. Zelanda"],
+  H:["H|EspañavCabo Verde","H|A. SauditavUruguay","H|EspañavA. Saudita","H|UruguayvCabo Verde","H|A. SauditavCabo Verde","H|EspañavUruguay"],
+  I:["I|FranciavSenegal","I|IraqvNoruega","I|FranciavIraq","I|SenegalvNoruega","I|FranciavNoruega","I|SenegalvIraq"],
+  J:["J|ArgentinavArgelia","J|AustriavJordania","J|ArgentinavAustria","J|ArgeliavJordania","J|ArgeliavAustria","J|ArgentinavJordania"],
+  K:["K|PortugalvDR Congo","K|UzbekistánvColombia","K|PortugalvUzbekistán","K|DR CongovColombia","K|PortugalvColombia","K|DR CongovUzbekistán"],
+  L:["L|InglaterravCroacia","L|GhanavPanamá","L|InglaterravGhana","L|CroaciavPanamá","L|InglaterravPanamá","L|CroaciavGhana"],
 };
 
-function mkKODefs(){
-  const d=[];
-  const r32=[["1°A","2°B"],["1°B","2°A"],["1°C","2°D"],["1°D","2°C"],["1°E","2°F"],["1°F","2°E"],["1°G","2°H"],["1°H","2°G"],["1°I","3°Mejor"],["1°J","3°Mejor"],["1°K","3°Mejor"],["1°L","3°Mejor"],["2°I","3°Mejor"],["2°J","3°Mejor"],["2°K","3°Mejor"],["2°L","3°Mejor"]];
-  r32.forEach(([h,a],i)=>d.push({id:`r32_${String(i+1).padStart(2,"0")}`,round:"r32",ph:h,pa:a,num:i+1}));
-  for(let i=1;i<=8;i++)d.push({id:`r16_${String(i).padStart(2,"0")}`,round:"r16",ph:`Gan.R32 M${i*2-1}`,pa:`Gan.R32 M${i*2}`,num:i});
-  for(let i=1;i<=4;i++)d.push({id:`qf_${String(i).padStart(2,"0")}`,round:"qf",ph:`Gan.Oct M${i*2-1}`,pa:`Gan.Oct M${i*2}`,num:i});
-  for(let i=1;i<=2;i++)d.push({id:`sf_${String(i).padStart(2,"0")}`,round:"sf",ph:`Gan.QF M${i*2-1}`,pa:`Gan.QF M${i*2}`,num:i});
-  d.push({id:"tp_01",round:"tp",ph:"Perd.SF M1",pa:"Perd.SF M2",num:1});
-  d.push({id:"final_01",round:"final",ph:"Gan.SF M1",pa:"Gan.SF M2",num:1});
-  return d;
-}
-const KO_DEFS=mkKODefs();
-
-// ═══ UTILIDADES ═══════════════════════════════════════════════════════
 function mkM(gk){
   // Build match map keyed by sorted team names
   const t=GROUPS[gk],raw=[];
@@ -1141,16 +1139,13 @@ function Landing({onLogin,onAdmin,onLB,onHoy,locked,users=[],allPreds={}}){
 }
 
 function DailyFact(){
-  // Dato del día: uno fijo por categoría según la fecha real (no navegable)
+  // Dato del día: avanza cada día calendario real, desde hoy mismo
   const today=Math.floor(Date.now()/86400000);
-  // Fecha base: 11 Jun 2026 (día 0 del mundial)
-  const BASE_DAY=Math.floor(new Date('2026-06-11').getTime()/86400000);
-  const dayOffset=Math.max(0,today-BASE_DAY); // días desde apertura
+  const BASE_DAY=Math.floor(new Date('2026-05-29').getTime()/86400000); // Hoy = Día 1
+  const dayOffset=today-BASE_DAY; // positivo desde hoy, crece cada día
   const [ci,setCi]=useState(0);
   const cat=FACT_CATS[ci];
-  // El dato de hoy para esta categoría
-  const fact=cat.facts[dayOffset%cat.facts.length];
-  // Fecha legible
+  const fact=cat.facts[((dayOffset%cat.facts.length)+cat.facts.length)%cat.facts.length];
   const dateStr=new Date().toLocaleDateString('es-CO',{weekday:'long',day:'numeric',month:'long'});
   return(
     <div className="fw">
@@ -1164,7 +1159,7 @@ function DailyFact(){
         <span className="fe">{fact.e}</span>
         <div className="ft">{fact.t}</div>
         <div style={{marginTop:10,fontFamily:"'Barlow Condensed',sans-serif",fontSize:9,color:"var(--txs)",opacity:.45,letterSpacing:"1.5px",textAlign:"right"}}>
-          DÍA {dayOffset+1} DEL TORNEO · {(dayOffset%cat.facts.length)+1}/{cat.facts.length}
+          DÍA {dayOffset+1} · {(((dayOffset%cat.facts.length)+cat.facts.length)%cat.facts.length)+1}/{cat.facts.length}
         </div>
       </div>
     </div>
