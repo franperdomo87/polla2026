@@ -617,8 +617,11 @@ function calcScore(preds,results,koTeams,koResults,koUnlocked,spRes){
   GKS.forEach(gk=>{
     let aEx=true,aSt=true;
     mkM(gk).forEach(({id})=>{const p=preds?.matches?.[id],r=results?.matches?.[id];if(!p||!r||p.h===""||p.a===""||r.h===""||r.a===""){aEx=false;return;}const pts=sMatch(p.h,p.a,r.h,r.a);if(+p.h!==+r.h||+p.a!==+r.a)aEx=false;group+=pts;});
-    const rs=results?.standings?.[gk],ps=preds?.standings?.[gk];
-    if(rs&&ps){for(let i=0;i<4;i++){if(ps[i]&&rs[i]&&ps[i]===rs[i])group+=2;else aSt=false;}const ptp=tPts(gk,preds?.matches),rtp=tPts(gk,results?.matches);GROUPS[gk].forEach(t=>{if(ptp[t.n]===rtp[t.n])group+=1;});if(aEx&&aSt)group+=10;}else aSt=false;
+    const rs=results?.standings?.[gk];
+    // Posiciones predichas: calculadas automáticamente con reglas FIFA
+    const psAuto=cStand(gk,preds?.matches).map(t=>t.n);
+    const allFilled=mkM(gk).every(({id})=>{const p=preds?.matches?.[id];return p&&p.h!==""&&p.a!=="";});
+    if(rs&&allFilled){for(let i=0;i<4;i++){if(psAuto[i]&&rs[i]&&psAuto[i]===rs[i])group+=2;else aSt=false;}const ptp=tPts(gk,preds?.matches),rtp=tPts(gk,results?.matches);GROUPS[gk].forEach(t=>{if(ptp[t.n]===rtp[t.n])group+=1;});if(aEx&&aSt)group+=10;}else aSt=false;
   });
   KO_ROUNDS.forEach(({id:rid})=>{
     if(!koUnlocked?.[rid])return;
@@ -1276,15 +1279,38 @@ function GroupPanel({gk,preds,results,onMC,onSC,locked}){
         {haP&&<div><div className="stit" style={{marginTop:0,color:"var(--green)"}}>Tu tabla predicha</div><StTable rows={pRows} acc="rgba(16,185,129,.3)"/></div>}
         {haR&&<div><div className="stit" style={{marginTop:0,color:"var(--gold)"}}>Tabla real</div><StTable rows={rRows} acc="rgba(240,180,41,.3)" adv/></div>}
       </div>}
-      <div className="stit" style={{marginTop:22}}>Clasificación final — tu pronóstico</div>
-      {[0,1,2,3].map(i=>{const rp=results?.standings?.[gk]?.[i],pp=st[i],ok=rp&&pp&&rp===pp;return(<div key={i} className="sr" style={{borderColor:ok?"rgba(240,180,41,.35)":"var(--bos)"}}>
-        <span className="pos">{med[i]}</span>
-        <select className="tsel" value={st[i]||""} disabled={locked} onChange={e=>onSC(gk,i,e.target.value||null)}>
-          <option value="">— Seleccionar equipo —</option>
-          {teams.map(t=><option key={t.n} value={t.n} disabled={st.includes(t.n)&&st[i]!==t.n}>{t.f} {t.n}</option>)}
-        </select>
-        {rp&&<span className={`badge ${ok?"badge-g":"badge-r"}`}>{ok?"✓":"✗"} {rp}</span>}
-      </div>);})}
+      {/* Clasificación automática — calculada según los marcadores predichos y reglas FIFA */}
+      {pRows.some(r=>r.pj>0)&&(<>
+        <div style={{marginTop:22,marginBottom:8}}>
+          <div style={{display:"flex",alignItems:"center",gap:10,flexWrap:"wrap"}}>
+            <div className="stit" style={{marginTop:0,marginBottom:0}}>
+              🏆 Tu clasificación — calculada automáticamente
+            </div>
+            {!pRows.every(r=>r.pj>0)&&<span style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:11,color:"var(--txs)",opacity:.7}}>Completa todos los partidos para ver la clasificación final</span>}
+          </div>
+          <div style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:11,color:"var(--txs)",marginTop:3,opacity:.7,lineHeight:1.5}}>
+            Ordenada según reglas FIFA: puntos → enfrentamiento directo → diferencia de goles → goles a favor
+          </div>
+        </div>
+        <div style={{background:"var(--sur)",border:"1px solid var(--bos)",borderRadius:10,overflow:"hidden",padding:"2px 9px 8px"}}>
+          {pRows.map((t,i)=>{
+            const medals=["🥇","🥈","🥉","4️⃣"];
+            const rp=results?.standings?.[gk]?.[i];
+            const ok=rp&&rp===t.n;
+            return(
+              <div key={t.n} style={{display:"flex",alignItems:"center",gap:10,padding:"8px 4px",borderBottom:i<3?"1px solid rgba(255,255,255,.04)":"none",background:i<2?"rgba(16,185,129,.03)":"transparent"}}>
+                <span style={{fontFamily:"'Bebas Neue',cursive",fontSize:20,color:"var(--gold)",minWidth:26,textAlign:"center"}}>{medals[i]}</span>
+                <Flag c={t.c} f={t.f}/>
+                <span style={{flex:1,fontFamily:"'Barlow Condensed',sans-serif",fontSize:14,fontWeight:700,color:"var(--txt)"}}>{t.n}</span>
+                <span style={{fontFamily:"'Bebas Neue',cursive",fontSize:16,color:"var(--gold)",minWidth:30,textAlign:"center"}}>{t.pts}<span style={{fontSize:10,color:"var(--txs)",fontFamily:"'Barlow Condensed',sans-serif"}}> pts</span></span>
+                <span style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:11,color:(t.gf-t.gc)>0?"var(--green)":(t.gf-t.gc)<0?"var(--red)":"var(--txs)",minWidth:32,textAlign:"right"}}>{t.gf-t.gc>0?"+":""}{t.gf-t.gc} DG</span>
+                {rp&&<span className={`badge ${ok?"badge-g":"badge-r"}`} style={{marginLeft:4}}>{ok?"✓":"✗"} Real: {i+1}°</span>}
+              </div>
+            );
+          })}
+        </div>
+        {pRows.every(r=>r.pj>0)&&<div style={{marginTop:6,fontFamily:"'Barlow Condensed',sans-serif",fontSize:10,color:"var(--green)",letterSpacing:"2px",opacity:.7}}>✦ LOS 2 PRIMEROS CLASIFICAN DIRECTAMENTE AL R32</div>}
+      </>)}
       <ScoreInfo/>
     </div>
   );
