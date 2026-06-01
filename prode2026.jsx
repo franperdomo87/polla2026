@@ -1077,6 +1077,13 @@ function Instructions(){
 }
 
 
+function Flag({c,f,size=20}){
+  // Renders emoji flag from team.f
+  if(!f&&!c) return null;
+  return <span style={{fontSize:size,lineHeight:1,flexShrink:0,display:"inline-block"}}>{f||""}</span>;
+}
+
+
 function Landing({onLogin,onAdmin,onLB,onHoy,locked,users=[],allPreds={}}){
   const [name,setName]=useState("");
   const [step,setStep]=useState("home");
