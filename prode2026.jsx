@@ -616,12 +616,29 @@ function calcScore(preds,results,koTeams,koResults,koUnlocked,spRes){
   let group=0,knockout=0,special=0;
   GKS.forEach(gk=>{
     let aEx=true,aSt=true;
-    mkM(gk).forEach(({id})=>{const p=preds?.matches?.[id],r=results?.matches?.[id];if(!p||!r||p.h===""||p.a===""||r.h===""||r.a===""){aEx=false;return;}const pts=sMatch(p.h,p.a,r.h,r.a);if(+p.h!==+r.h||+p.a!==+r.a)aEx=false;group+=pts;});
+    let anyResultInGroup=false;
+    // Group match points: only if BOTH prediction AND real result exist with valid scores
+    mkM(gk).forEach(({id})=>{
+      const p=preds?.matches?.[id], r=results?.matches?.[id];
+      const hasPred = p && p.h!=="" && p.a!=="" && !isNaN(+p.h) && !isNaN(+p.a);
+      const hasRes = r && r.h!=="" && r.a!=="" && !isNaN(+r.h) && !isNaN(+r.a);
+      if(!hasPred || !hasRes) { aEx=false; return; }
+      anyResultInGroup = true;
+      const pts=sMatch(p.h,p.a,r.h,r.a);
+      if(+p.h!==+r.h||+p.a!==+r.a) aEx=false;
+      group+=pts;
+    });
+    // Standings points: only if real standings are filled AND there are results
     const rs=results?.standings?.[gk];
-    // Posiciones predichas: calculadas automáticamente con reglas FIFA
-    const psAuto=cStand(gk,preds?.matches).map(t=>t.n);
+    const hasRealStandings = rs && Array.isArray(rs) && rs.filter(Boolean).length===4;
     const allFilled=mkM(gk).every(({id})=>{const p=preds?.matches?.[id];return p&&p.h!==""&&p.a!=="";});
-    if(rs&&allFilled){for(let i=0;i<4;i++){if(psAuto[i]&&rs[i]&&psAuto[i]===rs[i])group+=2;else aSt=false;}const ptp=tPts(gk,preds?.matches),rtp=tPts(gk,results?.matches);GROUPS[gk].forEach(t=>{if(ptp[t.n]===rtp[t.n])group+=1;});if(aEx&&aSt)group+=10;}else aSt=false;
+    if(hasRealStandings && allFilled && anyResultInGroup){
+      const psAuto=cStand(gk,preds?.matches).map(t=>t.n);
+      for(let i=0;i<4;i++){if(psAuto[i]&&rs[i]&&psAuto[i]===rs[i])group+=2;else aSt=false;}
+      const ptp=tPts(gk,preds?.matches),rtp=tPts(gk,results?.matches);
+      GROUPS[gk].forEach(t=>{if(ptp[t.n]===rtp[t.n])group+=1;});
+      if(aEx&&aSt)group+=10;
+    } else aSt=false;
   });
   KO_ROUNDS.forEach(({id:rid})=>{
     if(!koUnlocked?.[rid])return;
@@ -1840,6 +1857,13 @@ function AdminView({results,onSaveR,locked,onToggle,onBack,users,allPreds,lb,koT
       <button className="btn btn-ol btn-sm" onClick={onBack}>← Salir</button>
       <div style={{fontFamily:"'Bebas Neue',cursive",fontSize:29,color:"var(--gold)",letterSpacing:"4px",flex:1}}>Admin ⚙️</div>
       <button className={`btn btn-sm ${locked?"btn-gr":"btn-rd"}`} onClick={onToggle}>{locked?"🔓 Abrir polla":"🔒 Cerrar polla"}</button>
+      <button className="btn btn-sm btn-ol" style={{borderColor:"rgba(244,63,94,.3)",color:"#fca5a5"}} onClick={async()=>{
+        if(!window.confirm("⚠️ Esto BORRARÁ todos los resultados ingresados (marcadores y posiciones de grupos). Los pronósticos de los usuarios NO se tocan. ¿Continuar?"))return;
+        await onSaveR({matches:{},standings:{}});
+        await onSaveKR({});
+        await onSaveSR({topScorer:null,goldenBall:null});
+        window.alert("✅ Resultados limpiados. Los puntajes ahora son 0.");
+      }}>🗑️ Limpiar resultados</button>
       <button className={`btn btn-sm ${saved?"btn-gr":"btn-gold"}`} onClick={saveAll} disabled={saving}>{saving?"Guardando...":saved?"✅ Guardado":"💾 Guardar todo"}</button>
     </div>
     <div className="atab">{[["groups","⚽ Grupos"],["knockout","⚔️ Eliminación"],["special","🌟 Especiales"],["users","👥 Usuarios"],["stats","📈 Estadísticas"],["lb","📊 Tabla"]].map(([k,l])=><button key={k} className={`atb${tab===k?" act":""}`} onClick={()=>setTab(k)}>{l}</button>)}</div>
