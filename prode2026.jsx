@@ -1438,7 +1438,7 @@ function SpecialPanel({preds,spRes,onUpd,locked}){
   </div>);
 }
 // ═══ LEADERBOARD ══════════════════════════════════════════════════════
-function LBView({lb,results,koUnlocked,users,allPreds,onBack}){
+function LBView({lb,results,koUnlocked,koTeams,koResults,users,allPreds,onBack}){
   const [tab,setTab]=useState("tabla");
   const hasKO=Object.values(koUnlocked||{}).some(Boolean);
   const rc=["rnkg","rnks","rnkb"],re=["🥇","🥈","🥉"];
@@ -1481,7 +1481,7 @@ function LBView({lb,results,koUnlocked,users,allPreds,onBack}){
     </div>
     </>}
 
-    {tab==="apuestas"&&<ApuestasView users={users} allPreds={allPreds} results={results} lb={lb}/>}
+    {tab==="apuestas"&&<ApuestasView users={users} allPreds={allPreds} results={results} lb={lb} koTeams={koTeams} koResults={koResults} koUnlocked={koUnlocked}/>}
     {tab==="stats"&&<StatsPanel users={users} lb={lb}/>}
   </div>);
 }
@@ -2016,6 +2016,12 @@ function AdminView({results,onSaveR,locked,onToggle,onBack,users,allPreds,lb,koT
       <div className="stit">{users.length} participante{users.length!==1?"s":""} en la polla</div>
       {users.map(u=>{
         const done=GKS.filter(gk=>mkM(gk).every(({id})=>{const p=allPreds?.[u.id]?.matches?.[id];return p&&p.h!==""&&p.a!=="";})&&mkM(gk).length===6).length;
+        // Progreso de fases eliminatorias activadas
+        const koProgress=KO_ROUNDS.filter(r=>koUnlocked?.[r.id]).map(r=>{
+          const defs=KO_DEFS.filter(d=>d.round===r.id);
+          const filled=defs.filter(d=>{const p=allPreds?.[u.id]?.ko?.[d.id];return p&&p.h!==""&&p.a!=="";}).length;
+          return{short:r.short,emoji:r.emoji,filled,total:defs.length,complete:filled===defs.length};
+        });
         return(
           <div key={u.id} className="lbr" style={{gap:8,flexWrap:"wrap"}}>
             <div style={{flex:1,minWidth:180}}>
@@ -2028,7 +2034,14 @@ function AdminView({results,onSaveR,locked,onToggle,onBack,users,allPreds,lb,koT
                 {!u.sexo&&!u.edad&&!u.ciudad&&<span style={{opacity:.4,fontStyle:"italic"}}>Sin perfil</span>}
               </div>
             </div>
-            <span style={{fontFamily:"'Barlow Condensed',sans-serif",color:"var(--txs)",fontSize:12,flexShrink:0}}>{done}/12 grupos</span>
+            <div style={{display:"flex",flexDirection:"column",gap:3,alignItems:"flex-end",flexShrink:0}}>
+              <span style={{fontFamily:"'Barlow Condensed',sans-serif",color:done===12?"var(--green)":"var(--txs)",fontSize:12}}>{done}/12 grupos</span>
+              {koProgress.map(k=>(
+                <span key={k.short} style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:11,color:k.complete?"var(--green)":k.filled>0?"var(--gold)":"var(--red)",display:"flex",alignItems:"center",gap:3}}>
+                  {k.emoji} {k.short}: {k.filled}/{k.total}{k.complete?" ✓":""}
+                </span>
+              ))}
+            </div>
             <button
               onClick={()=>setEditingUser(u)}
               style={{padding:"4px 10px",border:"1px solid rgba(96,165,250,.3)",borderRadius:6,background:"transparent",color:"var(--blue)",cursor:"pointer",fontFamily:"'Barlow Condensed',sans-serif",fontSize:11,fontWeight:700,flexShrink:0}}>
