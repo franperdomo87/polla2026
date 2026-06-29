@@ -978,7 +978,7 @@ export default function App(){
       <div className="bg"/><div className="rel">
         {view==="landing"&&<Landing onLogin={login} onAdmin={()=>setView("admin")} onLB={()=>setView("lb")} onHoy={()=>setView("hoy")} locked={locked} users={users} allPreds={allPreds}/>}
         {view==="predict"&&user&&<PredictView user={user} preds={up} onSave={p=>saveP(user.id,p)} onLB={()=>setView("lb")} onOut={()=>{setUser(null);setView("landing");}} onHoy={()=>setView("hoy")} locked={locked} nav={nav} setNav={setNav} results={results} koTeams={koTeams} koResults={koResults} koUnlocked={koUnlocked} spRes={spRes}/>}
-        {view==="lb"&&<LBView lb={lb} results={results} koUnlocked={koUnlocked} users={users} allPreds={allPreds} onBack={()=>setView(user?"predict":"landing")}/>}
+        {view==="lb"&&<LBView lb={lb} results={results} koUnlocked={koUnlocked} koTeams={koTeams} koResults={koResults} users={users} allPreds={allPreds} onBack={()=>setView(user?"predict":"landing")}/>}
         {view==="hoy"&&<HoyView results={results} allPreds={allPreds} users={users} lb={lb} onBack={()=>setView(user?"predict":"landing")}/>}
         {view==="admin"&&<AdminView results={results} onSaveR={saveR} locked={locked} onToggle={toggleLock} onBack={()=>setView("landing")} users={users} allPreds={allPreds} lb={lb} koTeams={koTeams} onSaveKT={saveKT} koResults={koResults} onSaveKR={saveKR} koUnlocked={koUnlocked} onSaveKU={saveKU} spRes={spRes} onSaveSR={saveSR} onDeleteUser={deleteUser} onSaveUsers={saveUsers}/>}
       </div>
@@ -1250,7 +1250,7 @@ function PredictView({user,preds,onSave,onLB,onOut,onHoy,locked,nav,setNav,resul
         <div className="sbs">Picks Especiales</div>
         <button className={`gb${nav.type==="special"?" sp":""}`} onClick={()=>setNav({type:"special",id:"s"})}><span style={{fontFamily:"'Bebas Neue',cursive",fontSize:11}}>🌟 Picks</span><span style={{flex:1,fontSize:10,color:"var(--txs)"}}>Goleador·Balón</span>{lp?.special?.topScorer&&lp?.special?.goldenBall&&<span style={{color:"var(--gold)",fontSize:10}}>✓</span>}</button>
         <div style={{marginTop:"auto",padding:"8px 5px",display:"flex",flexDirection:"column",gap:5}}>
-          {!locked&&<button className={`btn btn-sm ${saved?"btn-gr":"btn-gold"}`} style={{width:"100%",justifyContent:"center"}} onClick={save} disabled={saving}>{saving?"Guardando...":saved?"✅ Guardado":"💾 Guardar"}</button>}
+          <button className={`btn btn-sm ${saved?"btn-gr":"btn-gold"}`} style={{width:"100%",justifyContent:"center"}} onClick={save} disabled={saving}>{saving?"Guardando...":saved?"✅ Guardado":"💾 Guardar"}</button>
           <button className="btn btn-ol btn-sm" style={{width:"100%",justifyContent:"center"}} onClick={onHoy}>📅 Hoy</button>
           <button className="btn btn-ol btn-sm" style={{width:"100%",justifyContent:"center"}} onClick={onLB}>📊 Tabla</button>
           <button className="btn btn-ol btn-sm" style={{width:"100%",justifyContent:"center"}} onClick={onOut}>← Salir</button>
@@ -1671,13 +1671,13 @@ function HoyView({results,allPreds,users,lb,onBack}){
 
 
 // ═══ APUESTAS VIEW ════════════════════════════════════════════════════
-function ApuestasView({users,allPreds,results,lb}){
-  const [selGk,setSelGk]=useState("A");
+function ApuestasView({users,allPreds,results,lb,koTeams,koResults,koUnlocked}){
+  // sel puede ser un grupo (A-L) o una ronda KO (r32, r16, qf, sf, tp, final)
+  const [sel,setSel]=useState("A");
   const lbMap={};lb.forEach(u=>lbMap[u.id]={total:u.total,group:u.group||0});
 
-  // For selected group, show all matches and all users' predictions
-  const matches=mkM(selGk);
-  const rMatches=results?.matches||{};
+  const isKO=["r32","r16","qf","sf","tp","final"].includes(sel);
+  const koRoundsUnlocked=KO_ROUNDS.filter(r=>koUnlocked?.[r.id]);
 
   return(<div style={{animation:"fi .3s ease"}}>
     <div style={{fontFamily:"'Bebas Neue',cursive",fontSize:26,color:"var(--gold)",letterSpacing:"4px",marginBottom:4}}>👁️ APUESTAS DE TODOS</div>
@@ -1685,98 +1685,192 @@ function ApuestasView({users,allPreds,results,lb}){
       Transparencia total — todos pueden ver los pronósticos de todos. Los resultados reales aparecen en dorado cuando el partido ya se jugó.
     </div>
 
-    {/* Group selector */}
-    <div style={{display:"flex",gap:5,flexWrap:"wrap",marginBottom:16}}>
+    {/* Selector: Grupos */}
+    <div style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:10,color:"var(--txs)",letterSpacing:"2px",marginBottom:6,textTransform:"uppercase"}}>Fase de grupos</div>
+    <div style={{display:"flex",gap:5,flexWrap:"wrap",marginBottom:12}}>
       {GKS.map(gk=>(
-        <button key={gk} className={`atb${selGk===gk?" act":""}`} onClick={()=>setSelGk(gk)}>
+        <button key={gk} className={`atb${sel===gk?" act":""}`} onClick={()=>setSel(gk)}>
           Grupo {gk}
         </button>
       ))}
     </div>
 
-    {/* Group teams */}
-    <div className="gts" style={{marginBottom:16}}>
-      {GROUPS[selGk].map(t=><span key={t.n} className="tc">{t.f} {t.n}</span>)}
-    </div>
+    {/* Selector: Fases eliminatorias (solo las activadas) */}
+    {koRoundsUnlocked.length>0&&(<>
+      <div style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:10,color:"var(--txs)",letterSpacing:"2px",marginBottom:6,textTransform:"uppercase"}}>Eliminación directa</div>
+      <div style={{display:"flex",gap:5,flexWrap:"wrap",marginBottom:16}}>
+        {koRoundsUnlocked.map(r=>(
+          <button key={r.id} className={`atb${sel===r.id?" act":""}`} onClick={()=>setSel(r.id)}>
+            {r.emoji} {r.short}
+          </button>
+        ))}
+      </div>
+    </>)}
 
-    {/* Each match */}
-    {matches.map(({id,h,a})=>{
-      const rp=rMatches[id];
-      const hasResult=rp&&rp.h!==""&&rp.a!=="";
-      const sch=SCHEDULE[id];
-
-      // Collect all predictions for this match
-      const preds=users.map(u=>{
-        const p=allPreds?.[u.id]?.matches?.[id];
-        const pts=p&&p.h!==""&&p.a!==""&&hasResult?sMatch(p.h,p.a,rp.h,rp.a):null;
-        return{...u,pred:p,pts};
-      }).filter(u=>u.pred&&u.pred.h!==""&&u.pred.a!=="");
-
-      return(
-        <div key={id} style={{marginBottom:18,background:"var(--sur)",border:"1px solid var(--bos)",borderRadius:12,overflow:"hidden"}}>
-          {/* Match header */}
-          <div style={{padding:"10px 14px",borderBottom:"1px solid var(--bos)",display:"flex",alignItems:"center",gap:12,flexWrap:"wrap"}}>
-            <div style={{flex:1}}>
-              <div style={{fontFamily:"'Bebas Neue',cursive",fontSize:18,letterSpacing:"2px",color:"var(--txt)"}}>{h.f} {h.n} <span style={{color:"var(--txs)",fontSize:14}}>VS</span> {a.n} {a.f}</div>
-              {sch&&<div style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:11,color:"var(--txs)",marginTop:2}}>📅 {sch.d} · 🕐 {sch.h} COL · 🏟️ {sch.st}</div>}
-            </div>
-            {hasResult&&(
-              <div style={{textAlign:"center"}}>
-                <div style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:9,color:"var(--gold)",letterSpacing:"2px",marginBottom:2}}>RESULTADO REAL</div>
-                <div style={{fontFamily:"'Bebas Neue',cursive",fontSize:28,color:"var(--gold)",lineHeight:1}}>{rp.h} — {rp.a}</div>
-              </div>
-            )}
-            {!hasResult&&(
-              <div style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:11,color:"var(--txs)",opacity:.5,fontStyle:"italic"}}>Partido no jugado aún</div>
-            )}
-          </div>
-
-          {/* Predictions table */}
-          {preds.length===0?(
-            <div style={{padding:"12px 14px",color:"var(--txs)",fontFamily:"'Barlow Condensed',sans-serif",fontSize:13}}>Ningún participante ha ingresado pronóstico para este partido.</div>
-          ):(
-            <div style={{overflowX:"auto"}}>
-              <table style={{width:"100%",borderCollapse:"collapse",fontFamily:"'Barlow Condensed',sans-serif"}}>
-                <thead>
-                  <tr style={{borderBottom:"1px solid var(--bos)"}}>
-                    <th style={{textAlign:"left",padding:"7px 14px",fontSize:10,letterSpacing:"2px",color:"var(--txs)",textTransform:"uppercase",minWidth:120}}>Participante</th>
-                    <th style={{textAlign:"center",padding:"7px 10px",fontSize:10,letterSpacing:"2px",color:"var(--txs)",textTransform:"uppercase"}}>Pronóstico</th>
-                    <th style={{textAlign:"center",padding:"7px 10px",fontSize:10,letterSpacing:"2px",color:"var(--txs)",textTransform:"uppercase"}}>Resultado</th>
-                    <th style={{textAlign:"center",padding:"7px 10px",fontSize:10,letterSpacing:"2px",color:"var(--txs)",textTransform:"uppercase"}}>Pts</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {preds.sort((a,b)=>(b.pts||0)-(a.pts||0)).map((u,i)=>{
-                    const isExact=u.pts===5,isOk=u.pts===3,isFail=u.pts===0&&hasResult;
-                    const predRes=u.pred.h>u.pred.a?"L":u.pred.a>u.pred.h?"V":"E";
-                    return(
-                      <tr key={u.id} style={{borderBottom:"1px solid rgba(255,255,255,.03)",background:i%2===0?"transparent":"rgba(255,255,255,.015)"}}>
-                        <td style={{padding:"8px 14px",fontSize:14,fontWeight:700,color:"var(--txt)"}}>{u.name}</td>
-                        <td style={{textAlign:"center",padding:"8px 10px"}}>
-                          <span style={{fontFamily:"'Bebas Neue',cursive",fontSize:20,color:isExact?"var(--gold)":isOk?"var(--green)":isFail?"var(--red)":"var(--txt)"}}>{u.pred.h} — {u.pred.a}</span>
-                          <span style={{marginLeft:6,fontFamily:"'Barlow Condensed',sans-serif",fontSize:11,color:"var(--txs)",opacity:.7}}>{predRes}</span>
-                        </td>
-                        <td style={{textAlign:"center",padding:"8px 10px"}}>
-                          {isExact&&<span className="badge badge-g">🎯 Exacto</span>}
-                          {isOk&&<span className="badge badge-gr">✅ Correcto</span>}
-                          {isFail&&<span className="badge badge-r">✗ Fallo</span>}
-                          {!hasResult&&<span style={{color:"var(--txs)",fontSize:11,fontFamily:"'Barlow Condensed',sans-serif"}}>—</span>}
-                        </td>
-                        <td style={{textAlign:"center",padding:"8px 10px"}}>
-                          {u.pts!==null?(
-                            <span style={{fontFamily:"'Bebas Neue',cursive",fontSize:20,color:isExact?"var(--gold)":isOk?"var(--green)":"var(--red)"}}>+{u.pts}</span>
-                          ):<span style={{color:"var(--txs)",fontSize:12}}>—</span>}
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
-          )}
+    {/* ───────── VISTA DE GRUPOS ───────── */}
+    {!isKO&&(()=>{
+      const matches=mkM(sel);
+      const rMatches=results?.matches||{};
+      return(<>
+        <div className="gts" style={{marginBottom:16}}>
+          {GROUPS[sel].map(t=><span key={t.n} className="tc">{t.f} {t.n}</span>)}
         </div>
-      );
-    })}
+        {matches.map(({id,h,a})=>{
+          const rp=rMatches[id];
+          const hasResult=rp&&rp.h!==""&&rp.a!=="";
+          const sch=SCHEDULE[id];
+          const preds=users.map(u=>{
+            const p=allPreds?.[u.id]?.matches?.[id];
+            const pts=p&&p.h!==""&&p.a!==""&&hasResult?sMatch(p.h,p.a,rp.h,rp.a):null;
+            return{...u,pred:p,pts};
+          }).filter(u=>u.pred&&u.pred.h!==""&&u.pred.a!=="");
+          return(
+            <div key={id} style={{marginBottom:18,background:"var(--sur)",border:"1px solid var(--bos)",borderRadius:12,overflow:"hidden"}}>
+              <div style={{padding:"10px 14px",borderBottom:"1px solid var(--bos)",display:"flex",alignItems:"center",gap:12,flexWrap:"wrap"}}>
+                <div style={{flex:1}}>
+                  <div style={{fontFamily:"'Bebas Neue',cursive",fontSize:18,letterSpacing:"2px",color:"var(--txt)"}}>{h.f} {h.n} <span style={{color:"var(--txs)",fontSize:14}}>VS</span> {a.n} {a.f}</div>
+                  {sch&&<div style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:11,color:"var(--txs)",marginTop:2}}>📅 {sch.d} · 🕐 {sch.h} COL · 🏟️ {sch.st}</div>}
+                </div>
+                {hasResult&&(
+                  <div style={{textAlign:"center"}}>
+                    <div style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:9,color:"var(--gold)",letterSpacing:"2px",marginBottom:2}}>RESULTADO REAL</div>
+                    <div style={{fontFamily:"'Bebas Neue',cursive",fontSize:28,color:"var(--gold)",lineHeight:1}}>{rp.h} — {rp.a}</div>
+                  </div>
+                )}
+                {!hasResult&&(
+                  <div style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:11,color:"var(--txs)",opacity:.5,fontStyle:"italic"}}>Partido no jugado aún</div>
+                )}
+              </div>
+              {preds.length===0?(
+                <div style={{padding:"12px 14px",color:"var(--txs)",fontFamily:"'Barlow Condensed',sans-serif",fontSize:13}}>Ningún participante ha ingresado pronóstico para este partido.</div>
+              ):(
+                <div style={{overflowX:"auto"}}>
+                  <table style={{width:"100%",borderCollapse:"collapse",fontFamily:"'Barlow Condensed',sans-serif"}}>
+                    <thead>
+                      <tr style={{borderBottom:"1px solid var(--bos)"}}>
+                        <th style={{textAlign:"left",padding:"7px 14px",fontSize:10,letterSpacing:"2px",color:"var(--txs)",textTransform:"uppercase",minWidth:120}}>Participante</th>
+                        <th style={{textAlign:"center",padding:"7px 10px",fontSize:10,letterSpacing:"2px",color:"var(--txs)",textTransform:"uppercase"}}>Pronóstico</th>
+                        <th style={{textAlign:"center",padding:"7px 10px",fontSize:10,letterSpacing:"2px",color:"var(--txs)",textTransform:"uppercase"}}>Resultado</th>
+                        <th style={{textAlign:"center",padding:"7px 10px",fontSize:10,letterSpacing:"2px",color:"var(--txs)",textTransform:"uppercase"}}>Pts</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {preds.sort((a,b)=>(b.pts||0)-(a.pts||0)).map((u,i)=>{
+                        const isExact=u.pts===5,isOk=u.pts===3,isFail=u.pts===0&&hasResult;
+                        const predRes=u.pred.h>u.pred.a?"L":u.pred.a>u.pred.h?"V":"E";
+                        return(
+                          <tr key={u.id} style={{borderBottom:"1px solid rgba(255,255,255,.03)",background:i%2===0?"transparent":"rgba(255,255,255,.015)"}}>
+                            <td style={{padding:"8px 14px",fontSize:14,fontWeight:700,color:"var(--txt)"}}>{u.name}</td>
+                            <td style={{textAlign:"center",padding:"8px 10px"}}>
+                              <span style={{fontFamily:"'Bebas Neue',cursive",fontSize:20,color:isExact?"var(--gold)":isOk?"var(--green)":isFail?"var(--red)":"var(--txt)"}}>{u.pred.h} — {u.pred.a}</span>
+                              <span style={{marginLeft:6,fontFamily:"'Barlow Condensed',sans-serif",fontSize:11,color:"var(--txs)",opacity:.7}}>{predRes}</span>
+                            </td>
+                            <td style={{textAlign:"center",padding:"8px 10px"}}>
+                              {isExact&&<span className="badge badge-g">🎯 Exacto</span>}
+                              {isOk&&<span className="badge badge-gr">✅ Correcto</span>}
+                              {isFail&&<span className="badge badge-r">✗ Fallo</span>}
+                              {!hasResult&&<span style={{color:"var(--txs)",fontSize:11,fontFamily:"'Barlow Condensed',sans-serif"}}>—</span>}
+                            </td>
+                            <td style={{textAlign:"center",padding:"8px 10px"}}>
+                              {u.pts!==null?(
+                                <span style={{fontFamily:"'Bebas Neue',cursive",fontSize:20,color:isExact?"var(--gold)":isOk?"var(--green)":"var(--red)"}}>+{u.pts}</span>
+                              ):<span style={{color:"var(--txs)",fontSize:12}}>—</span>}
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </>);
+    })()}
+
+    {/* ───────── VISTA DE ELIMINACIÓN DIRECTA ───────── */}
+    {isKO&&(()=>{
+      const defs=KO_DEFS.filter(d=>d.round===sel);
+      const round=KO_ROUNDS.find(r=>r.id===sel);
+      return(<>
+        <div style={{fontFamily:"'Bebas Neue',cursive",fontSize:20,color:"var(--blue)",letterSpacing:"3px",marginBottom:14}}>{round?.emoji} {round?.label}</div>
+        {defs.map(def=>{
+          const teams=koTeams?.[def.id]||{h:"",a:""};
+          const rp=koResults?.[def.id];
+          const hasResult=rp&&rp.h!==""&&rp.a!=="";
+          const hasTeams=teams.h&&teams.a;
+          const hName=teams.h||def.ph, aName=teams.a||def.pa;
+          const preds=users.map(u=>{
+            const p=allPreds?.[u.id]?.ko?.[def.id];
+            const pts=p&&p.h!==""&&p.a!==""&&hasResult?sKO(p,rp):null;
+            return{...u,pred:p,pts};
+          }).filter(u=>u.pred&&u.pred.h!==""&&u.pred.a!=="");
+          return(
+            <div key={def.id} style={{marginBottom:18,background:"var(--sur)",border:"1px solid var(--bos)",borderRadius:12,overflow:"hidden"}}>
+              <div style={{padding:"10px 14px",borderBottom:"1px solid var(--bos)",display:"flex",alignItems:"center",gap:12,flexWrap:"wrap"}}>
+                <div style={{flex:1}}>
+                  <div style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:10,color:"var(--txs)",letterSpacing:"2px",marginBottom:2}}>PARTIDO {def.num}</div>
+                  <div style={{fontFamily:"'Bebas Neue',cursive",fontSize:18,letterSpacing:"2px",color:hasTeams?"var(--txt)":"var(--txs)"}}>{hName} <span style={{color:"var(--txs)",fontSize:14}}>VS</span> {aName}</div>
+                </div>
+                {hasResult&&(
+                  <div style={{textAlign:"center"}}>
+                    <div style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:9,color:"var(--gold)",letterSpacing:"2px",marginBottom:2}}>RESULTADO REAL</div>
+                    <div style={{fontFamily:"'Bebas Neue',cursive",fontSize:28,color:"var(--gold)",lineHeight:1}}>{rp.h} — {rp.a}</div>
+                    {rp.penWinner&&<div style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:10,color:"var(--gold)",marginTop:2}}>🥅 Penales: {rp.penWinner==="h"?hName:aName}</div>}
+                  </div>
+                )}
+                {!hasResult&&(
+                  <div style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:11,color:"var(--txs)",opacity:.5,fontStyle:"italic"}}>Partido no jugado aún</div>
+                )}
+              </div>
+              {preds.length===0?(
+                <div style={{padding:"12px 14px",color:"var(--txs)",fontFamily:"'Barlow Condensed',sans-serif",fontSize:13}}>Ningún participante ha ingresado pronóstico para este partido.</div>
+              ):(
+                <div style={{overflowX:"auto"}}>
+                  <table style={{width:"100%",borderCollapse:"collapse",fontFamily:"'Barlow Condensed',sans-serif"}}>
+                    <thead>
+                      <tr style={{borderBottom:"1px solid var(--bos)"}}>
+                        <th style={{textAlign:"left",padding:"7px 14px",fontSize:10,letterSpacing:"2px",color:"var(--txs)",textTransform:"uppercase",minWidth:120}}>Participante</th>
+                        <th style={{textAlign:"center",padding:"7px 10px",fontSize:10,letterSpacing:"2px",color:"var(--txs)",textTransform:"uppercase"}}>Pronóstico</th>
+                        <th style={{textAlign:"center",padding:"7px 10px",fontSize:10,letterSpacing:"2px",color:"var(--txs)",textTransform:"uppercase"}}>Resultado</th>
+                        <th style={{textAlign:"center",padding:"7px 10px",fontSize:10,letterSpacing:"2px",color:"var(--txs)",textTransform:"uppercase"}}>Pts</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {preds.sort((a,b)=>(b.pts||0)-(a.pts||0)).map((u,i)=>{
+                        const isExact=u.pts===8||u.pts===11,isOk=u.pts===4||u.pts===7,isFail=(u.pts===0)&&hasResult;
+                        const pw=u.pred.penWinner;
+                        return(
+                          <tr key={u.id} style={{borderBottom:"1px solid rgba(255,255,255,.03)",background:i%2===0?"transparent":"rgba(255,255,255,.015)"}}>
+                            <td style={{padding:"8px 14px",fontSize:14,fontWeight:700,color:"var(--txt)"}}>{u.name}</td>
+                            <td style={{textAlign:"center",padding:"8px 10px"}}>
+                              <span style={{fontFamily:"'Bebas Neue',cursive",fontSize:20,color:isExact?"var(--gold)":isOk?"var(--green)":isFail?"var(--red)":"var(--txt)"}}>{u.pred.h} — {u.pred.a}</span>
+                              {pw&&<span style={{marginLeft:6,fontFamily:"'Barlow Condensed',sans-serif",fontSize:10,color:"var(--txs)",opacity:.8}}>🥅 {pw==="h"?hName.slice(0,3):aName.slice(0,3)}</span>}
+                            </td>
+                            <td style={{textAlign:"center",padding:"8px 10px"}}>
+                              {isExact&&<span className="badge badge-g">🎯 Exacto</span>}
+                              {isOk&&<span className="badge badge-gr">✅ Correcto</span>}
+                              {isFail&&<span className="badge badge-r">✗ Fallo</span>}
+                              {!hasResult&&<span style={{color:"var(--txs)",fontSize:11,fontFamily:"'Barlow Condensed',sans-serif"}}>—</span>}
+                            </td>
+                            <td style={{textAlign:"center",padding:"8px 10px"}}>
+                              {u.pts!==null?(
+                                <span style={{fontFamily:"'Bebas Neue',cursive",fontSize:20,color:isExact?"var(--gold)":isOk?"var(--green)":"var(--red)"}}>+{u.pts}</span>
+                              ):<span style={{color:"var(--txs)",fontSize:12}}>—</span>}
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </>);
+    })()}
   </div>);
 }
 
