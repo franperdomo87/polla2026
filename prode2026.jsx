@@ -1400,8 +1400,8 @@ function KORow({def,pred,result,teams,onU}){
       {result&&result.h!==""&&<div style={{display:"flex",flexDirection:"column",alignItems:"center",minWidth:42,marginLeft:3}}><div style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:9,color:"var(--txs)",letterSpacing:"1px"}}>REAL</div><div style={{fontFamily:"'Bebas Neue',cursive",fontSize:17}}>{result.h}:{result.a}</div>{result.penWinner&&<div style={{fontSize:9,color:"var(--gold)",fontFamily:"'Barlow Condensed',sans-serif"}}>P:{result.penWinner==="H"?teams?.h||def.ph:teams?.a||def.pa}</div>}</div>}
       {pts!==null&&<span style={{fontFamily:"'Bebas Neue',cursive",fontSize:18,minWidth:27,textAlign:"right",color:isE?"var(--gold)":isO?"var(--green)":"var(--red)"}}>+{pts}</span>}
     </div>
-    {isD&&!noT&&<div className="ko-pen">
-      <div style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:11,color:"var(--gold)",letterSpacing:"1px",flexShrink:0}}>🥊 Empate → Ganador por penales:</div>
+    {isD&&!noT&&<div className="ko-pen" style={{border:!pred.penWinner?"1px solid rgba(244,63,94,.5)":"1px solid var(--gbor)",borderRadius:8,padding:"7px 10px",background:!pred.penWinner?"rgba(244,63,94,.06)":"rgba(240,180,41,.04)"}}>
+      <div style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:11,color:!pred.penWinner?"#fca5a5":"var(--gold)",letterSpacing:"1px",flexShrink:0,fontWeight:700}}>{!pred.penWinner?"⚠️ ¡Empate! Elige quién gana en penales:":"🥊 Ganador por penales:"}</div>
       <button className={`kpb${pred.penWinner==="H"?" sel":""}`} onClick={()=>onU("penWinner",pred.penWinner==="H"?null:"H")}>{h}</button>
       <button className={`kpb${pred.penWinner==="A"?" sel":""}`} onClick={()=>onU("penWinner",pred.penWinner==="A"?null:"A")}>{a}</button>
       {result?.penWinner&&<span className={`badge ${pred.penWinner===result.penWinner?"badge-g":"badge-r"}`}>{pred.penWinner===result.penWinner?"✓ Correcto":"✗ Incorrecto"}</span>}
@@ -1837,7 +1837,7 @@ function ApuestasView({users,allPreds,results,lb,koTeams,koResults,koUnlocked}){
                   <div style={{textAlign:"center"}}>
                     <div style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:9,color:"var(--gold)",letterSpacing:"2px",marginBottom:2}}>RESULTADO REAL</div>
                     <div style={{fontFamily:"'Bebas Neue',cursive",fontSize:28,color:"var(--gold)",lineHeight:1}}>{rp.h} — {rp.a}</div>
-                    {rp.penWinner&&<div style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:10,color:"var(--gold)",marginTop:2}}>🥅 Penales: {rp.penWinner==="h"?hName:aName}</div>}
+                    {rp.penWinner&&<div style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:10,color:"var(--gold)",marginTop:2}}>🥅 Penales: {rp.penWinner==="H"?hName:aName}</div>}
                   </div>
                 )}
                 {!hasResult&&(
@@ -1866,7 +1866,7 @@ function ApuestasView({users,allPreds,results,lb,koTeams,koResults,koUnlocked}){
                             <td style={{padding:"8px 14px",fontSize:14,fontWeight:700,color:"var(--txt)"}}>{u.name}</td>
                             <td style={{textAlign:"center",padding:"8px 10px"}}>
                               <span style={{fontFamily:"'Bebas Neue',cursive",fontSize:20,color:isExact?"var(--gold)":isOk?"var(--green)":isFail?"var(--red)":"var(--txt)"}}>{u.pred.h} — {u.pred.a}</span>
-                              {pw&&<span style={{marginLeft:6,fontFamily:"'Barlow Condensed',sans-serif",fontSize:10,color:"var(--txs)",opacity:.8}}>🥅 {pw==="h"?hName.slice(0,3):aName.slice(0,3)}</span>}
+                              {+u.pred.h===+u.pred.a&&(pw?<span style={{marginLeft:6,fontFamily:"'Barlow Condensed',sans-serif",fontSize:10,color:"var(--gold)",opacity:.9}}>🥅 {pw==="H"?hName:aName}</span>:<span style={{marginLeft:6,fontFamily:"'Barlow Condensed',sans-serif",fontSize:10,color:"var(--red)",opacity:.8}}>⚠️ sin penales</span>)}
                             </td>
                             <td style={{textAlign:"center",padding:"8px 10px"}}>
                               {isExact&&<span className="badge badge-g">🎯 Exacto</span>}
