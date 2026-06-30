@@ -561,11 +561,22 @@ function sKO(pred,result){
   if(!pred||!result||pred.h===""||pred.a===""||result.h===""||result.a==="")return 0;
   const ph=+pred.h,pa=+pred.a,rh=+result.h,ra=+result.a;
   if(isNaN(ph)||isNaN(pa)||isNaN(rh)||isNaN(ra))return 0;
-  const pW=ph>pa?"H":pa>ph?"A":pred.penWinner,rW=rh>ra?"H":ra>rh?"A":result.penWinner;
-  if(!pW||!rW)return 0;
+  // Resultado del tiempo reglamentario: H (gana local), A (gana visitante), D (empate)
+  const pRes=ph>pa?"H":pa>ph?"A":"D";
+  const rRes=rh>ra?"H":ra>rh?"A":"D";
   let pts=0;
-  if(ph===rh&&pa===ra){pts+=8;if(rh===ra&&pred.penWinner&&result.penWinner&&pred.penWinner===result.penWinner)pts+=3;}
-  else if(pW===rW){pts+=4;if(rh===ra&&ph===pa&&pred.penWinner&&result.penWinner&&pred.penWinner===result.penWinner)pts+=3;}
+  // Marcador exacto en tiempo reglamentario = 8 pts
+  if(ph===rh&&pa===ra){
+    pts+=8;
+    // Si fue empate y acertó el ganador de penales = +3
+    if(rRes==="D"&&pred.penWinner&&result.penWinner&&pred.penWinner===result.penWinner)pts+=3;
+  }
+  // Resultado correcto (mismo tipo: local/visitante/empate) pero marcador distinto = 4 pts
+  else if(pRes===rRes){
+    pts+=4;
+    // Si ambos predijeron empate y acertó el ganador de penales = +3
+    if(rRes==="D"&&pred.penWinner&&result.penWinner&&pred.penWinner===result.penWinner)pts+=3;
+  }
   return pts;
 }
 function tPts(gk,mp){const p={};GROUPS[gk].forEach(t=>p[t.n]=0);mkM(gk).forEach(({h,a,id})=>{const m=mp?.[id];if(!m||m.h===""||m.a==="")return;const hi=+m.h,ai=+m.a;if(hi>ai)p[h.n]+=3;else if(ai>hi)p[a.n]+=3;else{p[h.n]++;p[a.n]++;}});return p;}
@@ -643,7 +654,16 @@ function calcScore(preds,results,koTeams,koResults,koUnlocked,spRes){
   KO_ROUNDS.forEach(({id:rid})=>{
     if(!koUnlocked?.[rid])return;
     const defs=KO_DEFS.filter(d=>d.round===rid);let rOk=0,rTot=0;
-    defs.forEach(({id:mid})=>{const teams=koTeams?.[mid],result=koResults?.[mid],pred=preds?.ko?.[mid];if(!teams?.h||!teams?.a||!result||result.h===""||!pred)return;rTot++;const pts=sKO(pred,result);knockout+=pts;const pW=+pred.h>+pred.a?"H":+pred.a>+pred.h?"A":pred.penWinner,rW=+result.h>+result.a?"H":+result.a>+result.h?"A":result.penWinner;if(pW&&rW&&pW===rW)rOk++;});
+    defs.forEach(({id:mid})=>{
+      const teams=koTeams?.[mid],result=koResults?.[mid],pred=preds?.ko?.[mid];
+      if(!teams?.h||!teams?.a||!result||result.h===""||result.a===""||!pred||pred.h===""||pred.a==="")return;
+      rTot++;
+      const pts=sKO(pred,result);knockout+=pts;
+      // ¿Acertó qué equipo avanza? (considera penales en empates)
+      const pAdv=+pred.h>+pred.a?"h":+pred.a>+pred.h?"a":pred.penWinner;
+      const rAdv=+result.h>+result.a?"h":+result.a>+result.h?"a":result.penWinner;
+      if(pAdv&&rAdv&&pAdv===rAdv)rOk++;
+    });
     if(rTot>0&&rOk===rTot&&rOk===defs.length)knockout+=5;
   });
   if(spRes?.topScorer&&preds?.special?.topScorer===spRes.topScorer)special+=15;
